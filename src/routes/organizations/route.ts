@@ -31,8 +31,8 @@ export const organizationsRoute = express.Router()
   validateResponse(endpoints.UpdateOrganizationResponseSchema),
   endpoints.update,
 )
-// .delete(
-//   '/posts/:postId',
-//   validateResponse(endpoints.RemovePostResponseSchema),
-//   endpoints.remove,
-// );
+.delete(
+  '/organizations/:orgId',
+  validateResponse(endpoints.RemoveOrganizationResponseSchema),
+  endpoints.remove,
+);

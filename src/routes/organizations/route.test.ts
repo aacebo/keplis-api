@@ -1,5 +1,6 @@
 import * as supertest from 'supertest';
 import { StatusCodes } from 'http-status-codes';
+import { isValid } from 'date-fns';
 
 import { devUserToken } from '../../seed/dev-user-token';
 import { DEV_USER } from '../../seed/dev-user';
@@ -100,6 +101,27 @@ describe('[e2e] /organizations', () => {
         .expect(({ body }) => {
           expect(body).toBeDefined();
           expect(body.data._id).toEqual(organization._id);
+        })
+        .end(done);
+    });
+  });
+
+  describe('remove', () => {
+    it('should not find organization', (done) => {
+      request.delete(`/organizations/1`)
+        .set('Authorization', `Bearer ${token}`)
+        .expect(StatusCodes.NOT_FOUND)
+        .end(done);
+    });
+
+    it('should remove organization', (done) => {
+      request.delete(`/organizations/${organization._id}`)
+        .set('Authorization', `Bearer ${token}`)
+        .expect(StatusCodes.OK)
+        .expect(({ body }) => {
+          expect(body).toBeDefined();
+          expect(body.data._id).toEqual(organization._id);
+          expect(isValid(Date.parse(body.data.removedAt))).toBe(true);
         })
         .end(done);
     });
