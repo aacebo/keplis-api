@@ -1,9 +1,11 @@
 import * as mongoose from 'mongoose';
 import * as dotenv from 'dotenv';
+import * as faker from 'faker';
+
 import { exit } from 'process';
 import { formatDistanceToNow } from 'date-fns';
 
-import { UserModel } from '../src/routes';
+import { OrganizationModel, UserModel } from '../src/routes';
 import Logger from '../src/core/logger';
 
 import * as seeds from './seeds';
@@ -16,6 +18,10 @@ async function start(count: number) {
   const userIds: string[] = [];
   let entities = 1;
 
+  const getRandomUserId = () => {
+    return userIds[faker.random.number({ min: 0, max: userIds.length - 1 })];
+  }
+
   Logger.info('creating fixtures...');
 
   try {
@@ -25,6 +31,7 @@ async function start(count: number) {
       useUnifiedTopology: true,
     });
 
+    await OrganizationModel.deleteMany({ });;
     await UserModel.deleteMany({ });
 
     Logger.info(`creating users(${count})...`);
@@ -37,6 +44,13 @@ async function start(count: number) {
       const user = new UserModel(seeds.user());
       await user.save();
       userIds.push(user._id);
+    }
+
+    Logger.info(`creating organizations(${count})...`);
+
+    for (let i = 0; i < count; i++, entities++) {
+      const organization = new OrganizationModel(seeds.organization({ createdBy: getRandomUserId() }));
+      await organization.save();
     }
 
     Logger.info(`finished seeding ${entities} entities in ${formatDistanceToNow(start)}`);
