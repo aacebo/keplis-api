@@ -13,8 +13,6 @@ export function organization(args?: Partial<Organization>) {
     description: faker.lorem.sentences(5),
     website: faker.internet.url(),
     email: faker.internet.email(),
-    owners: [],
-    viewers: [],
     ...args,
   };
 }

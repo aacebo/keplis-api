@@ -2,7 +2,7 @@ import * as express from 'express';
 
 import { auth } from '../../core/auth';
 import { pagination } from '../../core/pagination';
-import { validateResponse } from '../../core/validate';
+import { validateBody, validateResponse } from '../../core/validate';
 
 import * as endpoints from './endpoints';
 
@@ -13,18 +13,18 @@ export const organizationsRoute = express.Router()
   pagination,
   validateResponse(endpoints.FindOrganizationResponseSchema),
   endpoints.find,
-);
+)
 // .get(
 //   '/posts/:postId',
 //   validateResponse(endpoints.FindOnePostResponseSchema),
 //   endpoints.findOne,
 // )
-// .post(
-//   '/posts',
-//   validateBody(endpoints.CreatePostRequestSchema),
-//   validateResponse(endpoints.CreatePostResponseSchema),
-//   endpoints.create,
-// )
+.post(
+  '/organizations',
+  validateBody(endpoints.CreateOrganizationRequestSchema),
+  validateResponse(endpoints.CreateOrganizationResponseSchema),
+  endpoints.create,
+);
 // .put(
 //   '/posts/:postId',
 //   validateBody(endpoints.UpdatePostRequestSchema),
