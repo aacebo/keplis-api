@@ -10,8 +10,11 @@ module.exports = {
   collectCoverageFrom: [
     "**/*.ts",
     "!**/server.ts",
+
     "!**/node_modules/**",
+    "!**/testing/**",
     "!**/seed/**",
+
     "!**/index.ts",
     "!**/route.ts",
     "!**/*.entity.ts",
@@ -20,7 +23,7 @@ module.exports = {
     "!**/*.schema.ts",
     "!**/*.interface.ts",
     "!**/*.dto.ts",
-    "!**/testing/**"
+    "!**/*.seed.ts"
   ],
   coverageThreshold: {
     global: {
