@@ -36,7 +36,7 @@ describe('remove', () => {
 
   it('should be invalid user', async () => {
     const user = mocks.userDocument();
-    const findSpy = jest.spyOn(UserModel, 'findById').mockResolvedValueOnce(user);
+    const findSpy = jest.spyOn(UserModel, 'findById').mockResolvedValueOnce(user as any);
     const statusSpy = spyOn(params.response, 'status').and.callThrough();
     const sendSpy = spyOn(params.response, 'send');
 

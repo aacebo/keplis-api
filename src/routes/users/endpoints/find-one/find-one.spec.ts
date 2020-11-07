@@ -37,7 +37,7 @@ describe('findOne', () => {
 
   it('should find user', async () => {
     const statusSpy = spyOn(params.response, 'status').and.callThrough();
-    const findSpy = jest.spyOn(UserModel, 'findById').mockResolvedValueOnce(user);
+    const findSpy = jest.spyOn(UserModel, 'findById').mockResolvedValueOnce(user as any);
     const sendSpy = spyOn(params.response, 'send');
 
     await findOne(params.request, params.response as any);

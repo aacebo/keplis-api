@@ -1,31 +1,21 @@
 import * as faker from 'faker';
 import * as uuid from 'uuid';
 
-export function userDocument(args?: any) {
-  const _id = uuid.v4();
-  const firstName = args?.firstName || faker.name.firstName();
-  const lastName = args?.lastName || faker.name.lastName();
-  const username = faker.internet.userName(firstName, lastName);
-  const dob = faker.date.past();
-  const email = faker.internet.email();
-  const image = faker.internet.avatar();
+import { user } from '../../../seed/seeds/user.seed';
+import { User } from '../../routes';
 
-  const toObject = () => {
-    return {
-      _id,
-      firstName,
-      lastName,
-      username,
-      dob,
-      email,
-      image,
-      ...args,
-    };
-  }
+export function userDocument(args?: Partial<User>) {
+  const value = user({
+    _id: uuid.v4(),
+    createdAt: faker.date.past(),
+    ...args,
+  });
+
+  const toObject = () => value;
 
   return {
     ...toObject(),
     toObject,
-    save: () => Promise.resolve({ _id }),
+    save: () => Promise.resolve(value),
   };
 }

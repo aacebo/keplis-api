@@ -37,7 +37,7 @@ describe('login', () => {
   });
 
   it('should find user and return token', async () => {
-    const findSpy = jest.spyOn(UserModel, 'findOne').mockResolvedValueOnce(mocks.userDocument());
+    const findSpy = jest.spyOn(UserModel, 'findOne').mockResolvedValueOnce(mocks.userDocument() as any);
     const statusSpy = spyOn(params.response, 'status').and.callThrough();
     const sendSpy = spyOn(params.response, 'send');
 
