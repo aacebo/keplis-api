@@ -7,12 +7,12 @@ import * as seeds from '../../seed/seeds';
 
 import { startTestServer } from '../../testing/utils';
 
-// import { Organization } from './organization.entity';
+import { Organization } from './organization.entity';
 
 describe('[e2e] /organizations', () => {
   let request: supertest.SuperTest<supertest.Test>;
   let token: string;
-  // let organization: Organization;
+  let organization: Organization;
 
   beforeAll(async () => {
     request = await startTestServer();
@@ -22,12 +22,12 @@ describe('[e2e] /organizations', () => {
   beforeAll(async () => {
     const payload = seeds.organization();
 
-    await request.post('/organizations')
+    const res = await request.post('/organizations')
       .set('Authorization', `Bearer ${token}`)
       .send(payload)
       .expect(StatusCodes.CREATED);
 
-    // organization = res.body.data;
+    organization = res.body.data;
   });
 
   describe('create', () => {
@@ -41,7 +41,7 @@ describe('[e2e] /organizations', () => {
         .expect(res => {
           expect(res.body).toBeDefined();
           expect(res.body.data).toMatchObject(payload);
-          expect(res.body.data.createdBy).toEqual(DEV_USER._id);
+          expect(res.body.data.createdBy._id).toEqual(DEV_USER._id);
         })
         .end(done);
     });
@@ -58,6 +58,26 @@ describe('[e2e] /organizations', () => {
           expect(body.meta).toBeDefined();
           expect(body.links).toBeDefined();
           expect(body.data.length).toEqual(2);
+        })
+        .end(done);
+    });
+  });
+
+  describe('findOne', () => {
+    it('should not find organization', (done) => {
+      request.get('/organizations/1')
+        .set('Authorization', `Bearer ${token}`)
+        .expect(StatusCodes.NOT_FOUND)
+        .end(done);
+    });
+
+    it('should find one organization', (done) => {
+      request.get(`/organizations/${organization._id}`)
+        .set('Authorization', `Bearer ${token}`)
+        .expect(StatusCodes.OK)
+        .expect(({ body }) => {
+          expect(body).toBeDefined();
+          expect(body.data._id).toEqual(organization._id);
         })
         .end(done);
     });

@@ -14,11 +14,11 @@ export const organizationsRoute = express.Router()
   validateResponse(endpoints.FindOrganizationResponseSchema),
   endpoints.find,
 )
-// .get(
-//   '/posts/:postId',
-//   validateResponse(endpoints.FindOnePostResponseSchema),
-//   endpoints.findOne,
-// )
+.get(
+  '/organizations/:orgId',
+  validateResponse(endpoints.FindOneOrganizationResponseSchema),
+  endpoints.findOne,
+)
 .post(
   '/organizations',
   validateBody(endpoints.CreateOrganizationRequestSchema),

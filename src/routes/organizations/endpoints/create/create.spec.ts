@@ -8,6 +8,8 @@ jest.mock('../../organization.entity', () => ({
   OrganizationModel: class {
     toObject() { }
     save() { return Promise.resolve(); }
+    populate() { return this; }
+    execPopulate() { return Promise.resolve(mocks.organizationDocument()); }
   },
 }));
 

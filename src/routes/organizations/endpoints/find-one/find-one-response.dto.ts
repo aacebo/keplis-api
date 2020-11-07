@@ -2,6 +2,6 @@ import { UserJoinSchema } from '../../../users';
 
 import { OrganizationSchema } from '../../organization.schema';
 
-export const CreateOrganizationResponseSchema = OrganizationSchema.append({
+export const FindOneOrganizationResponseSchema = OrganizationSchema.append({
   createdBy: UserJoinSchema.required(),
 });

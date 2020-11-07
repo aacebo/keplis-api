@@ -10,9 +10,12 @@ import { CreateOrganizationRequest } from './create-request.dto';
 export async function create(req: IAuthRequest & Request<any, any, CreateOrganizationRequest>, res: Response) {
   const organization = new OrganizationModel({
     ...req.body,
+    owners: [req.user.id],
     createdBy: req.user.id,
-  });
+  }).populate('createdBy', '_id image username email');
 
   await organization.save();
-  res.status(StatusCodes.CREATED).send(organization.toObject());
+  const saved = await organization.execPopulate();
+
+  res.status(StatusCodes.CREATED).send(saved.toObject());
 }
