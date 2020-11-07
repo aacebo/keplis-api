@@ -1,7 +1,7 @@
 import * as uuid from 'uuid';
 import * as faker from 'faker';
 
-import { organization } from '../../../seed/seeds/organization.seed';
+import { organization } from '../../seed/seeds/organization.seed';
 import { Organization } from '../../routes';
 
 export function organizationDocument(args?: Partial<Organization>) {

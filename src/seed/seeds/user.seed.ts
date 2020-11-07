@@ -1,6 +1,6 @@
 import * as faker from 'faker';
 
-import { User } from '../../src/routes/users';
+import { User } from '../../routes/users';
 
 export function user(args?: Partial<User>) {
   const firstName = args?.firstName || faker.name.firstName();

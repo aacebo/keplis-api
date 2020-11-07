@@ -1,9 +1,9 @@
 import * as supertest from 'supertest';
 import { StatusCodes } from 'http-status-codes';
 
-import { devUserToken } from '../../../seed/dev-user-token';
-import { DEV_USER } from '../../../seed/dev-user';
-import * as seeds from '../../../seed/seeds';
+import { devUserToken } from '../../seed/dev-user-token';
+import { DEV_USER } from '../../seed/dev-user';
+import * as seeds from '../../seed/seeds';
 
 import { startTestServer } from '../../testing/utils';
 

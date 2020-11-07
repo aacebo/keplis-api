@@ -6,8 +6,8 @@ import * as uuid from 'uuid';
 import { exit } from 'process';
 import { formatDistanceToNow } from 'date-fns';
 
-import { OrganizationModel, UserModel } from '../src/routes';
-import Logger from '../src/core/logger';
+import { OrganizationModel, UserModel } from '../routes';
+import Logger from '../core/logger';
 
 import * as seeds from './seeds';
 import { DEV_USER } from './dev-user';

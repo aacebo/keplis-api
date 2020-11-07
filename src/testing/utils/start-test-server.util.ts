@@ -1,7 +1,7 @@
 import * as express from 'express';
 import * as supertest from 'supertest';
 
-import { DEV_USER } from '../../../seed/dev-user';
+import { DEV_USER } from '../../seed/dev-user';
 import { startServer } from '../../server';
 
 import { IUserDocument, UserModel } from '../../routes/users/user.entity';

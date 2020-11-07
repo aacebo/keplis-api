@@ -9,7 +9,7 @@
     "test:e2e": "cross-env NODE_ENV=test jest \".test\\.ts\" --forceExit --runInBand --detectOpenHandles --collectCoverage=false",
     "start": "ts-node .",
     "start:local": "cross-env NODE_ENV=dev nodemon --watch 'src/**/*' -e ts --exec ts-node .",
-    "seed": "ts-node seed"
+    "seed": "ts-node src/seed"
   },
   "repository": {
     "type": "git",

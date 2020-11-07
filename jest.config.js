@@ -11,7 +11,7 @@ module.exports = {
     "**/*.ts",
     "!**/server.ts",
     "!**/node_modules/**",
-    "!**/fixtures/**",
+    "!**/seed/**",
     "!**/index.ts",
     "!**/route.ts",
     "!**/*.entity.ts",
