@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aacebo/query-api.git"
+    "url": "git+https://github.com/aacebo/keplis-api.git"
   },
   "author": "Alexander Acebo",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/aacebo/query-api/issues"
+    "url": "https://github.com/aacebo/keplis-api/issues"
   },
-  "homepage": "https://github.com/aacebo/query-api#readme",
+  "homepage": "https://github.com/aacebo/keplis-api#readme",
   "dependencies": {
     "chalk": "^4.1.0",
     "cors": "^2.8.5",
