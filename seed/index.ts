@@ -1,6 +1,7 @@
 import * as mongoose from 'mongoose';
 import * as dotenv from 'dotenv';
 import * as faker from 'faker';
+import * as uuid from 'uuid';
 
 import { exit } from 'process';
 import { formatDistanceToNow } from 'date-fns';
@@ -49,7 +50,13 @@ async function start(count: number) {
     Logger.info(`creating organizations(${count})...`);
 
     for (let i = 0; i < count; i++, entities++) {
-      const organization = new OrganizationModel(seeds.organization({ createdBy: getRandomUserId() }));
+      const createdBy = getRandomUserId();
+      const organization = new OrganizationModel(seeds.organization({
+        _id: uuid.v4(),
+        owners: [createdBy],
+        createdBy,
+      }));
+
       await organization.save();
     }
 
