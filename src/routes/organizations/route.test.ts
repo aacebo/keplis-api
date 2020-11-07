@@ -82,4 +82,26 @@ describe('[e2e] /organizations', () => {
         .end(done);
     });
   });
+
+  describe('update', () => {
+    it('should not find organization', (done) => {
+      request.put('/organizations/1')
+        .set('Authorization', `Bearer ${token}`)
+        .send({ firstName: 'devtest' })
+        .expect(StatusCodes.NOT_FOUND)
+        .end(done);
+    });
+
+    it('should update organization', (done) => {
+      request.put(`/organizations/${organization._id}`)
+        .set('Authorization', `Bearer ${token}`)
+        .send({ title: 'a new title' })
+        .expect(StatusCodes.OK)
+        .expect(({ body }) => {
+          expect(body).toBeDefined();
+          expect(body.data._id).toEqual(organization._id);
+        })
+        .end(done);
+    });
+  });
 });

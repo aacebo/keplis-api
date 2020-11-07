@@ -24,13 +24,13 @@ export const organizationsRoute = express.Router()
   validateBody(endpoints.CreateOrganizationRequestSchema),
   validateResponse(endpoints.CreateOrganizationResponseSchema),
   endpoints.create,
-);
-// .put(
-//   '/posts/:postId',
-//   validateBody(endpoints.UpdatePostRequestSchema),
-//   validateResponse(endpoints.UpdatePostResponseSchema),
-//   endpoints.update,
-// )
+)
+.put(
+  '/organizations/:orgId',
+  validateBody(endpoints.UpdateOrganizationRequestSchema),
+  validateResponse(endpoints.UpdateOrganizationResponseSchema),
+  endpoints.update,
+)
 // .delete(
 //   '/posts/:postId',
 //   validateResponse(endpoints.RemovePostResponseSchema),
