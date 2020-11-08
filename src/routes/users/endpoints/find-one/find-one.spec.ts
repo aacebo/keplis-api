@@ -28,7 +28,7 @@ describe('findOne', () => {
     const findSpy = jest.spyOn(UserModel, 'findById').mockResolvedValueOnce(undefined);
     const sendSpy = spyOn(params.response, 'send');
 
-    await findOne(params.request, params.response as any);
+    await findOne(params.request, params.response);
 
     expect(statusSpy).toHaveBeenCalledWith(StatusCodes.NOT_FOUND);
     expect(findSpy).toHaveBeenCalledTimes(1);
@@ -40,7 +40,7 @@ describe('findOne', () => {
     const findSpy = jest.spyOn(UserModel, 'findById').mockResolvedValueOnce(user as any);
     const sendSpy = spyOn(params.response, 'send');
 
-    await findOne(params.request, params.response as any);
+    await findOne(params.request, params.response);
 
     expect(statusSpy).not.toHaveBeenCalled();
     expect(findSpy).toHaveBeenCalledTimes(1);

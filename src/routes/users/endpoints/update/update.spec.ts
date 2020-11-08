@@ -30,7 +30,7 @@ describe('update', () => {
     const statusSpy = spyOn(params.response, 'status').and.callThrough();
     const sendSpy = spyOn(params.response, 'send');
 
-    await update(params.request, params.response as any);
+    await update(params.request, params.response);
 
     expect(findSpy).toHaveBeenCalledTimes(1);
     expect(statusSpy).toHaveBeenCalledWith(StatusCodes.NOT_FOUND);
@@ -46,7 +46,7 @@ describe('update', () => {
     await update({
       ...params.request,
       user: { id: 'test' },
-      }, params.response as any);
+      }, params.response);
 
       expect(findSpy).toHaveBeenCalledTimes(1);
       expect(statusSpy).toHaveBeenCalledWith(StatusCodes.UNAUTHORIZED);
@@ -62,7 +62,7 @@ describe('update', () => {
     await update({
       ...params.request,
       user: { id: user._id, },
-    }, params.response as any);
+    }, params.response);
 
     expect(findSpy).toHaveBeenCalledTimes(1);
     expect(statusSpy).not.toHaveBeenCalled();

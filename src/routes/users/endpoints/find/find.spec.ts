@@ -37,7 +37,7 @@ describe('find', () => {
       }),
     } as any);
 
-    await find(params.request as any, params.response as any);
+    await find(params.request, params.response);
 
     expect(findSpy).toHaveBeenCalledTimes(1);
     expect(countSpy).toHaveBeenCalledTimes(1);

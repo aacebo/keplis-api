@@ -27,7 +27,7 @@ describe('remove', () => {
     const statusSpy = spyOn(params.response, 'status').and.callThrough();
     const sendSpy = spyOn(params.response, 'send');
 
-    await remove(params.request, params.response as any);
+    await remove(params.request, params.response);
 
     expect(findSpy).toHaveBeenCalledTimes(1);
     expect(statusSpy).toHaveBeenCalledWith(StatusCodes.NOT_FOUND);
@@ -43,7 +43,7 @@ describe('remove', () => {
     await remove({
       ...params.request,
       user: { id: 'test' },
-      }, params.response as any);
+      }, params.response);
 
       expect(findSpy).toHaveBeenCalledTimes(1);
       expect(statusSpy).toHaveBeenCalledWith(StatusCodes.UNAUTHORIZED);
@@ -59,7 +59,7 @@ describe('remove', () => {
     await remove({
       ...params.request,
       user: { id: user._id, },
-    }, params.response as any);
+    }, params.response);
 
     expect(findSpy).toHaveBeenCalledTimes(1);
     expect(statusSpy).not.toHaveBeenCalled();

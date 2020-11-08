@@ -88,7 +88,7 @@ describe('[e2e] /organizations', () => {
     it('should not find organization', (done) => {
       request.put('/organizations/1')
         .set('Authorization', `Bearer ${token}`)
-        .send({ firstName: 'devtest' })
+        .send({ name: 'test' })
         .expect(StatusCodes.NOT_FOUND)
         .end(done);
     });
@@ -96,11 +96,12 @@ describe('[e2e] /organizations', () => {
     it('should update organization', (done) => {
       request.put(`/organizations/${organization._id}`)
         .set('Authorization', `Bearer ${token}`)
-        .send({ title: 'a new title' })
+        .send({ name: 'test' })
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
           expect(body).toBeDefined();
           expect(body.data._id).toEqual(organization._id);
+          expect(isValid(Date.parse(body.data.updatedAt))).toBe(true);
         })
         .end(done);
     });

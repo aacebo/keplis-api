@@ -29,7 +29,7 @@ describe('login', () => {
     const statusSpy = spyOn(params.response, 'status').and.callThrough();
     const sendSpy = spyOn(params.response, 'send');
 
-    await login(params.request, params.response as any);
+    await login(params.request, params.response);
 
     expect(findSpy).toHaveBeenCalledTimes(1);
     expect(statusSpy).toHaveBeenCalledWith(StatusCodes.NOT_FOUND);
@@ -41,7 +41,7 @@ describe('login', () => {
     const statusSpy = spyOn(params.response, 'status').and.callThrough();
     const sendSpy = spyOn(params.response, 'send');
 
-    await login(params.request as any, params.response as any);
+    await login(params.request, params.response);
 
     expect(findSpy).toHaveBeenCalledTimes(1);
     expect(statusSpy).not.toHaveBeenCalled();

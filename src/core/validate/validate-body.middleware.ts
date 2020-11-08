@@ -4,7 +4,7 @@ import * as joi from 'joi';
 
 export function validateBody(Schema: joi.Schema) {
   return (req: Request, res: Response, next: NextFunction) => {
-    const valid = Schema.validate(req.body, { stripUnknown: true });
+    const valid = Schema.validate(req.body, { allowUnknown: false });
 
     if (valid.error) {
       res.status(StatusCodes.BAD_REQUEST).send(ReasonPhrases.BAD_REQUEST);
