@@ -15,19 +15,19 @@ export const usersRoute = express.Router()
   endpoints.find,
 )
 .get(
-  '/users/:userId',
+  '/users/:username',
   auth,
   validateResponse(endpoints.FindOneUserResponseSchema),
   endpoints.findOne,
 )
 .delete(
-  '/users/:userId',
+  '/users/:username',
   auth,
   validateResponse(endpoints.RemoveUserResponseSchema),
   endpoints.remove,
 )
 .put(
-  '/users/:userId',
+  '/users/:username',
   auth,
   validateBody(endpoints.UpdateUserRequestSchema),
   validateResponse(endpoints.UpdateUserResponseSchema),

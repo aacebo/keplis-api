@@ -17,6 +17,7 @@ export async function login(req: Request<any, any, LoginUserRequest>, res: Respo
 
   const token = jwt.sign({
     id: user._id,
+    username: user.username,
     email: user.email,
   } as IAuthPayload, process.env.SECRET);
 

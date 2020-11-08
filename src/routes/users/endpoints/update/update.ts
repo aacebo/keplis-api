@@ -8,7 +8,7 @@ import { UserModel } from '../../user.entity';
 import { UpdateUserRequest } from './update-request.dto';
 
 export async function update(req: IAuthRequest & Request<any, any, UpdateUserRequest>, res: Response) {
-  let user = await UserModel.findById(req.params.userId);
+  let user = await UserModel.findOne({ username: req.params.username });
 
   if (!user) {
     res.status(StatusCodes.NOT_FOUND).send(`User ${ReasonPhrases.NOT_FOUND}`);

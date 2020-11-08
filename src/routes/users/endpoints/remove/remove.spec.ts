@@ -1,5 +1,4 @@
 import { StatusCodes } from 'http-status-codes';
-import * as uuid from 'uuid';
 
 import * as mocks from '../../../../testing/mocks';
 
@@ -14,7 +13,7 @@ describe('remove', () => {
   };
 
   beforeEach(() => {
-    params.request = mocks.request({ params: { userId: uuid.v4() } });
+    params.request = mocks.request({ params: { username: 'test' } });
     params.response = mocks.response();
   });
 
@@ -23,7 +22,7 @@ describe('remove', () => {
   });
 
   it('should not find user', async () => {
-    const findSpy = jest.spyOn(UserModel, 'findById').mockResolvedValueOnce(undefined);
+    const findSpy = jest.spyOn(UserModel, 'findOne').mockResolvedValueOnce(undefined);
     const statusSpy = spyOn(params.response, 'status').and.callThrough();
     const sendSpy = spyOn(params.response, 'send');
 
@@ -36,7 +35,7 @@ describe('remove', () => {
 
   it('should be invalid user', async () => {
     const user = mocks.userDocument();
-    const findSpy = jest.spyOn(UserModel, 'findById').mockResolvedValueOnce(user as any);
+    const findSpy = jest.spyOn(UserModel, 'findOne').mockResolvedValueOnce(user as any);
     const statusSpy = spyOn(params.response, 'status').and.callThrough();
     const sendSpy = spyOn(params.response, 'send');
 
@@ -52,7 +51,7 @@ describe('remove', () => {
 
   it('should find user and delete', async () => {
     const user = mocks.userDocument();
-    const findSpy = jest.spyOn(UserModel, 'findById').mockResolvedValueOnce(user as any);
+    const findSpy = jest.spyOn(UserModel, 'findOne').mockResolvedValueOnce(user as any);
     const statusSpy = spyOn(params.response, 'status');
     const sendSpy = spyOn(params.response, 'send');
 

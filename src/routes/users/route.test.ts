@@ -54,14 +54,14 @@ describe('[e2e] /users', () => {
 
   describe('findOne', () => {
     it('should not find user', (done) => {
-      request.get(`/users/1`)
+      request.get(`/users/test`)
         .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.NOT_FOUND)
         .end(done);
     });
 
     it('should find one user', (done) => {
-      request.get(`/users/${DEV_USER._id}`)
+      request.get(`/users/${DEV_USER.username}`)
         .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
@@ -74,7 +74,7 @@ describe('[e2e] /users', () => {
 
   describe('update', () => {
     it('should not find user', (done) => {
-      request.put('/users/1')
+      request.put('/users/test')
         .set('Authorization', `Bearer ${token}`)
         .send({ firstName: 'devtest' })
         .expect(StatusCodes.NOT_FOUND)
@@ -82,7 +82,7 @@ describe('[e2e] /users', () => {
     });
 
     it('should update user', (done) => {
-      request.put(`/users/${DEV_USER._id}`)
+      request.put(`/users/${DEV_USER.username}`)
         .set('Authorization', `Bearer ${token}`)
         .send({ firstName: 'devtest' })
         .expect(StatusCodes.OK)
@@ -97,14 +97,14 @@ describe('[e2e] /users', () => {
 
   describe('remove', () => {
     it('should not find user', (done) => {
-      request.delete(`/users/1`)
+      request.delete(`/users/test`)
         .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.NOT_FOUND)
         .end(done);
     });
 
     it('should remove user', (done) => {
-      request.delete(`/users/${DEV_USER._id}`)
+      request.delete(`/users/${DEV_USER.username}`)
         .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {

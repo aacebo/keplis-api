@@ -1,5 +1,4 @@
 import { StatusCodes } from 'http-status-codes';
-import * as uuid from 'uuid';
 
 import * as mocks from '../../../../testing/mocks';
 
@@ -15,7 +14,7 @@ describe('findOne', () => {
   };
 
   beforeEach(() => {
-    params.request = mocks.request({ params: { userId: uuid.v4() } });
+    params.request = mocks.request({ params: { username: 'test' } });
     params.response = mocks.response();
   });
 
@@ -25,7 +24,7 @@ describe('findOne', () => {
 
   it('should not find user', async () => {
     const statusSpy = spyOn(params.response, 'status').and.callThrough();
-    const findSpy = jest.spyOn(UserModel, 'findById').mockResolvedValueOnce(undefined);
+    const findSpy = jest.spyOn(UserModel, 'findOne').mockResolvedValueOnce(undefined);
     const sendSpy = spyOn(params.response, 'send');
 
     await findOne(params.request, params.response);
@@ -37,7 +36,7 @@ describe('findOne', () => {
 
   it('should find user', async () => {
     const statusSpy = spyOn(params.response, 'status').and.callThrough();
-    const findSpy = jest.spyOn(UserModel, 'findById').mockResolvedValueOnce(user as any);
+    const findSpy = jest.spyOn(UserModel, 'findOne').mockResolvedValueOnce(user as any);
     const sendSpy = spyOn(params.response, 'send');
 
     await findOne(params.request, params.response);

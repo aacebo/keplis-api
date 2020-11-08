@@ -6,5 +6,6 @@ export function token(id?: string) {
   return jwt.sign({
     id: id || uuid.v4(),
     email: faker.internet.email(),
+    username: faker.internet.userName(),
   }, process.env.SECRET);
 }

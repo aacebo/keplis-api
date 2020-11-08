@@ -1,5 +1,4 @@
 import { StatusCodes } from 'http-status-codes';
-import * as uuid from 'uuid';
 
 import * as mocks from '../../../../testing/mocks';
 
@@ -16,7 +15,7 @@ describe('update', () => {
   beforeEach(() => {
     params.response = mocks.response();
     params.request = mocks.request({
-      params: { userId: uuid.v4() },
+      params: { username: 'test' },
       body: { email: 'mynewemail@test.com' },
     });
   });
@@ -26,7 +25,7 @@ describe('update', () => {
   });
 
   it('should not find user', async () => {
-    const findSpy = jest.spyOn(UserModel, 'findById').mockResolvedValueOnce(undefined);
+    const findSpy = jest.spyOn(UserModel, 'findOne').mockResolvedValueOnce(undefined);
     const statusSpy = spyOn(params.response, 'status').and.callThrough();
     const sendSpy = spyOn(params.response, 'send');
 
@@ -39,7 +38,7 @@ describe('update', () => {
 
   it('should be invalid user', async () => {
     const user = mocks.userDocument();
-    const findSpy = jest.spyOn(UserModel, 'findById').mockResolvedValueOnce(user as any);
+    const findSpy = jest.spyOn(UserModel, 'findOne').mockResolvedValueOnce(user as any);
     const statusSpy = spyOn(params.response, 'status').and.callThrough();
     const sendSpy = spyOn(params.response, 'send');
 
@@ -55,7 +54,7 @@ describe('update', () => {
 
   it('should find and update user', async () => {
     const user = mocks.userDocument();
-    const findSpy = jest.spyOn(UserModel, 'findById').mockResolvedValueOnce(user as any);
+    const findSpy = jest.spyOn(UserModel, 'findOne').mockResolvedValueOnce(user as any);
     const statusSpy = spyOn(params.response, 'status');
     const sendSpy = spyOn(params.response, 'send');
 
