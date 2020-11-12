@@ -9,16 +9,12 @@ import * as pkg from '../package.json';
 
 import Logger, { logger } from './core/logger';
 import { response } from './core/response';
+
+dotenv.config({ path: !!process.env.NODE_ENV ? `.env.${process.env.NODE_ENV}` : '.env' });
+
 import * as routes from './routes';
 
-const NODE_ENV_MAP: { [key: string]: string; } = {
-  dev: 'local',
-  test: 'test',
-};
-
 export async function startServer() {
-  dotenv.config({ path: !!process.env.NODE_ENV ? `.env.${NODE_ENV_MAP[process.env.NODE_ENV]}` : '.env' });
-
   const app = express();
 
   try {
@@ -41,6 +37,7 @@ export async function startServer() {
     app.use(logger);
     app.use(response);
 
+    app.use(routes.filesRoute);
     app.use(routes.usersRoute);
     app.use(routes.organizationsRoute);
 
