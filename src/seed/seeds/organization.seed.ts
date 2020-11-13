@@ -1,6 +1,6 @@
 import * as faker from 'faker';
 
-import { Organization } from '../../routes/organizations';
+import { Organization } from '../../routes/organizations/organization.entity';
 
 export function organization(args?: Partial<Organization>) {
   const displayName = faker.company.companyName();

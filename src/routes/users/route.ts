@@ -5,6 +5,7 @@ import { pagination } from '../../core/pagination';
 import { validateBody, validateResponse } from '../../core/validate';
 
 import * as endpoints from './endpoints';
+import * as routes from './routes';
 
 export const usersRoute = express.Router()
 .get(
@@ -38,4 +39,5 @@ export const usersRoute = express.Router()
   validateBody(endpoints.LoginUserRequestSchema),
   validateResponse(endpoints.LoginUserResponseSchema),
   endpoints.login,
-);
+)
+.use(routes.userOrganizationsRoute);

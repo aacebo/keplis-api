@@ -1,6 +1,6 @@
 import * as joi from 'joi';
 
-import { UserJoinSchema } from '../../../users';
+import { UserJoinSchema } from '../../../users/user.schema';
 
 import { OrganizationSchema } from '../../organization.schema';
 
