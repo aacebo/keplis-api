@@ -1,9 +1,9 @@
+/* istanbul ignore file */
 import * as mongodb from 'mongodb';
 import * as mongoose from 'mongoose';
 import * as multer from 'multer';
 import * as GridFsStorage from 'multer-gridfs-storage';
 
-/* istanbul ignore next */
 export class Uploader {
   private _storage: GridFsStorage;
   private _multer: multer.Multer;
