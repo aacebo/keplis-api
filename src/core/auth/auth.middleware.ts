@@ -32,5 +32,6 @@ export async function auth(req: IAuthRequest, res: Response, next: NextFunction)
 
   delete payload.iat;
   req.user = payload;
+
   next();
 }
