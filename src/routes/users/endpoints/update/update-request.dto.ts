@@ -1,5 +1,7 @@
 import * as joi from 'joi';
 
+import { NAME_REGEX } from '../../../../core/name';
+
 export class UpdateUserRequest {
   readonly image?: string;
   readonly username?: string;
@@ -11,7 +13,7 @@ export class UpdateUserRequest {
 
 export const UpdateUserRequestSchema = joi.object<UpdateUserRequest>({
   image: joi.string().uri(),
-  username: joi.string(),
+  username: joi.string().regex(NAME_REGEX),
   firstName: joi.string(),
   lastName: joi.string(),
   dob: joi.date(),

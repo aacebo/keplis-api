@@ -6,13 +6,13 @@ import * as uuid from 'uuid';
 import { exit } from 'process';
 import { formatDistanceToNow } from 'date-fns';
 
+dotenv.config({ path: '.env.local' });
+
 import { OrganizationModel, UserModel } from '../routes';
 import Logger from '../core/logger';
 
 import * as seeds from './seeds';
 import { DEV_USER } from './dev-user';
-
-dotenv.config({ path: '.env.local' });
 
 async function start(count: number) {
   const start = new Date();

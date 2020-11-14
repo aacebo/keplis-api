@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import { StatusCodes, ReasonPhrases } from 'http-status-codes';
 
 import { IAuthRequest } from '../../../../core/auth';
@@ -7,7 +7,7 @@ import { UserModel } from '../../user.entity';
 
 import { UpdateUserRequest } from './update-request.dto';
 
-export async function update(req: IAuthRequest & Request<any, any, UpdateUserRequest>, res: Response) {
+export async function update(req: IAuthRequest<any, any, UpdateUserRequest>, res: Response) {
   let user = await UserModel.findOne({ username: req.params.username });
 
   if (!user) {

@@ -1,11 +1,13 @@
 import * as joi from 'joi';
 
+import { NAME_REGEX } from '../../core/name';
+
 import { Organization } from './organization.entity';
 
 export const OrganizationSchema = joi.object<Organization>({
   _id: joi.string().uuid({ version: 'uuidv4' }).required(),
   image: joi.string().uri(),
-  name: joi.string().regex(/^[a-z0-9-]+$/).required(),
+  name: joi.string().regex(NAME_REGEX).required(),
   displayName: joi.string().required(),
   description: joi.string(),
   website: joi.string().uri(),

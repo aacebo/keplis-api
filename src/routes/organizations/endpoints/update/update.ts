@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import { StatusCodes, ReasonPhrases } from 'http-status-codes';
 
 import { IAuthRequest } from '../../../../core/auth';
@@ -7,7 +7,7 @@ import { OrganizationModel } from '../../organization.entity';
 
 import { UpdateOrganizationRequest } from './update-request.dto';
 
-export async function update(req: IAuthRequest & Request<any, any, UpdateOrganizationRequest>, res: Response) {
+export async function update(req: IAuthRequest<any, any, UpdateOrganizationRequest>, res: Response) {
   let organization = await OrganizationModel.findOne({ name: req.params.name })
                                             .populate('createdBy', '_id image username email');
 

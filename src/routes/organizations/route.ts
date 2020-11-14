@@ -5,8 +5,10 @@ import { pagination } from '../../core/pagination';
 import { validateBody, validateResponse } from '../../core/validate';
 
 import * as endpoints from './endpoints';
+import * as routes from './routes';
 
 export const organizationsRoute = express.Router()
+.use(routes.organizationOwnersRoute)
 .use(auth)
 .get(
   '/organizations',

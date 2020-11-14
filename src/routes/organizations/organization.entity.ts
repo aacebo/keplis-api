@@ -27,7 +27,7 @@ export interface IOrganizationDocument extends Organization, mongoose.Document {
 export const OrganizationModel = mongoose.model<IOrganizationDocument>('Organization', new mongoose.Schema<Organization>({
   _id: { type: String, default: uuid.v4, required: true },
   image: { type: String },
-  name: { type: String, required: true },
+  name: { type: String, unique: true, required: true, index: true },
   displayName: { type: String, required: true, index: true },
   description: { type: String },
   website: { type: String },
