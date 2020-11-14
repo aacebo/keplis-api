@@ -66,14 +66,14 @@ describe('[e2e] /organizations', () => {
 
   describe('findOne', () => {
     it('should not find organization', (done) => {
-      request.get('/organizations/1')
+      request.get('/organizations/test')
         .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.NOT_FOUND)
         .end(done);
     });
 
     it('should find one organization', (done) => {
-      request.get(`/organizations/${organization._id}`)
+      request.get(`/organizations/${organization.name}`)
         .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
@@ -86,17 +86,17 @@ describe('[e2e] /organizations', () => {
 
   describe('update', () => {
     it('should not find organization', (done) => {
-      request.put('/organizations/1')
+      request.put('/organizations/test')
         .set('Authorization', `Bearer ${token}`)
-        .send({ name: 'test' })
+        .send({ displayName: 'test' })
         .expect(StatusCodes.NOT_FOUND)
         .end(done);
     });
 
     it('should update organization', (done) => {
-      request.put(`/organizations/${organization._id}`)
+      request.put(`/organizations/${organization.name}`)
         .set('Authorization', `Bearer ${token}`)
-        .send({ name: 'test' })
+        .send({ displayName: 'test' })
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
           expect(body).toBeDefined();
@@ -109,14 +109,14 @@ describe('[e2e] /organizations', () => {
 
   describe('remove', () => {
     it('should not find organization', (done) => {
-      request.delete(`/organizations/1`)
+      request.delete(`/organizations/test`)
         .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.NOT_FOUND)
         .end(done);
     });
 
     it('should remove organization', (done) => {
-      request.delete(`/organizations/${organization._id}`)
+      request.delete(`/organizations/${organization.name}`)
         .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {

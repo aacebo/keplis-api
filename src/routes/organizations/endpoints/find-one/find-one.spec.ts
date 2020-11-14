@@ -1,5 +1,4 @@
 import { StatusCodes } from 'http-status-codes';
-import * as uuid from 'uuid';
 
 import * as mocks from '../../../../testing/mocks';
 
@@ -15,7 +14,7 @@ describe('findOne', () => {
   };
 
   beforeEach(() => {
-    params.request = mocks.request({ params: { orgId: uuid.v4() } });
+    params.request = mocks.request({ params: { name: 'test' } });
     params.response = mocks.response();
   });
 
@@ -26,7 +25,7 @@ describe('findOne', () => {
   it('should not find organization', async () => {
     const sendSpy = spyOn(params.response, 'send');
     const statusSpy = spyOn(params.response, 'status').and.callThrough();
-    const findSpy = jest.spyOn(OrganizationModel, 'findById').mockReturnValueOnce({
+    const findSpy = jest.spyOn(OrganizationModel, 'findOne').mockReturnValueOnce({
       populate: (..._args: string[]) => Promise.resolve(undefined),
     } as any);
 
@@ -40,7 +39,7 @@ describe('findOne', () => {
   it('should find organization', async () => {
     const sendSpy = spyOn(params.response, 'send');
     const statusSpy = spyOn(params.response, 'status').and.callThrough();
-    const findSpy = jest.spyOn(OrganizationModel, 'findById').mockReturnValueOnce({
+    const findSpy = jest.spyOn(OrganizationModel, 'findOne').mockReturnValueOnce({
       populate: (..._args: string[]) => Promise.resolve(organization),
     } as any);
 

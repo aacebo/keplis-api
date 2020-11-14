@@ -4,7 +4,7 @@ import { StatusCodes, ReasonPhrases } from 'http-status-codes';
 import { OrganizationModel } from '../../organization.entity';
 
 export async function findOne(req: Request, res: Response) {
-  const organization = await OrganizationModel.findById(req.params.orgId)
+  const organization = await OrganizationModel.findOne({ name: req.params.name })
                                               .populate('createdBy', '_id image username email');
 
   if (!organization) {

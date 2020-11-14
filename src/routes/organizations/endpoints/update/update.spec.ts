@@ -1,5 +1,4 @@
 import { StatusCodes } from 'http-status-codes';
-import * as uuid from 'uuid';
 
 import * as mocks from '../../../../testing/mocks';
 
@@ -16,7 +15,7 @@ describe('update', () => {
   beforeEach(() => {
     params.response = mocks.response();
     params.request = mocks.request({
-      params: { orgId: uuid.v4() },
+      params: { name: 'test' },
       body: { name: 'test' },
     });
   });
@@ -28,7 +27,7 @@ describe('update', () => {
   it('should not find organization', async () => {
     const statusSpy = spyOn(params.response, 'status').and.callThrough();
     const sendSpy = spyOn(params.response, 'send');
-    const findSpy = jest.spyOn(OrganizationModel, 'findById').mockReturnValueOnce({
+    const findSpy = jest.spyOn(OrganizationModel, 'findOne').mockReturnValueOnce({
       populate: (..._args: string[]) => Promise.resolve(undefined),
     } as any);
 
@@ -43,7 +42,7 @@ describe('update', () => {
     const organization = mocks.organizationDocument();
     const statusSpy = spyOn(params.response, 'status').and.callThrough();
     const sendSpy = spyOn(params.response, 'send');
-    const findSpy = jest.spyOn(OrganizationModel, 'findById').mockReturnValueOnce({
+    const findSpy = jest.spyOn(OrganizationModel, 'findOne').mockReturnValueOnce({
       populate: (..._args: string[]) => Promise.resolve(organization),
     } as any);
 
@@ -58,7 +57,7 @@ describe('update', () => {
     const organization = mocks.organizationDocument({ owners: [params.request.user.id] });
     const statusSpy = spyOn(params.response, 'status');
     const sendSpy = spyOn(params.response, 'send');
-    const findSpy = jest.spyOn(OrganizationModel, 'findById').mockReturnValueOnce({
+    const findSpy = jest.spyOn(OrganizationModel, 'findOne').mockReturnValueOnce({
       populate: (..._args: string[]) => Promise.resolve(organization),
     } as any);
 
