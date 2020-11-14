@@ -4,14 +4,12 @@ import * as uuid from 'uuid';
 export class Organization {
   readonly _id: string;
   image?: string;
-  private: boolean;
   name: string;
   displayName: string;
   description?: string;
   website?: string;
   email?: string;
   owners: string[];
-  viewers: string[];
   readonly createdAt: Date;
   readonly createdBy: string;
   updatedAt?: Date;
@@ -29,14 +27,12 @@ export interface IOrganizationDocument extends Organization, mongoose.Document {
 export const OrganizationModel = mongoose.model<IOrganizationDocument>('Organization', new mongoose.Schema<Organization>({
   _id: { type: String, default: uuid.v4, required: true },
   image: { type: String },
-  private: { type: Boolean, default: false, required: true },
   name: { type: String, required: true },
   displayName: { type: String, required: true, index: true },
   description: { type: String },
   website: { type: String },
   email: { type: String },
   owners: [{ type: String, ref: 'User' }],
-  viewers: [{ type: String, ref: 'User' }],
   createdAt: { type: Date, default: Date.now, required: true },
   createdBy: { type: String, ref: 'User', required: true },
   updatedAt: { type: Date },

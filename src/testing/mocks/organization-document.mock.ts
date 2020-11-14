@@ -10,7 +10,6 @@ export function organizationDocument(args?: Partial<Organization>) {
     createdBy: uuid.v4(),
     createdAt: faker.date.past(),
     owners: [],
-    viewers: [],
     ...args,
   });
 

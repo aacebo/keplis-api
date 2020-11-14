@@ -7,7 +7,6 @@ export function organization(args?: Partial<Organization>) {
 
   return {
     image: faker.internet.avatar(),
-    private: faker.random.boolean(),
     name: displayName.toLowerCase().replace(/-+/g, '').replace(/[\s,]+/g, '-'),
     displayName,
     description: faker.lorem.sentences(5),

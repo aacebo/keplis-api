@@ -2,7 +2,6 @@ import * as joi from 'joi';
 
 export class UpdateOrganizationRequest {
   readonly image?: string;
-  readonly private?: boolean;
   readonly name?: string;
   readonly displayName?: string;
   readonly description?: string;
@@ -12,7 +11,6 @@ export class UpdateOrganizationRequest {
 
 export const UpdateOrganizationRequestSchema = joi.object<UpdateOrganizationRequest>({
   image: joi.string().uri(),
-  private: joi.boolean(),
   name: joi.string().regex(/^[a-z0-9-]+$/),
   displayName: joi.string(),
   description: joi.string(),

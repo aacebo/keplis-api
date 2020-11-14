@@ -49,7 +49,6 @@ describe('find', () => {
       return {
         ...o,
         owners: o.owners.length,
-        viewers: o.viewers.length,
       };
     }));
   });
