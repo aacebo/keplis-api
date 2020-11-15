@@ -31,6 +31,24 @@ describe('[e2e] /organizations/:name/owners', () => {
     organization = res.body.data;
   });
 
+  describe('find', () => {
+    it('should find owners', (done) => {
+      request.get(`/organizations/${organization.name}/owners`)
+        .set('Authorization', `Bearer ${token}`)
+        .expect(StatusCodes.OK)
+        .expect(({ body }) => {
+          expect(body).toBeDefined();
+          expect(body.data).toEqual([{
+            _id: DEV_USER._id,
+            image: DEV_USER.image,
+            username: DEV_USER.username,
+            email: DEV_USER.email,
+          }]);
+        })
+        .end(done);
+    });
+  });
+
   describe('update', () => {
     it('should remove owner', (done) => {
       request.put(`/organizations/${organization.name}/owners`)

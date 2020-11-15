@@ -7,6 +7,11 @@ import * as endpoints from './endpoints';
 
 export const organizationOwnersRoute = express.Router()
 .use(auth)
+.get(
+  '/organizations/:name/owners',
+  validateResponse(endpoints.FindOrganizationOwnersResponseSchema),
+  endpoints.find,
+)
 .put(
   '/organizations/:name/owners',
   validateBody(endpoints.UpdateOrganizationOwnerRequestSchema),
