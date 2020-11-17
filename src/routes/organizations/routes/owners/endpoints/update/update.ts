@@ -9,7 +9,7 @@ import { OrganizationModel } from '../../../../organization.entity';
 import { UpdateOrganizationOwnerRequest } from './update-request.dto';
 
 export async function update(req: IAuthRequest<any, any, UpdateOrganizationOwnerRequest>, res: Response) {
-  const organization = await OrganizationModel.findOne({ name: req.params.name })
+  const organization = await OrganizationModel.findOne({ name: req.params.orgName })
                                               .populate('createdBy', '_id image username email');
 
   if (!organization) {

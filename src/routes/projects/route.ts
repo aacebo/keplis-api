@@ -13,4 +13,9 @@ export const projectsRoute = express.Router()
   pagination,
   validateResponse(endpoints.FindProjectResponseSchema),
   endpoints.find,
+)
+.get(
+  '/projects/:projectName',
+  validateResponse(endpoints.FindOneProjectResponseSchema),
+  endpoints.findOne,
 );

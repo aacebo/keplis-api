@@ -16,7 +16,7 @@ describe('update', () => {
   beforeEach(() => {
     params.response = mocks.response();
     params.request = mocks.request({
-      params: { name: 'test' },
+      params: { orgName: 'test' },
       body: { username: 'test' },
     });
   });

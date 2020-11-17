@@ -17,7 +17,7 @@ export const organizationsRoute = express.Router()
   endpoints.find,
 )
 .get(
-  '/organizations/:name',
+  '/organizations/:orgName',
   validateResponse(endpoints.FindOneOrganizationResponseSchema),
   endpoints.findOne,
 )
@@ -28,13 +28,13 @@ export const organizationsRoute = express.Router()
   endpoints.create,
 )
 .put(
-  '/organizations/:name',
+  '/organizations/:orgName',
   validateBody(endpoints.UpdateOrganizationRequestSchema),
   validateResponse(endpoints.UpdateOrganizationResponseSchema),
   endpoints.update,
 )
 .delete(
-  '/organizations/:name',
+  '/organizations/:orgName',
   validateResponse(endpoints.RemoveOrganizationResponseSchema),
   endpoints.remove,
 );

@@ -16,6 +16,7 @@ import { DEV_USER } from './dev-user';
 async function start(count: number) {
   const start = new Date();
   const userIds: string[] = [];
+  const orgIds: string[] = [];
   let entities = 1;
 
   const getRandomNumber = (max: number) => {
@@ -24,6 +25,10 @@ async function start(count: number) {
 
   const getRandomUserId = () => {
     return userIds[getRandomNumber(userIds.length)];
+  }
+
+  const getRandomOrgId = () => {
+    return orgIds[getRandomNumber(orgIds.length)];
   }
 
   Logger.info('starting seed process...');
@@ -62,6 +67,7 @@ async function start(count: number) {
         createdBy,
       }));
 
+      orgIds.push(organization._id);
       await organization.save();
     }
 
@@ -71,6 +77,7 @@ async function start(count: number) {
       const createdBy = getRandomUserId();
       const project = new ProjectModel(seeds.project({
         _id: uuid.v4(),
+        organization: getRandomOrgId(),
         createdBy,
       }));
 

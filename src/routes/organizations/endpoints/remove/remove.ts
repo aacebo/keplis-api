@@ -6,7 +6,7 @@ import { IAuthRequest } from '../../../../core/auth';
 import { OrganizationModel } from '../../organization.entity';
 
 export async function remove(req: IAuthRequest, res: Response) {
-  let organization = await OrganizationModel.findOne({ name: req.params.name })
+  let organization = await OrganizationModel.findOne({ name: req.params.orgName })
                                             .populate('createdBy', '_id image username email');
 
   if (!organization) {

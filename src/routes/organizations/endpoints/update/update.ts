@@ -8,7 +8,7 @@ import { OrganizationModel } from '../../organization.entity';
 import { UpdateOrganizationRequest } from './update-request.dto';
 
 export async function update(req: IAuthRequest<any, any, UpdateOrganizationRequest>, res: Response) {
-  let organization = await OrganizationModel.findOne({ name: req.params.name })
+  let organization = await OrganizationModel.findOne({ name: req.params.orgName })
                                             .populate('createdBy', '_id image username email');
 
   if (!organization) {

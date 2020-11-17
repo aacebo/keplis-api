@@ -5,7 +5,7 @@ import { IAuthRequest } from '../../../../../../core/auth';
 import { OrganizationModel } from '../../../../organization.entity';
 
 export async function find(req: IAuthRequest, res: Response) {
-  const organization = await OrganizationModel.findOne({ name: req.params.name })
+  const organization = await OrganizationModel.findOne({ name: req.params.orgName })
                                               .populate('owners', '_id image username email');
 
   if (!organization) {

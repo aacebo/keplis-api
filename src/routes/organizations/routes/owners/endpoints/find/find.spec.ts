@@ -13,7 +13,7 @@ describe('find', () => {
   };
 
   beforeEach(() => {
-    params.request = mocks.request({ params: { name: 'test' } });
+    params.request = mocks.request({ params: { orgName: 'test' } });
     params.response = mocks.response();
   });
 
