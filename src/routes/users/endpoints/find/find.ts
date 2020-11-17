@@ -8,8 +8,6 @@ import { UserModel, IUserDocument } from '../../user.entity';
 export async function find(req: IAuthRequest & IPaginationRequest, res: Response) {
   const conditions: MongooseFilterQuery<Pick<IUserDocument, keyof IUserDocument>> = {
     $or: [
-      { firstName: { $regex: req.pagination.filter, $options: 'i' } },
-      { lastName: { $regex: req.pagination.filter, $options: 'i' } },
       { username: { $regex: req.pagination.filter, $options: 'i' } },
       { email: { $regex: req.pagination.filter, $options: 'i' } },
     ],

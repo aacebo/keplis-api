@@ -1,6 +1,5 @@
 import * as mongoose from 'mongoose';
 import * as dotenv from 'dotenv';
-import * as faker from 'faker';
 import * as uuid from 'uuid';
 
 import { exit } from 'process';
@@ -8,7 +7,7 @@ import { formatDistanceToNow } from 'date-fns';
 
 dotenv.config({ path: '.env.local' });
 
-import { OrganizationModel, UserModel } from '../routes';
+import { OrganizationModel, UserModel, ProjectModel } from '../routes';
 import Logger from '../core/logger';
 
 import * as seeds from './seeds';
@@ -19,11 +18,15 @@ async function start(count: number) {
   const userIds: string[] = [];
   let entities = 1;
 
+  const getRandomNumber = (max: number) => {
+    return Math.floor(Math.random() * Math.floor(max));
+  };
+
   const getRandomUserId = () => {
-    return userIds[faker.random.number({ min: 0, max: userIds.length - 1 })];
+    return userIds[getRandomNumber(userIds.length)];
   }
 
-  Logger.info('creating fixtures...');
+  Logger.info('starting seed process...');
 
   try {
     await mongoose.connect(process.env.DB, {
@@ -32,19 +35,21 @@ async function start(count: number) {
       useUnifiedTopology: true,
     });
 
-    await OrganizationModel.deleteMany({ });;
-    await UserModel.deleteMany({ });
+    for (const name in mongoose.connection.collections) {
+      Logger.info(`deleting all ${name}...`);
+      await mongoose.connection.collections[name].deleteMany({ });
+    }
 
     Logger.info(`creating users(${count})...`);
 
     const devUser = new UserModel(DEV_USER);
-    await devUser.save();
     userIds.push(devUser._id);
+    await devUser.save();
 
     for (let i = 0; i < count - 1; i++, entities++) {
-      const user = new UserModel(seeds.user());
-      await user.save();
+      const user = new UserModel(seeds.user({ _id: uuid.v4() }));
       userIds.push(user._id);
+      await user.save();
     }
 
     Logger.info(`creating organizations(${count})...`);
@@ -58,6 +63,18 @@ async function start(count: number) {
       }));
 
       await organization.save();
+    }
+
+    Logger.info(`creating projects(${count})...`);
+
+    for (let i = 0; i < count; i++, entities++) {
+      const createdBy = getRandomUserId();
+      const project = new ProjectModel(seeds.project({
+        _id: uuid.v4(),
+        createdBy,
+      }));
+
+      await project.save();
     }
 
     Logger.info(`finished seeding ${entities} entities in ${formatDistanceToNow(start)}`);

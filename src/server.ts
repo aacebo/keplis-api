@@ -40,6 +40,7 @@ export async function startServer() {
     app.use(routes.filesRoute);
     app.use(routes.usersRoute);
     app.use(routes.organizationsRoute);
+    app.use(routes.projectsRoute);
 
     return app;
   } catch (e) {
