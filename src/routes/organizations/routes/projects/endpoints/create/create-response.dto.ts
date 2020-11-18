@@ -1,4 +1,4 @@
-import { UserJoinSchema } from '../../../users';
+import { UserJoinSchema } from '../../../../../users';
 
 import { ProjectSchema } from '../../project.schema';
 

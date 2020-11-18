@@ -1,13 +1,23 @@
 import { MongooseFilterQuery } from 'mongoose';
 import { Response } from 'express';
+import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 
-import { IPaginationRequest } from '../../../../core/pagination';
+import { IPaginationRequest } from '../../../../../../core/pagination';
+import { OrganizationModel } from '../../../../organization.entity';
 
 import { ProjectModel, IProjectDocument } from '../../project.entity';
 
 export async function find(req: IPaginationRequest, res: Response) {
+  const organization = await OrganizationModel.findOne({ name: req.params.orgName });
+
+  if (!organization) {
+    res.status(StatusCodes.NOT_FOUND).send(`Organization ${ReasonPhrases.NOT_FOUND}`);
+    return;
+  }
+
   const conditions: MongooseFilterQuery<Pick<IProjectDocument, keyof IProjectDocument>> = {
     name: { $regex: req.pagination.filter, $options: 'i' },
+    organization: organization._id,
     removedAt: { $eq: undefined },
   };
 

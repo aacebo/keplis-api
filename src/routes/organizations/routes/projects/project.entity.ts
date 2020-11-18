@@ -1,7 +1,7 @@
 import * as mongoose from 'mongoose';
 import * as uuid from 'uuid';
 
-import { NAME_REGEX } from '../../core/name';
+import { NAME_REGEX } from '../../../../core/name';
 
 export class Project {
   readonly _id: string;

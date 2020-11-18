@@ -1,7 +1,7 @@
 import * as faker from 'faker';
 
 import { parseName } from '../../core/name';
-import { Project } from '../../routes/projects/project.entity';
+import { Project } from '../../routes/organizations/routes/projects/project.entity';
 
 export function project(args?: Partial<Project>) {
   const displayName = `${faker.random.alphaNumeric(10)}`;
