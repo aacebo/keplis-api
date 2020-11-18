@@ -7,7 +7,7 @@ import { formatDistanceToNow } from 'date-fns';
 
 dotenv.config({ path: '.env.local' });
 
-import { OrganizationModel, UserModel, ProjectModel } from '../routes';
+import { OrganizationModel, UserModel, ProjectModel, TicketModel } from '../routes';
 import Logger from '../core/logger';
 
 import * as seeds from './seeds';
@@ -17,6 +17,7 @@ async function start(count: number) {
   const start = new Date();
   const userIds: string[] = [];
   const orgIds: string[] = [];
+  const projectIds: string[] = [];
   let entities = 1;
 
   const getRandomNumber = (max: number) => {
@@ -30,6 +31,10 @@ async function start(count: number) {
   const getRandomOrgId = () => {
     return orgIds[getRandomNumber(orgIds.length)];
   }
+
+  const getRandomProjectId = () => {
+    return projectIds[getRandomNumber(projectIds.length)];
+  };
 
   Logger.info('starting seed process...');
 
@@ -81,7 +86,21 @@ async function start(count: number) {
         createdBy,
       }));
 
+      projectIds.push(project._id);
       await project.save();
+    }
+
+    Logger.info(`creating tickets(${count})...`);
+
+    for (let i = 0; i < count; i++, entities++) {
+      const createdBy = getRandomUserId();
+      const ticket = new TicketModel(seeds.ticket({
+        _id: uuid.v4(),
+        project: getRandomProjectId(),
+        createdBy,
+      }));
+
+      await ticket.save();
     }
 
     Logger.info(`finished seeding ${entities} entities in ${formatDistanceToNow(start)}`);

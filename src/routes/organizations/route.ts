@@ -9,7 +9,6 @@ import * as routes from './routes';
 
 export const organizationsRoute = express.Router()
 .use(routes.organizationOwnersRoute)
-.use(routes.projectsRoute)
 .use(auth)
 .get(
   '/organizations',

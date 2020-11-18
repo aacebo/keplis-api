@@ -2,7 +2,7 @@ import * as uuid from 'uuid';
 import * as faker from 'faker';
 
 import { organization } from '../../seed/seeds/organization.seed';
-import { Organization } from '../../routes';
+import { Organization } from '../../routes/organizations/organization.entity';
 
 export function organizationDocument(args?: Partial<Organization>) {
   const value = organization({

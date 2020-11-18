@@ -1,11 +1,11 @@
 import * as faker from 'faker';
 import * as uuid from 'uuid';
 
-import { user } from '../../seed/seeds/user.seed';
-import { User } from '../../routes/users/user.entity';
+import { ticket } from '../../seed/seeds/ticket.seed';
+import { Ticket } from '../../routes/tickets/ticket.entity';
 
-export function userDocument(args?: Partial<User>) {
-  const value = user({
+export function ticketDocument(args?: Partial<Ticket>) {
+  const value = ticket({
     _id: uuid.v4(),
     createdAt: faker.date.past(),
     ...args,

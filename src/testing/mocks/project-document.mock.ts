@@ -2,7 +2,7 @@ import * as uuid from 'uuid';
 import * as faker from 'faker';
 
 import { project } from '../../seed/seeds/project.seed';
-import { Project } from '../../routes';
+import { Project } from '../../routes/projects/project.entity';
 
 export function projectDocument(args?: Partial<Project>) {
   const value = project({
