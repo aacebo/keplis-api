@@ -24,6 +24,7 @@ export async function startServer() {
       useNewUrlParser: true,
       useCreateIndex: true,
       useUnifiedTopology: true,
+      useFindAndModify: false,
     });
 
     app.use(express.json());

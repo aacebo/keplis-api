@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "description": "",
   "main": "src/index.ts",
+  "typings": "src/typings.d.ts",
   "scripts": {
     "test": "npm run test:unit && npm run test:e2e",
     "test:unit": "cross-env NODE_ENV=test jest \".spec\\.ts\"",
@@ -33,6 +34,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.6.2",
     "mongoose": "^5.10.9",
+    "mongoose-sequence": "^5.3.0",
     "multer": "^1.4.2",
     "multer-gridfs-storage": "^4.2.0",
     "qs": "^6.9.4",

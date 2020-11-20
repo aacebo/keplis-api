@@ -11,7 +11,13 @@
     "outDir": "./dist",
     "sourceMap": true
   },
+  "ts-node": {
+    "files": true
+  },
+  "files": [
+    "src/typings.d.ts"
+  ],
   "include": [
-    "./src/**/*"
+    "src/**/*"
   ]
 }
