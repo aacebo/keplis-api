@@ -48,6 +48,22 @@ describe('remove', () => {
   });
 
   it('should not find ticket', async () => {
+    const statusSpy = spyOn(params.response, 'status').and.callThrough();
+    const sendSpy = spyOn(params.response, 'send');
+    const findOrgSpy = jest.spyOn(OrganizationModel, 'findOne').mockResolvedValueOnce(mocks.organizationDocument() as any);
+    const findProjectSpy = jest.spyOn(ProjectModel, 'findOne').mockResolvedValueOnce(mocks.projectDocument() as any);
+    const findTicketSpy = jest.spyOn(TicketModel, 'findOne').mockResolvedValueOnce(undefined);
+
+    await remove(params.request, params.response);
+
+    expect(findOrgSpy).toHaveBeenCalledTimes(1);
+    expect(findProjectSpy).toHaveBeenCalledTimes(1);
+    expect(findTicketSpy).toHaveBeenCalledTimes(1);
+    expect(statusSpy).toHaveBeenCalledWith(StatusCodes.NOT_FOUND);
+    expect(sendSpy).not.toHaveBeenCalled();
+  });
+
+  it('should be unauthorized', async () => {
     const ticket = mocks.ticketDocument();
     jest.spyOn(ticket, 'save').mockResolvedValueOnce({
       populate: () => ({
