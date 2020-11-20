@@ -14,6 +14,11 @@ export const ticketsRoute = express.Router()
   validateResponse(endpoints.FindTicketResponseSchema),
   endpoints.find,
 )
+.get(
+  '/organizations/:orgName/projects/:projectName/tickets/:ticketNumber',
+  validateResponse(endpoints.FindOneTicketResponseSchema),
+  endpoints.findOne,
+)
 .post(
   '/organizations/:orgName/projects/:projectName/tickets',
   validateBody(endpoints.CreateTicketRequestSchema),
