@@ -30,5 +30,9 @@ export const ticketsRoute = express.Router()
   validateBody(endpoints.UpdateTicketRequestSchema),
   validateResponse(endpoints.UpdateTicketResponseSchema),
   endpoints.update,
+)
+.delete(
+  '/organizations/:orgName/projects/:projectName/tickets/:ticketNumber',
+  validateResponse(endpoints.RemoveTicketResponseSchema),
+  endpoints.remove,
 );
-
