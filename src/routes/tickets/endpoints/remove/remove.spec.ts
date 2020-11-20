@@ -48,29 +48,41 @@ describe('remove', () => {
   });
 
   it('should not find ticket', async () => {
+    const ticket = mocks.ticketDocument();
+    jest.spyOn(ticket, 'save').mockResolvedValueOnce({
+      populate: () => ({
+        execPopulate: () => Promise.resolve(ticket),
+      }),
+    } as any);
+
     const statusSpy = spyOn(params.response, 'status').and.callThrough();
+    const sendSpy = spyOn(params.response, 'send');
     const findOrgSpy = jest.spyOn(OrganizationModel, 'findOne').mockResolvedValueOnce(mocks.organizationDocument() as any);
     const findProjectSpy = jest.spyOn(ProjectModel, 'findOne').mockResolvedValueOnce(mocks.projectDocument() as any);
-    const findTicketSpy = jest.spyOn(TicketModel, 'findOne').mockReturnValueOnce({
-      populate: () => Promise.resolve(undefined),
-    } as any);
+    const findTicketSpy = jest.spyOn(TicketModel, 'findOne').mockResolvedValueOnce(ticket as any);
 
     await remove(params.request, params.response);
 
     expect(findOrgSpy).toHaveBeenCalledTimes(1);
     expect(findProjectSpy).toHaveBeenCalledTimes(1);
     expect(findTicketSpy).toHaveBeenCalledTimes(1);
-    expect(statusSpy).toHaveBeenCalledWith(StatusCodes.NOT_FOUND);
+    expect(statusSpy).toHaveBeenCalledWith(StatusCodes.UNAUTHORIZED);
+    expect(sendSpy).not.toHaveBeenCalled();
   });
 
-  it('should update', async () => {
-    const statusSpy = spyOn(params.response, 'status').and.callThrough();
+  it('should remove', async () => {
+    const ticket = mocks.ticketDocument({ createdBy: params.request.user.id });
+    jest.spyOn(ticket, 'save').mockResolvedValueOnce({
+      populate: () => ({
+        execPopulate: () => Promise.resolve(ticket),
+      }),
+    } as any);
+
+    const statusSpy = spyOn(params.response, 'status');
     const sendSpy = spyOn(params.response, 'send');
     const findOrgSpy = jest.spyOn(OrganizationModel, 'findOne').mockResolvedValueOnce(mocks.organizationDocument() as any);
     const findProjectSpy = jest.spyOn(ProjectModel, 'findOne').mockResolvedValueOnce(mocks.projectDocument() as any);
-    const findTicketSpy = jest.spyOn(TicketModel, 'findOne').mockReturnValueOnce({
-      populate: () => Promise.resolve(mocks.ticketDocument()),
-    } as any);
+    const findTicketSpy = jest.spyOn(TicketModel, 'findOne').mockResolvedValueOnce(ticket as any);
 
     await remove(params.request, params.response);
 

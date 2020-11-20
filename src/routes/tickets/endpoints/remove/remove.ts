@@ -25,15 +25,21 @@ export async function remove(req: IAuthRequest, res: Response) {
   const ticket = await TicketModel.findOne({
     number: +req.params.ticketNumber,
     project: project._id,
-  }).populate('createdBy', '_id image username email');
+  });
 
   if (!ticket) {
     res.status(StatusCodes.NOT_FOUND).send(`Ticket ${ReasonPhrases.NOT_FOUND}`);
     return;
   }
 
-  ticket.removedAt = new Date();
-  await ticket.save();
+  if (ticket.createdBy !== req.user.id) {
+    res.status(StatusCodes.UNAUTHORIZED).send('Can\'t Update A Ticket You Didn\'t Create');
+    return;
+  }
 
-  res.send(ticket.toObject());
+  ticket.removedAt = new Date();
+  const saved = await ticket.save();
+  const populated = await saved.populate('createdBy', '_id image username email').execPopulate();
+
+  res.send(populated.toObject());
 }
