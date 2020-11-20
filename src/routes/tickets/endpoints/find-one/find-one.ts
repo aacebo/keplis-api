@@ -34,5 +34,5 @@ export async function findOne(req: Request, res: Response) {
     return;
   }
 
-  res.send(project.toObject());
+  res.send(ticket.toObject());
 }
