@@ -16,14 +16,34 @@ describe('logger', () => {
     params.next = () => {};
   });
 
-  it('should log request', () => {
+  it('should log info request', () => {
     const loggerSpy = spyOn(Logger, 'info');
     const nextSpy = spyOn(params, 'next');
 
-    logger(params.request as any, params.response as any, params.next);
-    logger({ } as any, params.response as any, params.next);
+    logger(params.request, params.response, params.next);
+    logger({ } as any, params.response, params.next);
 
     expect(nextSpy).toHaveBeenCalledTimes(2);
     expect(loggerSpy).toHaveBeenCalledTimes(2);
+  });
+
+  it('should log warn request', () => {
+    const loggerSpy = spyOn(Logger, 'warn');
+    const nextSpy = spyOn(params, 'next');
+
+    logger(params.request, mocks.response({ statusCode: 404 }), params.next);
+
+    expect(nextSpy).toHaveBeenCalledTimes(1);
+    expect(loggerSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('should log error request', () => {
+    const loggerSpy = spyOn(Logger, 'error');
+    const nextSpy = spyOn(params, 'next');
+
+    logger(params.request, mocks.response({ statusCode: 500 }), params.next);
+
+    expect(nextSpy).toHaveBeenCalledTimes(1);
+    expect(loggerSpy).toHaveBeenCalledTimes(1);
   });
 });

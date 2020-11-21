@@ -1,5 +1,6 @@
 export function response(args?: any) {
   return {
+    statusCode: 200,
     status: (_code: number) => ({
       send: (..._body: any) => { },
     }),
