@@ -5,7 +5,7 @@ import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 import { IPaginationRequest } from '../../../../core/pagination';
 import { OrganizationModel } from '../../../organizations/organization.entity';
 
-import { ProjectModel, IProjectDocument } from '../../project.entity';
+import { ProjectModel, IProjectDocument, Project } from '../../project.entity';
 
 export async function find(req: IPaginationRequest, res: Response) {
   const organization = await OrganizationModel.findOne({ name: req.params.orgName });
@@ -31,5 +31,8 @@ export async function find(req: IPaginationRequest, res: Response) {
   ]);
 
   req.total = total;
-  res.send(projects.map(p => p.toObject()));
+  res.send(projects.map(p => p.toObject()).map((p: Project) => ({
+    ...p,
+    tickets: p.tickets.length,
+  })));
 }

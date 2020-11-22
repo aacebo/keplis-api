@@ -38,5 +38,8 @@ export async function create(req: IAuthRequest<any, any, CreateTicketRequest>, r
   await ticket.save();
   const saved = await ticket.execPopulate();
 
+  project.tickets.push(saved._id);
+  await project.save();
+
   res.status(StatusCodes.CREATED).send(saved.toObject());
 }

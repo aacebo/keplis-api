@@ -8,6 +8,7 @@ import { ProjectModel } from '../../../projects/project.entity';
 import { ticketDocument } from '../../ticket-document.mock';
 
 import { create } from './create';
+import { projectDocument } from '../../../projects';
 
 jest.mock('../../ticket.entity', () => ({
   TicketModel: class {
@@ -60,7 +61,7 @@ describe('create', () => {
 
   it('should create', async () => {
     const findSpy = jest.spyOn(OrganizationModel, 'findOne').mockResolvedValueOnce(organizationDocument() as any);
-    const findOneSpy = jest.spyOn(ProjectModel, 'findOne').mockResolvedValueOnce(ticketDocument() as any);
+    const findOneSpy = jest.spyOn(ProjectModel, 'findOne').mockResolvedValueOnce(projectDocument() as any);
     const statusSpy = spyOn(params.response, 'status').and.callThrough();
 
     await create(params.request, params.response);

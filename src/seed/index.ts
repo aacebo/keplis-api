@@ -69,12 +69,12 @@ async function start(count: number) {
         createdBy: seeder.get('users'),
       }));
 
-      const org = await OrganizationModel.findById(v.organization);
-      org.projects.push(v._id);
+      const o = await OrganizationModel.findById(v.organization);
+      o.projects.push(v._id);
 
       seeder.set(v._id, 'projects');
       await v.save();
-      await org.save();
+      await o.save();
     }
 
     Logger.info(`creating tickets(${count * 4})...`);
@@ -86,8 +86,12 @@ async function start(count: number) {
         createdBy: seeder.get('users'),
       }));
 
+      const p = await ProjectModel.findById(v.project);
+      p.tickets.push(v._id);
+
       seeder.set(v._id, 'tickets');
       await v.save();
+      await p.save();
     }
 
     Logger.info(`creating comments(${count * 8})...`);

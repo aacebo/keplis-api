@@ -6,6 +6,7 @@ import { NAME_REGEX } from '../../core/name';
 export class Project {
   readonly _id: string;
   readonly organization: string;
+  readonly tickets: string[];
   name: string;
   displayName: string;
   description?: string;
@@ -26,6 +27,7 @@ export interface IProjectDocument extends Project, mongoose.Document {
 export const ProjectModel = mongoose.model<IProjectDocument>('Project', new mongoose.Schema<Project>({
   _id: { type: String, default: uuid.v4, required: true },
   organization: { type: String, ref: 'Organization', required: true },
+  tickets: [{ type: String, ref: 'Ticket' }],
   name: { type: String, unique: true, match: NAME_REGEX, required: true, index: true },
   displayName: { type: String, required: true, index: true },
   description: { type: String },

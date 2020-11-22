@@ -68,6 +68,7 @@ describe('find', () => {
 
       return {
         ...p,
+        tickets: p.tickets.length,
       };
     }));
   });
