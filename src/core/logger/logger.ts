@@ -10,6 +10,10 @@ export default class Logger {
     console.info(Chalk.cyan(`[${this._timestamp}] > ${msg}`));
   }
 
+  static success(msg: string) {
+    console.log(Chalk.green(`[${this._timestamp}] > ${msg}`));
+  }
+
   static warn(msg: string) {
     console.warn(Chalk.yellow(`[${this._timestamp}] > ${msg}`));
   }

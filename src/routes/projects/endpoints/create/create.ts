@@ -16,6 +16,13 @@ export async function create(req: IAuthRequest<any, any, CreateProjectRequest>, 
     return;
   }
 
+  const existing = await ProjectModel.findOne({ name: req.body.name });
+
+  if (existing) {
+    res.status(StatusCodes.CONFLICT).send('Project Name Already Exists');
+    return;
+  }
+
   const project = new ProjectModel({
     ...req.body,
     organization: organization._id,

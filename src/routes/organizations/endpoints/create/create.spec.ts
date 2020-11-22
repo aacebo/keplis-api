@@ -1,11 +1,13 @@
 import { StatusCodes } from 'http-status-codes';
 
 import * as mocks from '../../../../testing/mocks';
+import { OrganizationModel } from '../../organization.entity';
 
 import { create } from './create';
 
 jest.mock('../../organization.entity', () => ({
   OrganizationModel: class {
+    static findOne() { return Promise.resolve(mocks.organizationDocument()); }
     toObject() { }
     save() { return Promise.resolve(); }
     populate() { return this; }
@@ -30,12 +32,23 @@ describe('create', () => {
     jest.resetAllMocks();
   });
 
-  it('should create', async () => {
+  it('should find organization', async () => {
     const statusSpy = spyOn(params.response, 'status').and.callThrough();
+    const findOrgSpy = jest.spyOn(OrganizationModel, 'findOne').mockResolvedValueOnce(mocks.organizationDocument() as any);
 
     await create(params.request, params.response);
 
-    expect(statusSpy).toHaveBeenCalledTimes(1);
+    expect(findOrgSpy).toHaveBeenCalledTimes(1);
+    expect(statusSpy).toHaveBeenLastCalledWith(StatusCodes.CONFLICT);
+  });
+
+  it('should create', async () => {
+    const statusSpy = spyOn(params.response, 'status').and.callThrough();
+    const findOrgSpy = jest.spyOn(OrganizationModel, 'findOne').mockResolvedValueOnce(undefined);
+
+    await create(params.request, params.response);
+
+    expect(findOrgSpy).toHaveBeenCalledTimes(1);
     expect(statusSpy).toHaveBeenCalledWith(StatusCodes.CREATED);
   });
 });

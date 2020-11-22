@@ -16,8 +16,8 @@ describe('logger', () => {
     params.next = () => {};
   });
 
-  it('should log info request', () => {
-    const loggerSpy = spyOn(Logger, 'info');
+  it('should log success request', () => {
+    const loggerSpy = spyOn(Logger, 'success');
     const nextSpy = spyOn(params, 'next');
 
     logger(params.request, params.response, params.next);

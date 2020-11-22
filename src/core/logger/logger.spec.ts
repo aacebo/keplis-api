@@ -7,6 +7,12 @@ describe('Logger', () => {
     expect(spy).toHaveBeenCalledTimes(1);
   });
 
+  it('should log success', () => {
+    const spy = spyOn(console, 'log');
+    Logger.success('test');
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
   it('shoud log warn', () => {
     const spy = spyOn(console, 'warn');
     Logger.warn('test');
