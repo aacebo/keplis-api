@@ -8,11 +8,12 @@ import { ProjectModel } from '../../../projects/project.entity';
 import { projectDocument } from '../../../projects/project-document.mock';
 
 import { TicketModel } from '../../ticket.entity';
+import { ticketDocument } from '../../ticket-document.mock';
 
 import { findOne } from './find-one';
 
 describe('findOne', () => {
-  const ticket = mocks.ticketDocument();
+  const ticket = ticketDocument();
   const params = {
     request: mocks.request(),
     response: mocks.response(),

@@ -8,6 +8,7 @@ import { ProjectModel } from '../../../projects/project.entity';
 import { projectDocument } from '../../../projects/project-document.mock';
 
 import { TicketModel } from '../../ticket.entity';
+import { ticketDocument } from '../../ticket-document.mock';
 
 import { update } from './update';
 
@@ -21,7 +22,7 @@ describe('update', () => {
     params.response = mocks.response();
     params.request = mocks.request({
       params: { orgName: 'test', projectName: 'test', ticketNumber: '1' },
-      body: mocks.ticketDocument().toObject(),
+      body: ticketDocument().toObject(),
     });
   });
 
@@ -66,7 +67,7 @@ describe('update', () => {
   });
 
   it('should be unauthorized', async () => {
-    const ticket = mocks.ticketDocument();
+    const ticket = ticketDocument();
     jest.spyOn(ticket, 'save').mockResolvedValueOnce({
       populate: () => ({
         execPopulate: () => Promise.resolve(ticket),
@@ -89,7 +90,7 @@ describe('update', () => {
   });
 
   it('should update', async () => {
-    const ticket = mocks.ticketDocument({ createdBy: params.request.user.id });
+    const ticket = ticketDocument({ createdBy: params.request.user.id });
     jest.spyOn(ticket, 'save').mockResolvedValueOnce({
       populate: () => ({
         execPopulate: () => Promise.resolve(ticket),

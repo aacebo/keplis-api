@@ -5,6 +5,8 @@ import { OrganizationModel } from '../../../organizations/organization.entity';
 import { organizationDocument } from '../../../organizations/organization-document.mock';
 import { ProjectModel } from '../../../projects/project.entity';
 
+import { ticketDocument } from '../../ticket-document.mock';
+
 import { create } from './create';
 
 jest.mock('../../ticket.entity', () => ({
@@ -12,7 +14,7 @@ jest.mock('../../ticket.entity', () => ({
     toObject() { }
     save() { return Promise.resolve(); }
     populate() { return this; }
-    execPopulate() { return Promise.resolve(mocks.ticketDocument()); }
+    execPopulate() { return Promise.resolve(ticketDocument()); }
   },
 }));
 
@@ -26,7 +28,7 @@ describe('create', () => {
     params.response = mocks.response();
     params.request = mocks.request({
       params: { orgName: 'test', projectName: 'test' },
-      body: mocks.ticketDocument().toObject(),
+      body: ticketDocument().toObject(),
     });
   });
 
@@ -58,7 +60,7 @@ describe('create', () => {
 
   it('should create', async () => {
     const findSpy = jest.spyOn(OrganizationModel, 'findOne').mockResolvedValueOnce(organizationDocument() as any);
-    const findOneSpy = jest.spyOn(ProjectModel, 'findOne').mockResolvedValueOnce(mocks.ticketDocument() as any);
+    const findOneSpy = jest.spyOn(ProjectModel, 'findOne').mockResolvedValueOnce(ticketDocument() as any);
     const statusSpy = spyOn(params.response, 'status').and.callThrough();
 
     await create(params.request, params.response);

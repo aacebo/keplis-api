@@ -10,7 +10,7 @@ import Logger from '../core/logger';
 import { OrganizationModel, organization } from '../routes/organizations';
 import { UserModel } from '../routes/users';
 import { ProjectModel, project } from '../routes/projects';
-import { TicketModel } from '../routes/tickets';
+import { TicketModel, ticket } from '../routes/tickets';
 
 import * as seeds from './seeds';
 import { DEV_USER } from './dev-user';
@@ -76,7 +76,7 @@ async function start(count: number) {
     Logger.info(`creating tickets(${count})...`);
 
     for (let i = 0; i < count; i++) {
-      const v = new TicketModel(seeds.ticket({
+      const v = new TicketModel(ticket({
         _id: uuid.v4(),
         project: seeder.get('projects'),
         createdBy: seeder.get('users'),

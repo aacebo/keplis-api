@@ -4,7 +4,6 @@ import { isValid } from 'date-fns';
 
 import { devUserToken } from '../../seed/dev-user-token';
 import { DEV_USER } from '../../seed/dev-user';
-import * as seeds from '../../seed/seeds';
 
 import { startTestServer } from '../../testing/utils';
 
@@ -15,13 +14,14 @@ import { Project } from '../projects/project.entity';
 import { project } from '../projects/project.mock';
 
 import { Ticket } from './ticket.entity';
+import { ticket } from './ticket.mock';
 
 describe('[e2e] /organizations/:orgName/projects/:projectName/tickets', () => {
   let request: supertest.SuperTest<supertest.Test>;
   let token: string;
   let org: Organization;
   let proj: Project;
-  let ticket: Ticket;
+  let tkt: Ticket;
 
   beforeAll(async () => {
     request = await startTestServer();
@@ -51,7 +51,7 @@ describe('[e2e] /organizations/:orgName/projects/:projectName/tickets', () => {
   });
 
   beforeAll(async () => {
-    const payload = seeds.ticket();
+    const payload = ticket();
     delete payload.status;
 
     const res = await request.post(`/organizations/${org.name}/projects/${proj.name}/tickets`)
@@ -59,12 +59,12 @@ describe('[e2e] /organizations/:orgName/projects/:projectName/tickets', () => {
       .send(payload)
       .expect(StatusCodes.CREATED);
 
-    ticket = res.body.data;
+      tkt = res.body.data;
   });
 
   describe('create', () => {
     it('should not find organization', (done) => {
-      const payload = seeds.ticket();
+      const payload = ticket();
       delete payload.status;
 
       request.post(`/organizations/test/projects/${proj.name}/tickets`)
@@ -75,7 +75,7 @@ describe('[e2e] /organizations/:orgName/projects/:projectName/tickets', () => {
     });
 
     it('should not find project', (done) => {
-      const payload = seeds.ticket();
+      const payload = ticket();
       delete payload.status;
 
       request.post(`/organizations/${org.name}/projects/test/tickets`)
@@ -86,7 +86,7 @@ describe('[e2e] /organizations/:orgName/projects/:projectName/tickets', () => {
     });
 
     it('should create ticket', (done) => {
-      const payload = seeds.ticket();
+      const payload = ticket();
       delete payload.status;
 
       request.post(`/organizations/${org.name}/projects/${proj.name}/tickets`)
@@ -135,14 +135,14 @@ describe('[e2e] /organizations/:orgName/projects/:projectName/tickets', () => {
 
   describe('findOne', () => {
     it('should not find organization', (done) => {
-      request.get(`/organizations/test/projects/${proj.name}/tickets/${ticket.number}`)
+      request.get(`/organizations/test/projects/${proj.name}/tickets/${tkt.number}`)
         .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.NOT_FOUND)
         .end(done);
     });
 
     it('should not find project', (done) => {
-      request.get(`/organizations/${org.name}/projects/test/tickets/${ticket.number}`)
+      request.get(`/organizations/${org.name}/projects/test/tickets/${tkt.number}`)
         .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.NOT_FOUND)
         .end(done);
@@ -156,13 +156,13 @@ describe('[e2e] /organizations/:orgName/projects/:projectName/tickets', () => {
     });
 
     it('should find one ticket', (done) => {
-      request.get(`/organizations/${org.name}/projects/${proj.name}/tickets/${ticket.number}`)
+      request.get(`/organizations/${org.name}/projects/${proj.name}/tickets/${tkt.number}`)
         .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
           expect(body).toBeDefined();
           expect(body.data.project).toEqual(proj._id);
-          expect(body.data._id).toEqual(ticket._id);
+          expect(body.data._id).toEqual(tkt._id);
         })
         .end(done);
     });
@@ -170,7 +170,7 @@ describe('[e2e] /organizations/:orgName/projects/:projectName/tickets', () => {
 
   describe('update', () => {
     it('should not find organization', (done) => {
-      request.put(`/organizations/test/projects/${proj.name}/tickets/${ticket.number}`)
+      request.put(`/organizations/test/projects/${proj.name}/tickets/${tkt.number}`)
         .set('Authorization', `Bearer ${token}`)
         .send({ title: 'test' })
         .expect(StatusCodes.NOT_FOUND)
@@ -178,7 +178,7 @@ describe('[e2e] /organizations/:orgName/projects/:projectName/tickets', () => {
     });
 
     it('should not find project', (done) => {
-      request.put(`/organizations/${org.name}/projects/test/tickets/${ticket.number}`)
+      request.put(`/organizations/${org.name}/projects/test/tickets/${tkt.number}`)
         .set('Authorization', `Bearer ${token}`)
         .send({ title: 'test' })
         .expect(StatusCodes.NOT_FOUND)
@@ -194,14 +194,14 @@ describe('[e2e] /organizations/:orgName/projects/:projectName/tickets', () => {
     });
 
     it('should update ticket', (done) => {
-      request.put(`/organizations/${org.name}/projects/${proj.name}/tickets/${ticket.number}`)
+      request.put(`/organizations/${org.name}/projects/${proj.name}/tickets/${tkt.number}`)
         .set('Authorization', `Bearer ${token}`)
         .send({ title: 'test' })
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
           expect(body).toBeDefined();
           expect(body.data.project).toEqual(proj._id);
-          expect(body.data._id).toEqual(ticket._id);
+          expect(body.data._id).toEqual(tkt._id);
           expect(isValid(Date.parse(body.data.updatedAt))).toBe(true);
         })
         .end(done);
@@ -210,14 +210,14 @@ describe('[e2e] /organizations/:orgName/projects/:projectName/tickets', () => {
 
   describe('remove', () => {
     it('should not find organization', (done) => {
-      request.delete(`/organizations/test/projects/${proj.name}/tickets/${ticket.number}`)
+      request.delete(`/organizations/test/projects/${proj.name}/tickets/${tkt.number}`)
         .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.NOT_FOUND)
         .end(done);
     });
 
     it('should not find project', (done) => {
-      request.delete(`/organizations/${org.name}/projects/test/tickets/${ticket.number}`)
+      request.delete(`/organizations/${org.name}/projects/test/tickets/${tkt.number}`)
         .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.NOT_FOUND)
         .end(done);
@@ -231,13 +231,13 @@ describe('[e2e] /organizations/:orgName/projects/:projectName/tickets', () => {
     });
 
     it('should remove ticket', (done) => {
-      request.delete(`/organizations/${org.name}/projects/${proj.name}/tickets/${ticket.number}`)
+      request.delete(`/organizations/${org.name}/projects/${proj.name}/tickets/${tkt.number}`)
         .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
           expect(body).toBeDefined();
           expect(body.data.project).toEqual(proj._id);
-          expect(body.data._id).toEqual(ticket._id);
+          expect(body.data._id).toEqual(tkt._id);
           expect(isValid(Date.parse(body.data.removedAt))).toBe(true);
         })
         .end(done);

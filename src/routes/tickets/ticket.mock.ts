@@ -1,6 +1,8 @@
 import * as faker from 'faker';
 
-import { TicketType, Ticket, TicketStatus } from '../../routes/tickets';
+import { TicketType } from './ticket-type.enum';
+import { TicketStatus } from './ticket-status.enum';
+import { Ticket } from './ticket.entity';
 
 export function ticket(args?: Partial<Ticket>) {
   const types = Object.values(TicketType);
