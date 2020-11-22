@@ -9,7 +9,7 @@ import Logger from '../core/logger';
 
 import { OrganizationModel, organization } from '../routes/organizations';
 import { UserModel } from '../routes/users';
-import { ProjectModel } from '../routes/projects';
+import { ProjectModel, project } from '../routes/projects';
 import { TicketModel } from '../routes/tickets';
 
 import * as seeds from './seeds';
@@ -50,40 +50,40 @@ async function start(count: number) {
 
     for (let i = 0; i < count; i++) {
       const createdBy = seeder.get('users');
-      const org = new OrganizationModel(organization({
+      const v = new OrganizationModel(organization({
         _id: uuid.v4(),
         owners: [createdBy],
         createdBy,
       }));
 
-      seeder.set(org._id, 'organizations');
-      await org.save();
+      seeder.set(v._id, 'organizations');
+      await v.save();
     }
 
     Logger.info(`creating projects(${count})...`);
 
     for (let i = 0; i < count; i++) {
-      const project = new ProjectModel(seeds.project({
+      const v = new ProjectModel(project({
         _id: uuid.v4(),
         organization: seeder.get('organizations'),
         createdBy: seeder.get('users'),
       }));
 
-      seeder.set(project._id, 'projects');
-      await project.save();
+      seeder.set(v._id, 'projects');
+      await v.save();
     }
 
     Logger.info(`creating tickets(${count})...`);
 
     for (let i = 0; i < count; i++) {
-      const ticket = new TicketModel(seeds.ticket({
+      const v = new TicketModel(seeds.ticket({
         _id: uuid.v4(),
         project: seeder.get('projects'),
         createdBy: seeder.get('users'),
       }));
 
-      seeder.set(ticket._id, 'tickets');
-      await ticket.save();
+      seeder.set(v._id, 'tickets');
+      await v.save();
     }
 
     Logger.info(`finished seeding ${seeder.count} entities in ${seeder.elapse}`);

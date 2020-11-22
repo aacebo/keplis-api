@@ -3,7 +3,10 @@ import { StatusCodes } from 'http-status-codes';
 import * as mocks from '../../../../testing/mocks';
 import { OrganizationModel } from '../../../organizations/organization.entity';
 import { organizationDocument } from '../../../organizations/organization-document.mock';
+
 import { ProjectModel } from '../../../projects/project.entity';
+import { projectDocument } from '../../../projects/project-document.mock';
+
 import { TicketModel } from '../../ticket.entity';
 
 import { update } from './update';
@@ -51,7 +54,7 @@ describe('update', () => {
   it('should not find ticket', async () => {
     const statusSpy = spyOn(params.response, 'status').and.callThrough();
     const findOrgSpy = jest.spyOn(OrganizationModel, 'findOne').mockResolvedValueOnce(organizationDocument() as any);
-    const findProjectSpy = jest.spyOn(ProjectModel, 'findOne').mockResolvedValueOnce(mocks.projectDocument() as any);
+    const findProjectSpy = jest.spyOn(ProjectModel, 'findOne').mockResolvedValueOnce(projectDocument() as any);
     const findTicketSpy = jest.spyOn(TicketModel, 'findOne').mockResolvedValueOnce(undefined);
 
     await update(params.request, params.response);
@@ -73,7 +76,7 @@ describe('update', () => {
     const statusSpy = spyOn(params.response, 'status').and.callThrough();
     const sendSpy = spyOn(params.response, 'send');
     const findOrgSpy = jest.spyOn(OrganizationModel, 'findOne').mockResolvedValueOnce(organizationDocument() as any);
-    const findProjectSpy = jest.spyOn(ProjectModel, 'findOne').mockResolvedValueOnce(mocks.projectDocument() as any);
+    const findProjectSpy = jest.spyOn(ProjectModel, 'findOne').mockResolvedValueOnce(projectDocument() as any);
     const findTicketSpy = jest.spyOn(TicketModel, 'findOne').mockResolvedValueOnce(ticket as any);
 
     await update(params.request, params.response);
@@ -96,7 +99,7 @@ describe('update', () => {
     const statusSpy = spyOn(params.response, 'status');
     const sendSpy = spyOn(params.response, 'send');
     const findOrgSpy = jest.spyOn(OrganizationModel, 'findOne').mockResolvedValueOnce(organizationDocument() as any);
-    const findProjectSpy = jest.spyOn(ProjectModel, 'findOne').mockResolvedValueOnce(mocks.projectDocument() as any);
+    const findProjectSpy = jest.spyOn(ProjectModel, 'findOne').mockResolvedValueOnce(projectDocument() as any);
     const findTicketSpy = jest.spyOn(TicketModel, 'findOne').mockResolvedValueOnce(ticket as any);
 
     await update(params.request, params.response);

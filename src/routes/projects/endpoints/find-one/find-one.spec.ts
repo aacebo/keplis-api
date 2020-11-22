@@ -5,11 +5,12 @@ import { OrganizationModel } from '../../../organizations/organization.entity';
 import { organizationDocument } from '../../../organizations/organization-document.mock';
 
 import { ProjectModel } from '../../project.entity';
+import { projectDocument } from '../../project-document.mock';
 
 import { findOne } from './find-one';
 
 describe('findOne', () => {
-  const project = mocks.projectDocument();
+  const project = projectDocument();
   const params = {
     request: mocks.request(),
     response: mocks.response(),
