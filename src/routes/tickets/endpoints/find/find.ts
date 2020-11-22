@@ -6,7 +6,7 @@ import { IPaginationRequest } from '../../../../core/pagination';
 import { OrganizationModel } from '../../../organizations/organization.entity';
 import { ProjectModel } from '../../../projects/project.entity';
 
-import { TicketModel, ITicketDocument } from '../../ticket.entity';
+import { TicketModel, ITicketDocument, Ticket } from '../../ticket.entity';
 
 export async function find(req: IPaginationRequest, res: Response) {
   const organization = await OrganizationModel.findOne({ name: req.params.orgName });
@@ -42,5 +42,8 @@ export async function find(req: IPaginationRequest, res: Response) {
   ]);
 
   req.total = total;
-  res.send(tickets.map(t => t.toObject()));
+  res.send(tickets.map(t => t.toObject()).map((t: Ticket) => ({
+    ...t,
+    comments: t.comments.length,
+  })));
 }

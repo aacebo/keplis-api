@@ -8,6 +8,7 @@ import { TicketType } from './ticket-type.enum';
 export class Ticket {
   readonly _id: string;
   readonly project: string;
+  readonly comments: string[];
   readonly number: number;
   readonly type: TicketType;
   status: TicketStatus;
@@ -30,6 +31,7 @@ export interface ITicketDocument extends Ticket, mongoose.Document {
 export const TicketModel = mongoose.model<ITicketDocument>('Ticket', new mongoose.Schema<Ticket>({
   _id: { type: String, default: uuid.v4, required: true },
   project: { type: String, ref: 'Project', required: true },
+  comments: [{ type: String, ref: 'Comment' }],
   number: { type: Number, unique: true },
   type: { type: TicketType, required: true, index: true },
   status: { type: TicketStatus, default: TicketStatus.Open, required: true, index: true },

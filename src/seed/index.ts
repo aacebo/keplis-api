@@ -103,8 +103,12 @@ async function start(count: number) {
         createdBy: seeder.get('users'),
       }));
 
+      const t = await TicketModel.findById(v.ticket);
+      t.comments.push(v._id);
+
       seeder.set(v._id, 'comments');
       await v.save();
+      await t.save();
     }
 
     Logger.info(`finished seeding ${seeder.count} entities in ${seeder.elapse}`);

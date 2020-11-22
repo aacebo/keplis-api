@@ -7,6 +7,7 @@ import { Ticket } from './ticket.entity';
 export function ticketDocument(args?: Partial<Ticket>) {
   const value = ticket({
     _id: uuid.v4(),
+    comments: [],
     createdAt: faker.date.past(),
     ...args,
   });
