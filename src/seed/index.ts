@@ -60,9 +60,10 @@ async function start(count: number) {
       await v.save();
     }
 
-    Logger.info(`creating projects(${count * 2})...`);
+    count *= 5;
+    Logger.info(`creating projects(${count})...`);
 
-    for (let i = 0; i < count * 2; i++) {
+    for (let i = 0; i < count; i++) {
       const v = new ProjectModel(project({
         _id: uuid.v4(),
         organization: seeder.get('organizations'),
@@ -77,9 +78,10 @@ async function start(count: number) {
       await o.save();
     }
 
-    Logger.info(`creating tickets(${count * 4})...`);
+    count *= 5;
+    Logger.info(`creating tickets(${count})...`);
 
-    for (let i = 0; i < count * 4; i++) {
+    for (let i = 0; i < count; i++) {
       const v = new TicketModel(ticket({
         _id: uuid.v4(),
         project: seeder.get('projects'),
@@ -94,9 +96,10 @@ async function start(count: number) {
       await p.save();
     }
 
-    Logger.info(`creating comments(${count * 8})...`);
+    count *= 5;
+    Logger.info(`creating comments(${count})...`);
 
-    for (let i = 0; i < count * 8; i++) {
+    for (let i = 0; i < count; i++) {
       const v = new CommentModel(comment({
         _id: uuid.v4(),
         ticket: seeder.get('tickets'),
