@@ -43,6 +43,7 @@ export async function startServer() {
     app.use(routes.organizationsRoute);
     app.use(routes.projectsRoute);
     app.use(routes.ticketsRoute);
+    app.use(routes.commentsRoute);
 
     return app;
   } catch (e) {
