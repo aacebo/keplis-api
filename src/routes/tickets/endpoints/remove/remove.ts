@@ -33,7 +33,7 @@ export async function remove(req: IAuthRequest, res: Response) {
   }
 
   if (ticket.createdBy !== req.user.id) {
-    res.status(StatusCodes.UNAUTHORIZED).send('Can\'t Update A Ticket You Didn\'t Create');
+    res.status(StatusCodes.UNAUTHORIZED).send('Can\'t Remove A Ticket You Didn\'t Create');
     return;
   }
 

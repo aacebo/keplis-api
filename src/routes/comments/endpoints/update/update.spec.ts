@@ -1,6 +1,7 @@
 import { StatusCodes } from 'http-status-codes';
 
 import * as mocks from '../../../../testing/mocks';
+
 import { OrganizationModel } from '../../../organizations/organization.entity';
 import { organizationDocument } from '../../../organizations/organization-document.mock';
 
@@ -13,10 +14,9 @@ import { ticketDocument } from '../../../tickets/ticket-document.mock';
 import { CommentModel } from '../../comment.entity';
 import { commentDocument } from '../../comment-document.mock';
 
-import { findOne } from './find-one';
+import { update } from './update';
 
-describe('findOne', () => {
-  const comment = commentDocument();
+describe('update', () => {
   const params = {
     request: mocks.request(),
     response: mocks.response(),
@@ -25,12 +25,8 @@ describe('findOne', () => {
   beforeEach(() => {
     params.response = mocks.response();
     params.request = mocks.request({
-      params: {
-        orgName: 'test',
-        projectName: 'test',
-        ticketNumber: '1',
-        commentId: 'test',
-      }
+      params: { orgName: 'test', projectName: 'test', ticketNumber: '1', commentId: 'test' },
+      body: commentDocument().toObject(),
     });
   });
 
@@ -39,45 +35,39 @@ describe('findOne', () => {
   });
 
   it('should not find organization', async () => {
-    const sendSpy = spyOn(params.response, 'send');
-    const statusSpy = spyOn(params.response, 'status').and.callThrough();
     const findOrgSpy = jest.spyOn(OrganizationModel, 'findOne').mockResolvedValueOnce(undefined);
+    const statusSpy = spyOn(params.response, 'status').and.callThrough();
 
-    await findOne(params.request, params.response);
+    await update(params.request, params.response);
 
     expect(findOrgSpy).toHaveBeenCalledTimes(1);
     expect(statusSpy).toHaveBeenCalledWith(StatusCodes.NOT_FOUND);
-    expect(sendSpy).not.toHaveBeenCalled();
   });
 
   it('should not find project', async () => {
-    const sendSpy = spyOn(params.response, 'send');
-    const statusSpy = spyOn(params.response, 'status').and.callThrough();
     const findOrgSpy = jest.spyOn(OrganizationModel, 'findOne').mockResolvedValueOnce(organizationDocument() as any);
     const findProjectSpy = jest.spyOn(ProjectModel, 'findOne').mockResolvedValueOnce(undefined);
+    const statusSpy = spyOn(params.response, 'status').and.callThrough();
 
-    await findOne(params.request, params.response);
+    await update(params.request, params.response);
 
     expect(findOrgSpy).toHaveBeenCalledTimes(1);
     expect(findProjectSpy).toHaveBeenCalledTimes(1);
     expect(statusSpy).toHaveBeenCalledWith(StatusCodes.NOT_FOUND);
-    expect(sendSpy).not.toHaveBeenCalled();
   });
 
   it('should not find ticket', async () => {
-    const sendSpy = spyOn(params.response, 'send');
     const statusSpy = spyOn(params.response, 'status').and.callThrough();
     const findOrgSpy = jest.spyOn(OrganizationModel, 'findOne').mockResolvedValueOnce(organizationDocument() as any);
     const findProjectSpy = jest.spyOn(ProjectModel, 'findOne').mockResolvedValueOnce(projectDocument() as any);
     const findTicketSpy = jest.spyOn(TicketModel, 'findOne').mockResolvedValueOnce(undefined);
 
-    await findOne(params.request, params.response);
+    await update(params.request, params.response);
 
     expect(findOrgSpy).toHaveBeenCalledTimes(1);
     expect(findProjectSpy).toHaveBeenCalledTimes(1);
     expect(findTicketSpy).toHaveBeenCalledTimes(1);
     expect(statusSpy).toHaveBeenCalledWith(StatusCodes.NOT_FOUND);
-    expect(sendSpy).not.toHaveBeenCalled();
   });
 
   it('should not find comment', async () => {
@@ -86,11 +76,9 @@ describe('findOne', () => {
     const findOrgSpy = jest.spyOn(OrganizationModel, 'findOne').mockResolvedValueOnce(organizationDocument() as any);
     const findProjectSpy = jest.spyOn(ProjectModel, 'findOne').mockResolvedValueOnce(projectDocument() as any);
     const findTicketSpy = jest.spyOn(TicketModel, 'findOne').mockResolvedValueOnce(ticketDocument() as any);
-    const findCommentSpy = jest.spyOn(CommentModel, 'findOne').mockReturnValueOnce({
-      populate: (..._args: string[]) => Promise.resolve(undefined),
-    } as any);
+    const findCommentSpy = jest.spyOn(CommentModel, 'findOne').mockResolvedValueOnce(undefined);
 
-    await findOne(params.request, params.response);
+    await update(params.request, params.response);
 
     expect(findOrgSpy).toHaveBeenCalledTimes(1);
     expect(findProjectSpy).toHaveBeenCalledTimes(1);
@@ -100,17 +88,47 @@ describe('findOne', () => {
     expect(sendSpy).not.toHaveBeenCalled();
   });
 
-  it('should find comment', async () => {
+  it('should be unauthorized', async () => {
+    const comment = commentDocument();
+    jest.spyOn(comment, 'save').mockResolvedValueOnce({
+      populate: () => ({
+        execPopulate: () => Promise.resolve(comment),
+      }),
+    } as any);
+
+    const statusSpy = spyOn(params.response, 'status').and.callThrough();
     const sendSpy = spyOn(params.response, 'send');
-    const statusSpy = spyOn(params.response, 'status');
     const findOrgSpy = jest.spyOn(OrganizationModel, 'findOne').mockResolvedValueOnce(organizationDocument() as any);
     const findProjectSpy = jest.spyOn(ProjectModel, 'findOne').mockResolvedValueOnce(projectDocument() as any);
     const findTicketSpy = jest.spyOn(TicketModel, 'findOne').mockResolvedValueOnce(ticketDocument() as any);
-    const findCommentSpy = jest.spyOn(CommentModel, 'findOne').mockReturnValueOnce({
-      populate: (..._args: string[]) => Promise.resolve(comment),
+    const findCommentSpy = jest.spyOn(CommentModel, 'findOne').mockResolvedValueOnce(comment as any);
+
+    await update(params.request, params.response);
+
+    expect(findOrgSpy).toHaveBeenCalledTimes(1);
+    expect(findProjectSpy).toHaveBeenCalledTimes(1);
+    expect(findTicketSpy).toHaveBeenCalledTimes(1);
+    expect(findCommentSpy).toHaveBeenCalledTimes(1);
+    expect(statusSpy).toHaveBeenCalledWith(StatusCodes.UNAUTHORIZED);
+    expect(sendSpy).not.toHaveBeenCalled();
+  });
+
+  it('should update', async () => {
+    const comment = commentDocument({ createdBy: params.request.user.id });
+    jest.spyOn(comment, 'save').mockResolvedValueOnce({
+      populate: () => ({
+        execPopulate: () => Promise.resolve(comment),
+      }),
     } as any);
 
-    await findOne(params.request, params.response);
+    const statusSpy = spyOn(params.response, 'status');
+    const sendSpy = spyOn(params.response, 'send');
+    const findOrgSpy = jest.spyOn(OrganizationModel, 'findOne').mockResolvedValueOnce(organizationDocument() as any);
+    const findProjectSpy = jest.spyOn(ProjectModel, 'findOne').mockResolvedValueOnce(projectDocument() as any);
+    const findTicketSpy = jest.spyOn(TicketModel, 'findOne').mockResolvedValueOnce(ticketDocument() as any);
+    const findCommentSpy = jest.spyOn(CommentModel, 'findOne').mockResolvedValueOnce(comment as any);
+
+    await update(params.request, params.response);
 
     expect(findOrgSpy).toHaveBeenCalledTimes(1);
     expect(findProjectSpy).toHaveBeenCalledTimes(1);

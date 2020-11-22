@@ -24,4 +24,10 @@ export const commentsRoute = express.Router()
   validateBody(endpoints.CreateCommentRequestSchema),
   validateResponse(endpoints.CreateCommentResponseSchema),
   endpoints.create,
+)
+.put(
+  '/organizations/:orgName/projects/:projectName/tickets/:ticketNumber/comments/:commentId',
+  validateBody(endpoints.UpdateCommentRequestSchema),
+  validateResponse(endpoints.UpdateCommentResponseSchema),
+  endpoints.update,
 );
