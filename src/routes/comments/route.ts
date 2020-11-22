@@ -30,4 +30,9 @@ export const commentsRoute = express.Router()
   validateBody(endpoints.UpdateCommentRequestSchema),
   validateResponse(endpoints.UpdateCommentResponseSchema),
   endpoints.update,
+)
+.delete(
+  '/organizations/:orgName/projects/:projectName/tickets/:ticketNumber/comments/:commentId',
+  validateResponse(endpoints.RemoveCommentResponseSchema),
+  endpoints.remove,
 );
