@@ -3,6 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import * as mocks from '../../../../../../testing/mocks';
 
 import { OrganizationModel } from '../../../../organization.entity';
+import { organizationDocument } from '../../../../organization-document.mock';
 
 import { find } from './find';
 
@@ -39,7 +40,7 @@ describe('find', () => {
     const sendSpy = spyOn(params.response, 'send');
     const statusSpy = spyOn(params.response, 'status').and.callThrough();
     const findSpy = jest.spyOn(OrganizationModel, 'findOne').mockReturnValueOnce({
-      populate: () => Promise.resolve(mocks.organizationDocument()),
+      populate: () => Promise.resolve(organizationDocument()),
     } as any);
 
     await find(params.request, params.response);

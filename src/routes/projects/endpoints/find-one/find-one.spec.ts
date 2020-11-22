@@ -2,6 +2,7 @@ import { StatusCodes } from 'http-status-codes';
 
 import * as mocks from '../../../../testing/mocks';
 import { OrganizationModel } from '../../../organizations/organization.entity';
+import { organizationDocument } from '../../../organizations/organization-document.mock';
 
 import { ProjectModel } from '../../project.entity';
 
@@ -38,7 +39,7 @@ describe('findOne', () => {
   it('should not find project', async () => {
     const sendSpy = spyOn(params.response, 'send');
     const statusSpy = spyOn(params.response, 'status').and.callThrough();
-    const findOneSpy = jest.spyOn(OrganizationModel, 'findOne').mockResolvedValueOnce(mocks.organizationDocument() as any);
+    const findOneSpy = jest.spyOn(OrganizationModel, 'findOne').mockResolvedValueOnce(organizationDocument() as any);
     const findSpy = jest.spyOn(ProjectModel, 'findOne').mockReturnValueOnce({
       populate: (..._args: string[]) => Promise.resolve(undefined),
     } as any);
@@ -54,7 +55,7 @@ describe('findOne', () => {
   it('should find project', async () => {
     const sendSpy = spyOn(params.response, 'send');
     const statusSpy = spyOn(params.response, 'status').and.callThrough();
-    const findOneSpy = jest.spyOn(OrganizationModel, 'findOne').mockResolvedValueOnce(mocks.organizationDocument() as any);
+    const findOneSpy = jest.spyOn(OrganizationModel, 'findOne').mockResolvedValueOnce(organizationDocument() as any);
     const findSpy = jest.spyOn(ProjectModel, 'findOne').mockReturnValueOnce({
       populate: (..._args: string[]) => Promise.resolve(project),
     } as any);

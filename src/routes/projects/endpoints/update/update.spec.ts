@@ -2,6 +2,7 @@ import { StatusCodes } from 'http-status-codes';
 
 import * as mocks from '../../../../testing/mocks';
 import { OrganizationModel } from '../../../organizations/organization.entity';
+import { organizationDocument } from '../../../organizations/organization-document.mock';
 
 import { ProjectModel } from '../../project.entity';
 
@@ -38,7 +39,7 @@ describe('update', () => {
   it('should be unauthorized', async () => {
     const sendSpy = spyOn(params.response, 'send');
     const statusSpy = spyOn(params.response, 'status').and.callThrough();
-    const findOneSpy = jest.spyOn(OrganizationModel, 'findOne').mockResolvedValueOnce(mocks.organizationDocument() as any);
+    const findOneSpy = jest.spyOn(OrganizationModel, 'findOne').mockResolvedValueOnce(organizationDocument() as any);
 
     await update(params.request, params.response);
 
@@ -48,7 +49,7 @@ describe('update', () => {
   });
 
   it('should not find project', async () => {
-    const organization = mocks.organizationDocument({ owners: [params.request.user.id] });
+    const organization = organizationDocument({ owners: [params.request.user.id] });
 
     const sendSpy = spyOn(params.response, 'send');
     const statusSpy = spyOn(params.response, 'status').and.callThrough();
@@ -66,7 +67,7 @@ describe('update', () => {
   });
 
   it('should find project', async () => {
-    const organization = mocks.organizationDocument({ owners: [params.request.user.id] });
+    const organization = organizationDocument({ owners: [params.request.user.id] });
 
     const sendSpy = spyOn(params.response, 'send');
     const statusSpy = spyOn(params.response, 'status').and.callThrough();

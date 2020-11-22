@@ -5,8 +5,12 @@ import { exit } from 'process';
 
 dotenv.config({ path: '.env.local' });
 
-import { OrganizationModel, UserModel, ProjectModel, TicketModel } from '../routes';
 import Logger from '../core/logger';
+
+import { OrganizationModel, organization } from '../routes/organizations';
+import { UserModel } from '../routes/users';
+import { ProjectModel } from '../routes/projects';
+import { TicketModel } from '../routes/tickets';
 
 import * as seeds from './seeds';
 import { DEV_USER } from './dev-user';
@@ -46,14 +50,14 @@ async function start(count: number) {
 
     for (let i = 0; i < count; i++) {
       const createdBy = seeder.get('users');
-      const organization = new OrganizationModel(seeds.organization({
+      const org = new OrganizationModel(organization({
         _id: uuid.v4(),
         owners: [createdBy],
         createdBy,
       }));
 
-      seeder.set(organization._id, 'organizations');
-      await organization.save();
+      seeder.set(org._id, 'organizations');
+      await org.save();
     }
 
     Logger.info(`creating projects(${count})...`);

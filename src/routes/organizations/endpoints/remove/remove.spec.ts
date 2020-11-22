@@ -3,6 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import * as mocks from '../../../../testing/mocks';
 
 import { OrganizationModel } from '../../organization.entity';
+import { organizationDocument } from '../../organization-document.mock';
 
 import { remove } from './remove';
 
@@ -38,7 +39,7 @@ describe('remove', () => {
   });
 
   it('should be invalid user', async () => {
-    const organization = mocks.organizationDocument();
+    const organization = organizationDocument();
     const statusSpy = spyOn(params.response, 'status').and.callThrough();
     const sendSpy = spyOn(params.response, 'send');
     const findSpy = jest.spyOn(OrganizationModel, 'findOne').mockReturnValueOnce({
@@ -53,7 +54,7 @@ describe('remove', () => {
   });
 
   it('should find and remove organization', async () => {
-    const organization = mocks.organizationDocument({ owners: [params.request.user.id] });
+    const organization = organizationDocument({ owners: [params.request.user.id] });
     const statusSpy = spyOn(params.response, 'status');
     const sendSpy = spyOn(params.response, 'send');
     const findSpy = jest.spyOn(OrganizationModel, 'findOne').mockReturnValueOnce({

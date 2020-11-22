@@ -3,6 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import * as mocks from '../../../../../../testing/mocks';
 
 import { OrganizationModel } from '../../../../../organizations/organization.entity';
+import { organizationDocument } from '../../../../../organizations/organization-document.mock';
 import { UserModel } from '../../../../user.entity';
 
 import { find } from './find';
@@ -14,9 +15,9 @@ describe('find', () => {
   };
 
   const organizations = [
-    mocks.organizationDocument(),
-    mocks.organizationDocument(),
-    mocks.organizationDocument(),
+    organizationDocument(),
+    organizationDocument(),
+    organizationDocument(),
   ];
 
   beforeEach(() => {

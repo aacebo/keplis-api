@@ -2,16 +2,17 @@ import { StatusCodes } from 'http-status-codes';
 
 import * as mocks from '../../../../testing/mocks';
 import { OrganizationModel } from '../../organization.entity';
+import { organizationDocument } from '../../organization-document.mock';
 
 import { create } from './create';
 
 jest.mock('../../organization.entity', () => ({
   OrganizationModel: class {
-    static findOne() { return Promise.resolve(mocks.organizationDocument()); }
+    static findOne() { return Promise.resolve(organizationDocument()); }
     toObject() { }
     save() { return Promise.resolve(); }
     populate() { return this; }
-    execPopulate() { return Promise.resolve(mocks.organizationDocument()); }
+    execPopulate() { return Promise.resolve(organizationDocument()); }
   },
 }));
 
@@ -24,7 +25,7 @@ describe('create', () => {
   beforeEach(() => {
     params.response = mocks.response();
     params.request = mocks.request({
-      body: mocks.organizationDocument().toObject(),
+      body: organizationDocument().toObject(),
     });
   });
 
@@ -34,7 +35,7 @@ describe('create', () => {
 
   it('should find organization', async () => {
     const statusSpy = spyOn(params.response, 'status').and.callThrough();
-    const findOrgSpy = jest.spyOn(OrganizationModel, 'findOne').mockResolvedValueOnce(mocks.organizationDocument() as any);
+    const findOrgSpy = jest.spyOn(OrganizationModel, 'findOne').mockResolvedValueOnce(organizationDocument() as any);
 
     await create(params.request, params.response);
 

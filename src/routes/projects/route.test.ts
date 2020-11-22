@@ -9,12 +9,14 @@ import * as seeds from '../../seed/seeds';
 import { startTestServer } from '../../testing/utils';
 
 import { Organization } from '../organizations/organization.entity';
+import { organization } from '../organizations/organization.mock';
+
 import { Project } from './project.entity';
 
 describe('[e2e] /organizations/:orgName/projects', () => {
   let request: supertest.SuperTest<supertest.Test>;
   let token: string;
-  let organization: Organization;
+  let org: Organization;
   let project: Project;
 
   beforeAll(async () => {
@@ -23,20 +25,20 @@ describe('[e2e] /organizations/:orgName/projects', () => {
   });
 
   beforeAll(async () => {
-    const payload = seeds.organization();
+    const payload = organization();
 
     const res = await request.post('/organizations')
       .set('Authorization', `Bearer ${token}`)
       .send(payload)
       .expect(StatusCodes.CREATED);
 
-    organization = res.body.data;
+    org = res.body.data;
   });
 
   beforeAll(async () => {
     const payload = seeds.project();
 
-    const res = await request.post(`/organizations/${organization.name}/projects`)
+    const res = await request.post(`/organizations/${org.name}/projects`)
       .set('Authorization', `Bearer ${token}`)
       .send(payload)
       .expect(StatusCodes.CREATED);
@@ -58,14 +60,14 @@ describe('[e2e] /organizations/:orgName/projects', () => {
     it('should create project', (done) => {
       const payload = seeds.project();
 
-      request.post(`/organizations/${organization.name}/projects`)
+      request.post(`/organizations/${org.name}/projects`)
         .set('Authorization', `Bearer ${token}`)
         .send(payload)
         .expect(StatusCodes.CREATED)
         .expect(res => {
           expect(res.body).toBeDefined();
           expect(res.body.data).toMatchObject(payload);
-          expect(res.body.data.organization).toEqual(organization._id);
+          expect(res.body.data.organization).toEqual(org._id);
           expect(res.body.data.createdBy._id).toEqual(DEV_USER._id);
         })
         .end(done);
@@ -81,7 +83,7 @@ describe('[e2e] /organizations/:orgName/projects', () => {
     });
 
     it('should find projects', (done) => {
-      request.get(`/organizations/${organization.name}/projects`)
+      request.get(`/organizations/${org.name}/projects`)
         .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
@@ -104,19 +106,19 @@ describe('[e2e] /organizations/:orgName/projects', () => {
     });
 
     it('should not find project', (done) => {
-      request.get(`/organizations/${organization.name}/projects/test`)
+      request.get(`/organizations/${org.name}/projects/test`)
         .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.NOT_FOUND)
         .end(done);
     });
 
     it('should find one project', (done) => {
-      request.get(`/organizations/${organization.name}/projects/${project.name}`)
+      request.get(`/organizations/${org.name}/projects/${project.name}`)
         .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
           expect(body).toBeDefined();
-          expect(body.data.organization).toEqual(organization._id);
+          expect(body.data.organization).toEqual(org._id);
           expect(body.data._id).toEqual(project._id);
         })
         .end(done);
@@ -133,7 +135,7 @@ describe('[e2e] /organizations/:orgName/projects', () => {
     });
 
     it('should not find project', (done) => {
-      request.put(`/organizations/${organization.name}/projects/test`)
+      request.put(`/organizations/${org.name}/projects/test`)
         .set('Authorization', `Bearer ${token}`)
         .send({ displayName: 'test' })
         .expect(StatusCodes.NOT_FOUND)
@@ -141,13 +143,13 @@ describe('[e2e] /organizations/:orgName/projects', () => {
     });
 
     it('should update project', (done) => {
-      request.put(`/organizations/${organization.name}/projects/${project.name}`)
+      request.put(`/organizations/${org.name}/projects/${project.name}`)
         .set('Authorization', `Bearer ${token}`)
         .send({ displayName: 'test' })
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
           expect(body).toBeDefined();
-          expect(body.data.organization).toEqual(organization._id);
+          expect(body.data.organization).toEqual(org._id);
           expect(body.data._id).toEqual(project._id);
           expect(isValid(Date.parse(body.data.updatedAt))).toBe(true);
         })
@@ -164,19 +166,19 @@ describe('[e2e] /organizations/:orgName/projects', () => {
     });
 
     it('should not find project', (done) => {
-      request.delete(`/organizations/${organization.name}/projects/test`)
+      request.delete(`/organizations/${org.name}/projects/test`)
         .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.NOT_FOUND)
         .end(done);
     });
 
     it('should remove project', (done) => {
-      request.delete(`/organizations/${organization.name}/projects/${project.name}`)
+      request.delete(`/organizations/${org.name}/projects/${project.name}`)
         .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
           expect(body).toBeDefined();
-          expect(body.data.organization).toEqual(organization._id);
+          expect(body.data.organization).toEqual(org._id);
           expect(body.data._id).toEqual(project._id);
           expect(isValid(Date.parse(body.data.removedAt))).toBe(true);
         })

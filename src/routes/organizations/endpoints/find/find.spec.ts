@@ -1,6 +1,7 @@
 import * as mocks from '../../../../testing/mocks';
 
 import { OrganizationModel } from '../../organization.entity';
+import { organizationDocument } from '../../organization-document.mock';
 
 import { find } from './find';
 
@@ -11,9 +12,9 @@ describe('find', () => {
   };
 
   const organizations = [
-    mocks.organizationDocument(),
-    mocks.organizationDocument(),
-    mocks.organizationDocument(),
+    organizationDocument(),
+    organizationDocument(),
+    organizationDocument(),
   ];
 
   beforeEach(() => {

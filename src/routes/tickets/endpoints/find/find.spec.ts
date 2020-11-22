@@ -2,6 +2,7 @@ import { StatusCodes } from 'http-status-codes';
 
 import * as mocks from '../../../../testing/mocks';
 import { OrganizationModel } from '../../../organizations/organization.entity';
+import { organizationDocument } from '../../../organizations/organization-document.mock';
 import { ProjectModel } from '../../../projects/project.entity';
 
 import { TicketModel } from '../../ticket.entity';
@@ -47,7 +48,7 @@ describe('find', () => {
   it('should not find project', async () => {
     const sendSpy = spyOn(params.response, 'send');
     const statusSpy = spyOn(params.response, 'status').and.callThrough();
-    const findOrgSpy = jest.spyOn(OrganizationModel, 'findOne').mockResolvedValueOnce(mocks.organizationDocument() as any);
+    const findOrgSpy = jest.spyOn(OrganizationModel, 'findOne').mockResolvedValueOnce(organizationDocument() as any);
     const findProjectSpy = jest.spyOn(ProjectModel, 'findOne').mockResolvedValueOnce(undefined);
 
     await find(params.request, params.response);
@@ -61,7 +62,7 @@ describe('find', () => {
   it('should find tickets', async () => {
     const sendSpy = spyOn(params.response, 'send');
     const statusSpy = spyOn(params.response, 'status');
-    const findOrgSpy = jest.spyOn(OrganizationModel, 'findOne').mockResolvedValueOnce(mocks.organizationDocument() as any);
+    const findOrgSpy = jest.spyOn(OrganizationModel, 'findOne').mockResolvedValueOnce(organizationDocument() as any);
     const findProjectSpy = jest.spyOn(ProjectModel, 'findOne').mockResolvedValueOnce(mocks.projectDocument() as any);
     const countTicketSpy = jest.spyOn(TicketModel, 'countDocuments').mockResolvedValueOnce(100);
     const findTicketSpy = jest.spyOn(TicketModel, 'find').mockReturnValueOnce({

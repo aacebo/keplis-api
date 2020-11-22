@@ -2,6 +2,7 @@ import { StatusCodes } from 'http-status-codes';
 
 import * as mocks from '../../../../testing/mocks';
 import { OrganizationModel } from '../../../organizations/organization.entity';
+import { organizationDocument } from '../../../organizations/organization-document.mock';
 import { ProjectModel } from '../../../projects/project.entity';
 
 import { create } from './create';
@@ -44,7 +45,7 @@ describe('create', () => {
   });
 
   it('should not find project', async () => {
-    const findSpy = jest.spyOn(OrganizationModel, 'findOne').mockResolvedValueOnce(mocks.organizationDocument() as any);
+    const findSpy = jest.spyOn(OrganizationModel, 'findOne').mockResolvedValueOnce(organizationDocument() as any);
     const findOneSpy = jest.spyOn(ProjectModel, 'findOne').mockResolvedValueOnce(undefined);
     const statusSpy = spyOn(params.response, 'status').and.callThrough();
 
@@ -56,7 +57,7 @@ describe('create', () => {
   });
 
   it('should create', async () => {
-    const findSpy = jest.spyOn(OrganizationModel, 'findOne').mockResolvedValueOnce(mocks.organizationDocument() as any);
+    const findSpy = jest.spyOn(OrganizationModel, 'findOne').mockResolvedValueOnce(organizationDocument() as any);
     const findOneSpy = jest.spyOn(ProjectModel, 'findOne').mockResolvedValueOnce(mocks.ticketDocument() as any);
     const statusSpy = spyOn(params.response, 'status').and.callThrough();
 

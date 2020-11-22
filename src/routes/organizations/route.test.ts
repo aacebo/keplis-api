@@ -4,16 +4,16 @@ import { isValid } from 'date-fns';
 
 import { devUserToken } from '../../seed/dev-user-token';
 import { DEV_USER } from '../../seed/dev-user';
-import * as seeds from '../../seed/seeds';
 
 import { startTestServer } from '../../testing/utils';
 
 import { Organization } from './organization.entity';
+import { organization } from './organization.mock';
 
 describe('[e2e] /organizations', () => {
   let request: supertest.SuperTest<supertest.Test>;
   let token: string;
-  let organization: Organization;
+  let org: Organization;
 
   beforeAll(async () => {
     request = await startTestServer();
@@ -21,19 +21,19 @@ describe('[e2e] /organizations', () => {
   });
 
   beforeAll(async () => {
-    const payload = seeds.organization();
+    const payload = organization();
 
     const res = await request.post('/organizations')
       .set('Authorization', `Bearer ${token}`)
       .send(payload)
       .expect(StatusCodes.CREATED);
 
-    organization = res.body.data;
+    org = res.body.data;
   });
 
   describe('create', () => {
     it('should create organization', (done) => {
-      const payload = seeds.organization();
+      const payload = organization();
 
       request.post('/organizations')
         .set('Authorization', `Bearer ${token}`)
@@ -73,12 +73,12 @@ describe('[e2e] /organizations', () => {
     });
 
     it('should find one organization', (done) => {
-      request.get(`/organizations/${organization.name}`)
+      request.get(`/organizations/${org.name}`)
         .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
           expect(body).toBeDefined();
-          expect(body.data._id).toEqual(organization._id);
+          expect(body.data._id).toEqual(org._id);
         })
         .end(done);
     });
@@ -94,13 +94,13 @@ describe('[e2e] /organizations', () => {
     });
 
     it('should update organization', (done) => {
-      request.put(`/organizations/${organization.name}`)
+      request.put(`/organizations/${org.name}`)
         .set('Authorization', `Bearer ${token}`)
         .send({ displayName: 'test' })
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
           expect(body).toBeDefined();
-          expect(body.data._id).toEqual(organization._id);
+          expect(body.data._id).toEqual(org._id);
           expect(isValid(Date.parse(body.data.updatedAt))).toBe(true);
         })
         .end(done);
@@ -116,12 +116,12 @@ describe('[e2e] /organizations', () => {
     });
 
     it('should remove organization', (done) => {
-      request.delete(`/organizations/${organization.name}`)
+      request.delete(`/organizations/${org.name}`)
         .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
           expect(body).toBeDefined();
-          expect(body.data._id).toEqual(organization._id);
+          expect(body.data._id).toEqual(org._id);
           expect(isValid(Date.parse(body.data.removedAt))).toBe(true);
         })
         .end(done);

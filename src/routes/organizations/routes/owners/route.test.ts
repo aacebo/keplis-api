@@ -4,16 +4,16 @@ import { isValid } from 'date-fns';
 
 import { devUserToken } from '../../../../seed/dev-user-token';
 import { DEV_USER } from '../../../../seed/dev-user';
-import * as seeds from '../../../../seed/seeds';
 
 import { startTestServer } from '../../../../testing/utils';
 
 import { Organization } from '../../organization.entity';
+import { organization } from '../../organization.mock';
 
 describe('[e2e] /organizations/:name/owners', () => {
   let request: supertest.SuperTest<supertest.Test>;
   let token: string;
-  let organization: Organization;
+  let org: Organization;
 
   beforeAll(async () => {
     request = await startTestServer();
@@ -21,19 +21,19 @@ describe('[e2e] /organizations/:name/owners', () => {
   });
 
   beforeAll(async () => {
-    const payload = seeds.organization();
+    const payload = organization();
 
     const res = await request.post('/organizations')
       .set('Authorization', `Bearer ${token}`)
       .send(payload)
       .expect(StatusCodes.CREATED);
 
-    organization = res.body.data;
+    org = res.body.data;
   });
 
   describe('find', () => {
     it('should find owners', (done) => {
-      request.get(`/organizations/${organization.name}/owners`)
+      request.get(`/organizations/${org.name}/owners`)
         .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
@@ -51,7 +51,7 @@ describe('[e2e] /organizations/:name/owners', () => {
 
   describe('update', () => {
     it('should remove owner', (done) => {
-      request.put(`/organizations/${organization.name}/owners`)
+      request.put(`/organizations/${org.name}/owners`)
         .set('Authorization', `Bearer ${token}`)
         .send({ username: DEV_USER.username })
         .expect(StatusCodes.OK)

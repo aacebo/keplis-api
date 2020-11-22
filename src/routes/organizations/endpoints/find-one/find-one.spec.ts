@@ -3,11 +3,12 @@ import { StatusCodes } from 'http-status-codes';
 import * as mocks from '../../../../testing/mocks';
 
 import { OrganizationModel } from '../../organization.entity';
+import { organizationDocument } from '../../organization-document.mock';
 
 import { findOne } from './find-one';
 
 describe('findOne', () => {
-  const organization = mocks.organizationDocument();
+  const organization = organizationDocument();
   const params = {
     request: mocks.request(),
     response: mocks.response(),

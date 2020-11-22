@@ -4,6 +4,7 @@ import * as mocks from '../../../../../../testing/mocks';
 import { UserModel } from '../../../../../users';
 
 import { OrganizationModel } from '../../../../organization.entity';
+import { organizationDocument } from '../../../../organization-document.mock';
 
 import { update } from './update';
 
@@ -41,7 +42,7 @@ describe('update', () => {
     const statusSpy = spyOn(params.response, 'status').and.callThrough();
     const findUserSpy = jest.spyOn(UserModel, 'findOne').mockResolvedValueOnce(undefined);
     const findOrgSpy = jest.spyOn(OrganizationModel, 'findOne').mockReturnValueOnce({
-      populate: () => Promise.resolve(mocks.organizationDocument()),
+      populate: () => Promise.resolve(organizationDocument()),
     } as any);
 
     await update(params.request, params.response);
@@ -55,7 +56,7 @@ describe('update', () => {
     const statusSpy = spyOn(params.response, 'status').and.callThrough();
     const findUserSpy = jest.spyOn(UserModel, 'findOne').mockResolvedValueOnce(mocks.userDocument() as any);
     const findOrgSpy = jest.spyOn(OrganizationModel, 'findOne').mockReturnValueOnce({
-      populate: () => Promise.resolve(mocks.organizationDocument()),
+      populate: () => Promise.resolve(organizationDocument()),
     } as any);
 
     await update(params.request, params.response);
@@ -67,7 +68,7 @@ describe('update', () => {
 
   it('should add user as owner', async () => {
     const user = mocks.userDocument();
-    const organization = mocks.organizationDocument({ owners: [params.request.user.id] });
+    const organization = organizationDocument({ owners: [params.request.user.id] });
 
     const statusSpy = spyOn(params.response, 'status');
     const sendSpy = spyOn(params.response, 'send');
@@ -92,7 +93,7 @@ describe('update', () => {
 
   it('should remove user from owners', async () => {
     const user = mocks.userDocument();
-    const organization = mocks.organizationDocument({ owners: [params.request.user.id, user._id] });
+    const organization = organizationDocument({ owners: [params.request.user.id, user._id] });
 
     const statusSpy = spyOn(params.response, 'status');
     const sendSpy = spyOn(params.response, 'send');

@@ -1,7 +1,8 @@
 import * as faker from 'faker';
 
 import { parseName } from '../../core/name';
-import { Organization } from '../../routes/organizations/organization.entity';
+
+import { Organization } from './organization.entity';
 
 export function organization(args?: Partial<Organization>) {
   const displayName = `${faker.company.companyName()} ${faker.random.alphaNumeric(5)}`;

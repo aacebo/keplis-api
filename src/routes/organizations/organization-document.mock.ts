@@ -1,8 +1,8 @@
 import * as uuid from 'uuid';
 import * as faker from 'faker';
 
-import { organization } from '../../seed/seeds/organization.seed';
-import { Organization } from '../../routes/organizations/organization.entity';
+import { organization } from './organization.mock';
+import { Organization } from './organization.entity';
 
 export function organizationDocument(args?: Partial<Organization>) {
   const value = organization({
@@ -16,7 +16,7 @@ export function organizationDocument(args?: Partial<Organization>) {
   const toObject = () => value;
 
   return {
-    ...toObject(),
+    ...value,
     toObject,
     save: () => Promise.resolve(value),
   };
