@@ -11,6 +11,7 @@ import { OrganizationModel, organization } from '../routes/organizations';
 import { UserModel, user } from '../routes/users';
 import { ProjectModel, project } from '../routes/projects';
 import { TicketModel, ticket } from '../routes/tickets';
+import { CommentModel, comment } from '../routes/comments';
 
 import { DEV_USER } from './dev-user';
 import { Seeder } from './seeder';
@@ -59,22 +60,26 @@ async function start(count: number) {
       await v.save();
     }
 
-    Logger.info(`creating projects(${count})...`);
+    Logger.info(`creating projects(${count * 2})...`);
 
-    for (let i = 0; i < count; i++) {
+    for (let i = 0; i < count * 2; i++) {
       const v = new ProjectModel(project({
         _id: uuid.v4(),
         organization: seeder.get('organizations'),
         createdBy: seeder.get('users'),
       }));
 
+      const org = await OrganizationModel.findById(v.organization);
+      org.projects.push(v._id);
+
       seeder.set(v._id, 'projects');
       await v.save();
+      await org.save();
     }
 
-    Logger.info(`creating tickets(${count})...`);
+    Logger.info(`creating tickets(${count * 4})...`);
 
-    for (let i = 0; i < count; i++) {
+    for (let i = 0; i < count * 4; i++) {
       const v = new TicketModel(ticket({
         _id: uuid.v4(),
         project: seeder.get('projects'),
@@ -82,6 +87,19 @@ async function start(count: number) {
       }));
 
       seeder.set(v._id, 'tickets');
+      await v.save();
+    }
+
+    Logger.info(`creating comments(${count * 8})...`);
+
+    for (let i = 0; i < count * 8; i++) {
+      const v = new CommentModel(comment({
+        _id: uuid.v4(),
+        ticket: seeder.get('tickets'),
+        createdBy: seeder.get('users'),
+      }));
+
+      seeder.set(v._id, 'comments');
       await v.save();
     }
 

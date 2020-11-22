@@ -1,16 +1,15 @@
 import * as uuid from 'uuid';
 import * as faker from 'faker';
 
-import { organization } from './organization.mock';
-import { Organization } from './organization.entity';
+import { comment } from './comment.mock';
+import { Comment } from './comment.entity';
 
-export function organizationDocument(args?: Partial<Organization>) {
-  const value = organization({
+export function commentDocument(args?: Partial<Comment>) {
+  const value = comment({
     _id: uuid.v4(),
+    ticket: uuid.v4(),
     createdBy: uuid.v4(),
     createdAt: faker.date.past(),
-    owners: [],
-    projects: [],
     ...args,
   });
 
@@ -20,5 +19,5 @@ export function organizationDocument(args?: Partial<Organization>) {
     ...value,
     toObject,
     save: () => Promise.resolve(value),
-  };
+  }
 }

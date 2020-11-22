@@ -32,5 +32,8 @@ export async function create(req: IAuthRequest<any, any, CreateProjectRequest>, 
   await project.save();
   const saved = await project.execPopulate();
 
+  organization.projects.push(saved._id);
+  await organization.save();
+
   res.status(StatusCodes.CREATED).send(saved.toObject());
 }

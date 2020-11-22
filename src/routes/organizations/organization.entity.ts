@@ -5,6 +5,7 @@ import { NAME_REGEX } from '../../core/name';
 
 export class Organization {
   readonly _id: string;
+  readonly projects: string[];
   image?: string;
   name: string;
   displayName: string;
@@ -28,6 +29,7 @@ export interface IOrganizationDocument extends Organization, mongoose.Document {
 
 export const OrganizationModel = mongoose.model<IOrganizationDocument>('Organization', new mongoose.Schema<Organization>({
   _id: { type: String, default: uuid.v4, required: true },
+  projects: [{ type: String, ref: 'Project' }],
   image: { type: String },
   name: { type: String, match: NAME_REGEX, unique: true, required: true, index: true },
   displayName: { type: String, required: true, index: true },

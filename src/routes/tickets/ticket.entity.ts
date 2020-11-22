@@ -29,7 +29,7 @@ export interface ITicketDocument extends Ticket, mongoose.Document {
 
 export const TicketModel = mongoose.model<ITicketDocument>('Ticket', new mongoose.Schema<Ticket>({
   _id: { type: String, default: uuid.v4, required: true },
-  project: { type: String, ref: 'User', required: true },
+  project: { type: String, ref: 'Project', required: true },
   number: { type: Number, unique: true },
   type: { type: TicketType, required: true, index: true },
   status: { type: TicketStatus, default: TicketStatus.Open, required: true, index: true },

@@ -5,6 +5,7 @@ interface IEntities {
   readonly organizations: string[];
   readonly projects: string[];
   readonly tickets: string[];
+  readonly comments: string[];
 }
 
 export class Seeder {
@@ -15,6 +16,7 @@ export class Seeder {
     organizations: [],
     projects: [],
     tickets: [],
+    comments: [],
   };
 
   get count() {

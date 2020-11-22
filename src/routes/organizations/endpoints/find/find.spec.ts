@@ -50,6 +50,7 @@ describe('find', () => {
       return {
         ...o,
         owners: o.owners.length,
+        projects: o.projects.length,
       };
     }));
   });

@@ -25,5 +25,6 @@ export async function find(req: IAuthRequest & IPaginationRequest, res: Response
   res.send(organizations.map(o => o.toObject()).map((o: Organization) => ({
     ...o,
     owners: o.owners.length,
+    projects: o.projects.length,
   })));
 }

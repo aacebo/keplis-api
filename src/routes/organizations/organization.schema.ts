@@ -6,6 +6,7 @@ import { Organization } from './organization.entity';
 
 export const OrganizationSchema = joi.object<Organization>({
   _id: joi.string().uuid({ version: 'uuidv4' }).required(),
+  projects: joi.array().items(joi.string().uuid({ version: 'uuidv4' })).required(),
   image: joi.string().uri(),
   name: joi.string().regex(NAME_REGEX).required(),
   displayName: joi.string().required(),
