@@ -4,7 +4,9 @@ import * as mocks from '../../../../../../testing/mocks';
 
 import { OrganizationModel } from '../../../../../organizations/organization.entity';
 import { organizationDocument } from '../../../../../organizations/organization-document.mock';
+
 import { UserModel } from '../../../../user.entity';
+import { userDocument } from '../../../../user-document.mock';
 
 import { find } from './find';
 
@@ -44,7 +46,7 @@ describe('find', () => {
 
   it('should find organizations', async () => {
     const sendSpy = spyOn(params.response, 'send');
-    const findOneSpy = jest.spyOn(UserModel, 'findOne').mockResolvedValueOnce(mocks.userDocument() as any);
+    const findOneSpy = jest.spyOn(UserModel, 'findOne').mockResolvedValueOnce(userDocument() as any);
     const countSpy = jest.spyOn(OrganizationModel, 'countDocuments').mockResolvedValueOnce(100);
     const findSpy = jest.spyOn(OrganizationModel, 'find').mockReturnValueOnce({
       sort: () => ({

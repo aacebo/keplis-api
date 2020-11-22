@@ -1,8 +1,8 @@
 import * as faker from 'faker';
 import * as uuid from 'uuid';
 
-import { user } from '../../seed/seeds/user.seed';
-import { User } from '../../routes/users/user.entity';
+import { user } from './user.mock';
+import { User } from './user.entity';
 
 export function userDocument(args?: Partial<User>) {
   const value = user({
@@ -14,7 +14,7 @@ export function userDocument(args?: Partial<User>) {
   const toObject = () => value;
 
   return {
-    ...toObject(),
+    ...value,
     toObject,
     save: () => Promise.resolve(value),
   };

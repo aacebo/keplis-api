@@ -3,11 +3,12 @@ import { StatusCodes } from 'http-status-codes';
 import * as mocks from '../../../../testing/mocks';
 
 import { UserModel } from '../../user.entity';
+import { userDocument } from '../../user-document.mock';
 
 import { findOne } from './find-one';
 
 describe('findOne', () => {
-  const user = mocks.userDocument();
+  const user = userDocument();
   const params = {
     request: mocks.request(),
     response: mocks.response(),

@@ -2,6 +2,7 @@ import { StatusCodes } from 'http-status-codes';
 import * as mocks from '../../../../testing/mocks';
 
 import { UserModel } from '../../user.entity';
+import { userDocument } from '../../user-document.mock';
 
 import { login } from './login';
 
@@ -37,7 +38,7 @@ describe('login', () => {
   });
 
   it('should find user and return token', async () => {
-    const findSpy = jest.spyOn(UserModel, 'findOne').mockResolvedValueOnce(mocks.userDocument() as any);
+    const findSpy = jest.spyOn(UserModel, 'findOne').mockResolvedValueOnce(userDocument() as any);
     const statusSpy = spyOn(params.response, 'status').and.callThrough();
     const sendSpy = spyOn(params.response, 'send');
 

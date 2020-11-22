@@ -3,6 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import * as mocks from '../../../../testing/mocks';
 
 import { UserModel } from '../../user.entity';
+import { userDocument } from '../../user-document.mock';
 
 import { remove } from './remove';
 
@@ -34,7 +35,7 @@ describe('remove', () => {
   });
 
   it('should be invalid user', async () => {
-    const user = mocks.userDocument();
+    const user = userDocument();
     const findSpy = jest.spyOn(UserModel, 'findOne').mockResolvedValueOnce(user as any);
     const statusSpy = spyOn(params.response, 'status').and.callThrough();
     const sendSpy = spyOn(params.response, 'send');
@@ -50,7 +51,7 @@ describe('remove', () => {
   });
 
   it('should find user and delete', async () => {
-    const user = mocks.userDocument();
+    const user = userDocument();
     const findSpy = jest.spyOn(UserModel, 'findOne').mockResolvedValueOnce(user as any);
     const statusSpy = spyOn(params.response, 'status');
     const sendSpy = spyOn(params.response, 'send');

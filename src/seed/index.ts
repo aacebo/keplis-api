@@ -8,11 +8,10 @@ dotenv.config({ path: '.env.local' });
 import Logger from '../core/logger';
 
 import { OrganizationModel, organization } from '../routes/organizations';
-import { UserModel } from '../routes/users';
+import { UserModel, user } from '../routes/users';
 import { ProjectModel, project } from '../routes/projects';
 import { TicketModel, ticket } from '../routes/tickets';
 
-import * as seeds from './seeds';
 import { DEV_USER } from './dev-user';
 import { Seeder } from './seeder';
 
@@ -41,9 +40,9 @@ async function start(count: number) {
     await devUser.save();
 
     for (let i = 0; i < count - 1; i++) {
-      const user = new UserModel(seeds.user({ _id: uuid.v4() }));
-      seeder.set(user._id, 'users');
-      await user.save();
+      const v = new UserModel(user({ _id: uuid.v4() }));
+      seeder.set(v._id, 'users');
+      await v.save();
     }
 
     Logger.info(`creating organizations(${count})...`);

@@ -1,6 +1,7 @@
 import * as mocks from '../../../../testing/mocks';
 
 import { UserModel } from '../../user.entity';
+import { userDocument } from '../../user-document.mock';
 
 import { find } from './find';
 
@@ -12,9 +13,9 @@ describe('find', () => {
   };
 
   const users = [
-    mocks.userDocument(),
-    mocks.userDocument(),
-    mocks.userDocument(),
+    userDocument(),
+    userDocument(),
+    userDocument(),
   ];
 
   beforeEach(() => {

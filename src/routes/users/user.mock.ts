@@ -1,7 +1,8 @@
 import * as faker from 'faker';
 
 import { parseName } from '../../core/name';
-import { User } from '../../routes/users/user.entity';
+
+import { User } from './user.entity';
 
 export function user(args?: Partial<User>) {
   const firstName = args?.firstName || `${faker.name.firstName()}${faker.random.alphaNumeric(5)}`;

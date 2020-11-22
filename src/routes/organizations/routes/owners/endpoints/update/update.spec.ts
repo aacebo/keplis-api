@@ -1,7 +1,7 @@
 import { StatusCodes } from 'http-status-codes';
 
 import * as mocks from '../../../../../../testing/mocks';
-import { UserModel } from '../../../../../users';
+import { UserModel, userDocument } from '../../../../../users';
 
 import { OrganizationModel } from '../../../../organization.entity';
 import { organizationDocument } from '../../../../organization-document.mock';
@@ -54,7 +54,7 @@ describe('update', () => {
 
   it('should be unauthorized', async () => {
     const statusSpy = spyOn(params.response, 'status').and.callThrough();
-    const findUserSpy = jest.spyOn(UserModel, 'findOne').mockResolvedValueOnce(mocks.userDocument() as any);
+    const findUserSpy = jest.spyOn(UserModel, 'findOne').mockResolvedValueOnce(userDocument() as any);
     const findOrgSpy = jest.spyOn(OrganizationModel, 'findOne').mockReturnValueOnce({
       populate: () => Promise.resolve(organizationDocument()),
     } as any);
@@ -67,7 +67,7 @@ describe('update', () => {
   });
 
   it('should add user as owner', async () => {
-    const user = mocks.userDocument();
+    const user = userDocument();
     const organization = organizationDocument({ owners: [params.request.user.id] });
 
     const statusSpy = spyOn(params.response, 'status');
@@ -92,7 +92,7 @@ describe('update', () => {
   });
 
   it('should remove user from owners', async () => {
-    const user = mocks.userDocument();
+    const user = userDocument();
     const organization = organizationDocument({ owners: [params.request.user.id, user._id] });
 
     const statusSpy = spyOn(params.response, 'status');
