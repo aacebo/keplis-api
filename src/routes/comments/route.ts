@@ -13,4 +13,10 @@ export const commentsRoute = express.Router()
   pagination,
   validateResponse(endpoints.FindCommentResponseSchema),
   endpoints.find,
+)
+.get(
+  '/organizations/:orgName/projects/:projectName/tickets/:ticketNumber/comments/:commentId',
+  validateResponse(endpoints.FindOneCommentResponseSchema),
+  endpoints.findOne,
 );
+
