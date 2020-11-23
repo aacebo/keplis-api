@@ -16,7 +16,7 @@ module.exports = {
     "!**/seed/**",
 
     "!**/index.ts",
-    "!**/route.ts",
+    "!**/*.route.ts",
     "!**/*.entity.ts",
     "!**/*.mock.ts",
     "!**/*.enum.ts",

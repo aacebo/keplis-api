@@ -8,7 +8,7 @@ import { FindOrganizationResponseSchema } from '../../../organizations/endpoints
 
 import * as endpoints from './endpoints';
 
-export const userOrganizationsRoute = express.Router()
+export const organizationsRoute = express.Router()
 .use(auth)
 .get(
   '/users/:username/organizations',

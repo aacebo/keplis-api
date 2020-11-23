@@ -40,4 +40,4 @@ export const usersRoute = express.Router()
   validateResponse(endpoints.LoginUserResponseSchema),
   endpoints.login,
 )
-.use(routes.userOrganizationsRoute);
+.use(routes.organizationsRoute);

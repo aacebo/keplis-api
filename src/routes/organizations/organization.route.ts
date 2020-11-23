@@ -8,7 +8,7 @@ import * as endpoints from './endpoints';
 import * as routes from './routes';
 
 export const organizationsRoute = express.Router()
-.use(routes.organizationOwnersRoute)
+.use(routes.ownersRoute)
 .use(auth)
 .get(
   '/organizations',

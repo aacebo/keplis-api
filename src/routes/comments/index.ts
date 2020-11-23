@@ -1,4 +1,4 @@
-export * from './route';
+export * from './comment.route';
 export * from './comment.entity';
 export * from './comment.schema';
 export * from './comment.mock';
