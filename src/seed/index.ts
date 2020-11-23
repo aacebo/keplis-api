@@ -103,6 +103,7 @@ async function start(count: number) {
       const v = new CommentModel(comment({
         _id: uuid.v4(),
         ticket: seeder.get('tickets'),
+        likes: [seeder.get('users')],
         createdBy: seeder.get('users'),
       }));
 

@@ -5,6 +5,7 @@ export class Comment {
   readonly _id: string;
   readonly ticket?: string;
   readonly comments: string[];
+  readonly likes: string[];
   body: string;
   readonly createdAt: Date;
   readonly createdBy: string;
@@ -24,6 +25,7 @@ export const CommentModel = mongoose.model<ICommentDocument>('Comment', new mong
   _id: { type: String, default: uuid.v4, required: true },
   ticket: { type: String, ref: 'Ticket' },
   comments: [{ type: String, ref: 'Comment' }],
+  likes: [{ type: String, ref: 'User' }],
   body: { type: String, required: true, index: true },
   createdAt: { type: Date, default: Date.now, required: true },
   createdBy: { type: String, ref: 'User', required: true },

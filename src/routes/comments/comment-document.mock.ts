@@ -9,6 +9,7 @@ export function commentDocument(args?: Partial<Comment>) {
     _id: uuid.v4(),
     ticket: uuid.v4(),
     comments: [],
+    likes: [],
     createdBy: uuid.v4(),
     createdAt: faker.date.past(),
     ...args,
