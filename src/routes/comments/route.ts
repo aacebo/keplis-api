@@ -15,7 +15,7 @@ export const commentsRoute = express.Router()
   endpoints.find,
 )
 .get(
-  '/organizations/:orgName/projects/:projectName/tickets/:ticketNumber/comments/:commentId',
+  '/comments/:commentId',
   validateResponse(endpoints.FindOneCommentResponseSchema),
   endpoints.findOne,
 )
@@ -26,13 +26,13 @@ export const commentsRoute = express.Router()
   endpoints.create,
 )
 .put(
-  '/organizations/:orgName/projects/:projectName/tickets/:ticketNumber/comments/:commentId',
+  '/comments/:commentId',
   validateBody(endpoints.UpdateCommentRequestSchema),
   validateResponse(endpoints.UpdateCommentResponseSchema),
   endpoints.update,
 )
 .delete(
-  '/organizations/:orgName/projects/:projectName/tickets/:ticketNumber/comments/:commentId',
+  '/comments/:commentId',
   validateResponse(endpoints.RemoveCommentResponseSchema),
   endpoints.remove,
 );

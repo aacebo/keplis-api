@@ -163,36 +163,15 @@ describe('[e2e] /organizations/:orgName/projects/:projectName/tickets/:ticketNum
   });
 
   describe('findOne', () => {
-    it('should not find organization', (done) => {
-      request.get(`/organizations/test/projects/${proj.name}/tickets/${tkt.number}/comments/${cmt._id}`)
-        .set('Authorization', `Bearer ${token}`)
-        .expect(StatusCodes.NOT_FOUND)
-        .end(done);
-    });
-
-    it('should not find project', (done) => {
-      request.get(`/organizations/${org.name}/projects/test/tickets/${tkt.number}/comments/${cmt._id}`)
-        .set('Authorization', `Bearer ${token}`)
-        .expect(StatusCodes.NOT_FOUND)
-        .end(done);
-    });
-
-    it('should not find ticket', (done) => {
-      request.get(`/organizations/${org.name}/projects/${proj.name}/tickets/5000/comments/${cmt._id}`)
-        .set('Authorization', `Bearer ${token}`)
-        .expect(StatusCodes.NOT_FOUND)
-        .end(done);
-    });
-
     it('should not find comment', (done) => {
-      request.get(`/organizations/${org.name}/projects/${proj.name}/tickets/5000/comments/test`)
+      request.get('/comments/test')
         .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.NOT_FOUND)
         .end(done);
     });
 
     it('should find one comment', (done) => {
-      request.get(`/organizations/${org.name}/projects/${proj.name}/tickets/${tkt.number}/comments/${cmt._id}`)
+      request.get(`/comments/${cmt._id}`)
         .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
@@ -205,32 +184,8 @@ describe('[e2e] /organizations/:orgName/projects/:projectName/tickets/:ticketNum
   });
 
   describe('update', () => {
-    it('should not find organization', (done) => {
-      request.put(`/organizations/test/projects/${proj.name}/tickets/${tkt.number}/comments/${cmt._id}`)
-        .set('Authorization', `Bearer ${token}`)
-        .send({ body: 'test' })
-        .expect(StatusCodes.NOT_FOUND)
-        .end(done);
-    });
-
-    it('should not find project', (done) => {
-      request.put(`/organizations/${org.name}/projects/test/tickets/${tkt.number}/comments/${cmt._id}`)
-        .set('Authorization', `Bearer ${token}`)
-        .send({ body: 'test' })
-        .expect(StatusCodes.NOT_FOUND)
-        .end(done);
-    });
-
-    it('should not find ticket', (done) => {
-      request.put(`/organizations/${org.name}/projects/${proj.name}/tickets/5000/comments/${cmt._id}`)
-        .set('Authorization', `Bearer ${token}`)
-        .send({ body: 'test' })
-        .expect(StatusCodes.NOT_FOUND)
-        .end(done);
-    });
-
     it('should not find comment', (done) => {
-      request.put(`/organizations/${org.name}/projects/${proj.name}/tickets/${tkt.number}/comments/test`)
+      request.put('/comments/test')
         .set('Authorization', `Bearer ${token}`)
         .send({ body: 'test' })
         .expect(StatusCodes.NOT_FOUND)
@@ -238,7 +193,7 @@ describe('[e2e] /organizations/:orgName/projects/:projectName/tickets/:ticketNum
     });
 
     it('should update comment', (done) => {
-      request.put(`/organizations/${org.name}/projects/${proj.name}/tickets/${tkt.number}/comments/${cmt._id}`)
+      request.put(`/comments/${cmt._id}`)
         .set('Authorization', `Bearer ${token}`)
         .send({ body: 'test' })
         .expect(StatusCodes.OK)
@@ -254,36 +209,15 @@ describe('[e2e] /organizations/:orgName/projects/:projectName/tickets/:ticketNum
   });
 
   describe('remove', () => {
-    it('should not find organization', (done) => {
-      request.delete(`/organizations/test/projects/${proj.name}/tickets/${tkt.number}/comments/${cmt._id}`)
-        .set('Authorization', `Bearer ${token}`)
-        .expect(StatusCodes.NOT_FOUND)
-        .end(done);
-    });
-
-    it('should not find project', (done) => {
-      request.delete(`/organizations/${org.name}/projects/test/tickets/${tkt.number}/comments/${cmt._id}`)
-        .set('Authorization', `Bearer ${token}`)
-        .expect(StatusCodes.NOT_FOUND)
-        .end(done);
-    });
-
-    it('should not find ticket', (done) => {
-      request.delete(`/organizations/${org.name}/projects/${proj.name}/tickets/5000/comments/${cmt._id}`)
-        .set('Authorization', `Bearer ${token}`)
-        .expect(StatusCodes.NOT_FOUND)
-        .end(done);
-    });
-
     it('should not find comment', (done) => {
-      request.delete(`/organizations/${org.name}/projects/${proj.name}/tickets/${tkt.number}/comments/test`)
+      request.delete('/comments/test')
         .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.NOT_FOUND)
         .end(done);
     });
 
     it('should remove comment', (done) => {
-      request.delete(`/organizations/${org.name}/projects/${proj.name}/tickets/${tkt.number}/comments/${cmt._id}`)
+      request.delete(`/comments/${cmt._id}`)
         .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
