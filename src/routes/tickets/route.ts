@@ -15,7 +15,7 @@ export const ticketsRoute = express.Router()
   endpoints.find,
 )
 .get(
-  '/organizations/:orgName/projects/:projectName/tickets/:ticketNumber',
+  '/tickets/:ticketNumber',
   validateResponse(endpoints.FindOneTicketResponseSchema),
   endpoints.findOne,
 )
@@ -26,13 +26,13 @@ export const ticketsRoute = express.Router()
   endpoints.create,
 )
 .put(
-  '/organizations/:orgName/projects/:projectName/tickets/:ticketNumber',
+  '/tickets/:ticketNumber',
   validateBody(endpoints.UpdateTicketRequestSchema),
   validateResponse(endpoints.UpdateTicketResponseSchema),
   endpoints.update,
 )
 .delete(
-  '/organizations/:orgName/projects/:projectName/tickets/:ticketNumber',
+  '/tickets/:ticketNumber',
   validateResponse(endpoints.RemoveTicketResponseSchema),
   endpoints.remove,
 );
