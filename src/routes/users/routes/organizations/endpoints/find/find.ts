@@ -32,12 +32,13 @@ export async function find(req: IAuthRequest & IPaginationRequest, res: Response
       .skip(req.pagination.skip)
       .limit(req.pagination.perPage)
       .populate('createdBy', '_id image username email'),
-      OrganizationModel.countDocuments(conditions),
+    OrganizationModel.countDocuments(conditions),
   ]);
 
   req.total = total;
   res.send(organizations.map(o => o.toObject()).map((o: Organization) => ({
     ...o,
     owners: o.owners.length,
+    projects: o.projects.length,
   })));
 }

@@ -5,6 +5,8 @@ import { devUserToken } from '../../../../seed/dev-user-token';
 import { DEV_USER } from '../../../../seed/dev-user';
 import { startTestServer } from '../../../../testing/utils';
 
+import { organization } from '../../../organizations';
+
 describe('[e2e] /users/:username/organizations', () => {
   let request: supertest.SuperTest<supertest.Test>;
   let token: string;
@@ -12,6 +14,15 @@ describe('[e2e] /users/:username/organizations', () => {
   beforeAll(async () => {
     request = await startTestServer();
     token = devUserToken();
+  });
+
+  beforeAll(async () => {
+    const payload = organization();
+
+    await request.post('/organizations')
+      .set('Authorization', `Bearer ${token}`)
+      .send(payload)
+      .expect(StatusCodes.CREATED);
   });
 
   describe('find', () => {
@@ -31,7 +42,7 @@ describe('[e2e] /users/:username/organizations', () => {
           expect(body.user).toBeDefined();
           expect(body.meta).toBeDefined();
           expect(body.links).toBeDefined();
-          expect(body.data.length).toEqual(0);
+          expect(body.data.length).toEqual(1);
         })
         .end(done);
     });
