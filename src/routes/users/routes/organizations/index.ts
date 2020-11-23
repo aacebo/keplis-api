@@ -1,1 +1,1 @@
-export * from './organizations.route';
+export * from './organization.route';

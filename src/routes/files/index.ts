@@ -1,1 +1,1 @@
-export * from './files.route';
+export * from './file.route';
