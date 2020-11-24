@@ -13,7 +13,7 @@ import { organization } from '../organizations/organization.mock';
 import { Project } from './project.entity';
 import { project } from './project.mock';
 
-describe('[e2e] /organizations/:orgName/projects', () => {
+describe('[e2e] /projects', () => {
   let request: supertest.SuperTest<supertest.Test>;
   let token: string;
   let org: Organization;
@@ -98,22 +98,15 @@ describe('[e2e] /organizations/:orgName/projects', () => {
   });
 
   describe('findOne', () => {
-    it('should not find organization', (done) => {
-      request.get(`/organizations/test/projects/${proj.name}`)
-        .set('Authorization', `Bearer ${token}`)
-        .expect(StatusCodes.NOT_FOUND)
-        .end(done);
-    });
-
     it('should not find project', (done) => {
-      request.get(`/organizations/${org.name}/projects/test`)
+      request.get('/projects/test')
         .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.NOT_FOUND)
         .end(done);
     });
 
     it('should find one project', (done) => {
-      request.get(`/organizations/${org.name}/projects/${proj.name}`)
+      request.get(`/projects/${proj.name}`)
         .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
@@ -126,16 +119,8 @@ describe('[e2e] /organizations/:orgName/projects', () => {
   });
 
   describe('update', () => {
-    it('should not find organization', (done) => {
-      request.put(`/organizations/test/projects/${proj.name}`)
-        .set('Authorization', `Bearer ${token}`)
-        .send({ displayName: 'test' })
-        .expect(StatusCodes.NOT_FOUND)
-        .end(done);
-    });
-
     it('should not find project', (done) => {
-      request.put(`/organizations/${org.name}/projects/test`)
+      request.put('/projects/test')
         .set('Authorization', `Bearer ${token}`)
         .send({ displayName: 'test' })
         .expect(StatusCodes.NOT_FOUND)
@@ -143,7 +128,7 @@ describe('[e2e] /organizations/:orgName/projects', () => {
     });
 
     it('should update project', (done) => {
-      request.put(`/organizations/${org.name}/projects/${proj.name}`)
+      request.put(`/projects/${proj.name}`)
         .set('Authorization', `Bearer ${token}`)
         .send({ displayName: 'test' })
         .expect(StatusCodes.OK)
@@ -158,22 +143,15 @@ describe('[e2e] /organizations/:orgName/projects', () => {
   });
 
   describe('remove', () => {
-    it('should not find organization', (done) => {
-      request.delete(`/organizations/test/projects/${proj.name}`)
-        .set('Authorization', `Bearer ${token}`)
-        .expect(StatusCodes.NOT_FOUND)
-        .end(done);
-    });
-
     it('should not find project', (done) => {
-      request.delete(`/organizations/${org.name}/projects/test`)
+      request.delete('/projects/test')
         .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.NOT_FOUND)
         .end(done);
     });
 
     it('should remove project', (done) => {
-      request.delete(`/organizations/${org.name}/projects/${proj.name}`)
+      request.delete(`/projects/${proj.name}`)
         .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {

@@ -15,7 +15,7 @@ export const projectsRoute = express.Router()
   endpoints.find,
 )
 .get(
-  '/organizations/:orgName/projects/:projectName',
+  '/projects/:projectName',
   validateResponse(endpoints.FindOneProjectResponseSchema),
   endpoints.findOne,
 )
@@ -26,13 +26,13 @@ export const projectsRoute = express.Router()
   endpoints.create,
 )
 .put(
-  '/organizations/:orgName/projects/:projectName',
+  '/projects/:projectName',
   validateBody(endpoints.UpdateProjectRequestSchema),
   validateResponse(endpoints.UpdateProjectResponseSchema),
   endpoints.update,
 )
 .delete(
-  '/organizations/:orgName/projects/:projectName',
+  '/projects/:projectName',
   validateResponse(endpoints.RemoveProjectResponseSchema),
   endpoints.remove,
 );
