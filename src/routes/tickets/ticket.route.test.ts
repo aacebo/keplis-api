@@ -16,7 +16,7 @@ import { project } from '../projects/project.mock';
 import { Ticket } from './ticket.entity';
 import { ticket } from './ticket.mock';
 
-describe('[e2e] /projects/:projectName/tickets', () => {
+describe('[e2e] /tickets', () => {
   let request: supertest.SuperTest<supertest.Test>;
   let token: string;
   let org: Organization;
