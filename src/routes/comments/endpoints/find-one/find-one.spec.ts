@@ -31,7 +31,9 @@ describe('findOne', () => {
     const sendSpy = spyOn(params.response, 'send');
     const statusSpy = spyOn(params.response, 'status').and.callThrough();
     const findCommentSpy = jest.spyOn(CommentModel, 'findOne').mockReturnValueOnce({
-      populate: (..._args: string[]) => Promise.resolve(undefined),
+      populate: () => ({
+        populate: () => Promise.resolve(undefined),
+      }),
     } as any);
 
     await findOne(params.request, params.response);
@@ -45,7 +47,9 @@ describe('findOne', () => {
     const sendSpy = spyOn(params.response, 'send');
     const statusSpy = spyOn(params.response, 'status');
     const findCommentSpy = jest.spyOn(CommentModel, 'findOne').mockReturnValueOnce({
-      populate: (..._args: string[]) => Promise.resolve(comment),
+      populate: () => ({
+        populate: () => Promise.resolve(comment),
+      }),
     } as any);
 
     await findOne(params.request, params.response);

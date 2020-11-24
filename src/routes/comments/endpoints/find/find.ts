@@ -48,7 +48,8 @@ export async function find(req: IPaginationRequest, res: Response) {
       .sort(req.pagination.sort.join(' '))
       .skip(req.pagination.skip)
       .limit(req.pagination.perPage)
-      .populate('createdBy', '_id image username email'),
+      .populate('createdBy', '_id image username email')
+      .populate('likes', '_id username'),
     CommentModel.countDocuments(conditions),
   ]);
 

@@ -92,7 +92,9 @@ describe('find', () => {
       sort: () => ({
         skip: () => ({
           limit: () => ({
-            populate: (..._args: string[]) => Promise.resolve(comments),
+            populate: () => ({
+              populate: () => Promise.resolve(comments),
+            }),
           }),
         }),
       }),

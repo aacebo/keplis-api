@@ -24,7 +24,9 @@ export async function update(req: IAuthRequest<any, any, UpdateCommentRequest>, 
 
   comment = Object.assign(comment, req.body);
   const saved = await comment.save();
-  const populated = await saved.populate('createdBy', '_id image username email').execPopulate();
+  const populated = await saved.populate('createdBy', '_id image username email')
+                               .populate('likes', '_id username')
+                               .execPopulate();
 
   res.send(populated.toObject());
 }

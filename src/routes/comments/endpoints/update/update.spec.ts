@@ -41,7 +41,9 @@ describe('update', () => {
     const comment = commentDocument();
     jest.spyOn(comment, 'save').mockResolvedValueOnce({
       populate: () => ({
-        execPopulate: () => Promise.resolve(comment),
+        populate: () => ({
+          execPopulate: () => Promise.resolve(comment),
+        }),
       }),
     } as any);
 
@@ -60,7 +62,9 @@ describe('update', () => {
     const comment = commentDocument({ createdBy: params.request.user.id });
     jest.spyOn(comment, 'save').mockResolvedValueOnce({
       populate: () => ({
-        execPopulate: () => Promise.resolve(comment),
+        populate: () => ({
+          execPopulate: () => Promise.resolve(comment),
+        }),
       }),
     } as any);
 

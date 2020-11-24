@@ -1,5 +1,7 @@
 import * as joi from 'joi';
 
+import { NAME_REGEX } from '../../core/name';
+
 import { Comment } from './comment.entity';
 
 export const CommentSchema = joi.object<Comment>({
@@ -13,3 +15,8 @@ export const CommentSchema = joi.object<Comment>({
   updatedAt: joi.date(),
   removedAt: joi.date(),
 });
+
+export const CommentLikesSchema = joi.array().items(joi.object({
+  _id: joi.string().uuid({ version: 'uuidv4' }).required(),
+  username: joi.string().regex(NAME_REGEX).required(),
+}));

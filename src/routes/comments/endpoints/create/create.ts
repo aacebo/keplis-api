@@ -43,7 +43,8 @@ export async function create(req: IAuthRequest<any, any, CreateCommentRequest>, 
     ...req.body,
     ticket: ticket._id,
     createdBy: req.user.id,
-  }).populate('createdBy', '_id image username email');
+  }).populate('createdBy', '_id image username email')
+    .populate('likes', '_id username');
 
   await comment.save();
   const saved = await comment.execPopulate();

@@ -22,7 +22,9 @@ export async function remove(req: IAuthRequest, res: Response) {
 
   comment.removedAt = new Date();
   const saved = await comment.save();
-  const populated = await saved.populate('createdBy', '_id image username email').execPopulate();
+  const populated = await saved.populate('createdBy', '_id image username email')
+                               .populate('likes', '_id username')
+                               .execPopulate();
 
   res.send(populated.toObject());
 }

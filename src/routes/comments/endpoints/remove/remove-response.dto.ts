@@ -1,7 +1,8 @@
 import { UserJoinSchema } from '../../../users';
 
-import { CommentSchema } from '../../comment.schema';
+import { CommentLikesSchema, CommentSchema } from '../../comment.schema';
 
 export const RemoveCommentResponseSchema = CommentSchema.append({
+  likes: CommentLikesSchema.required(),
   createdBy: UserJoinSchema.required(),
 });
