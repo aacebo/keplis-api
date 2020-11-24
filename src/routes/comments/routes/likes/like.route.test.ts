@@ -69,7 +69,7 @@ describe('[e2e] /comments/:commentId/likes', () => {
   beforeAll(async () => {
     const payload = comment();
 
-    const res = await request.post(`/organizations/${org.name}/projects/${proj.name}/tickets/${tkt.number}/comments`)
+    const res = await request.post(`/tickets/${tkt.number}/comments`)
       .set('Authorization', `Bearer ${token}`)
       .send(payload)
       .expect(StatusCodes.CREATED);

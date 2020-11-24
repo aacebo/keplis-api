@@ -19,7 +19,7 @@ import { ticket } from '../tickets/ticket.mock';
 import { Comment } from './comment.entity';
 import { comment } from './comment.mock';
 
-describe('[e2e] /organizations/:orgName/projects/:projectName/tickets/:ticketNumber/comments', () => {
+describe('[e2e] /tickets/:ticketNumber/comments', () => {
   let request: supertest.SuperTest<supertest.Test>;
   let token: string;
   let org: Organization;
@@ -69,7 +69,7 @@ describe('[e2e] /organizations/:orgName/projects/:projectName/tickets/:ticketNum
   beforeAll(async () => {
     const payload = comment();
 
-    const res = await request.post(`/organizations/${org.name}/projects/${proj.name}/tickets/${tkt.number}/comments`)
+    const res = await request.post(`/tickets/${tkt.number}/comments`)
       .set('Authorization', `Bearer ${token}`)
       .send(payload)
       .expect(StatusCodes.CREATED);
@@ -78,30 +78,10 @@ describe('[e2e] /organizations/:orgName/projects/:projectName/tickets/:ticketNum
   });
 
   describe('create', () => {
-    it('should not find organization', (done) => {
-      const payload = comment();
-
-      request.post(`/organizations/test/projects/${proj.name}/tickets/${tkt.number}/comments`)
-        .set('Authorization', `Bearer ${token}`)
-        .send(payload)
-        .expect(StatusCodes.NOT_FOUND)
-        .end(done);
-    });
-
-    it('should not find project', (done) => {
-      const payload = comment();
-
-      request.post(`/organizations/${org.name}/projects/test/tickets/${tkt.number}/comments`)
-        .set('Authorization', `Bearer ${token}`)
-        .send(payload)
-        .expect(StatusCodes.NOT_FOUND)
-        .end(done);
-    });
-
     it('should not find ticket', (done) => {
       const payload = comment();
 
-      request.post(`/organizations/${org.name}/projects/${proj.name}/tickets/5000/comments`)
+      request.post('/tickets/5000/comments')
         .set('Authorization', `Bearer ${token}`)
         .send(payload)
         .expect(StatusCodes.NOT_FOUND)
@@ -111,7 +91,7 @@ describe('[e2e] /organizations/:orgName/projects/:projectName/tickets/:ticketNum
     it('should create comment', (done) => {
       const payload = comment();
 
-      request.post(`/organizations/${org.name}/projects/${proj.name}/tickets/${tkt.number}/comments`)
+      request.post(`/tickets/${tkt.number}/comments`)
         .set('Authorization', `Bearer ${token}`)
         .send(payload)
         .expect(StatusCodes.CREATED)
@@ -126,29 +106,15 @@ describe('[e2e] /organizations/:orgName/projects/:projectName/tickets/:ticketNum
   });
 
   describe('find', () => {
-    it('should not find organization', (done) => {
-      request.get(`/organizations/test/projects/${proj.name}/tickets/${tkt.number}/comments`)
-        .set('Authorization', `Bearer ${token}`)
-        .expect(StatusCodes.NOT_FOUND)
-        .end(done);
-    });
-
-    it('should not find project', (done) => {
-      request.get(`/organizations/${org.name}/projects/test/tickets/${tkt.number}/comments`)
-        .set('Authorization', `Bearer ${token}`)
-        .expect(StatusCodes.NOT_FOUND)
-        .end(done);
-    });
-
     it('should not find ticket', (done) => {
-      request.get(`/organizations/${org.name}/projects/${proj.name}/tickets/5000/comments`)
+      request.get('/tickets/5000/comments')
         .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.NOT_FOUND)
         .end(done);
     });
 
     it('should find comments', (done) => {
-      request.get(`/organizations/${org.name}/projects/${proj.name}/tickets/${tkt.number}/comments`)
+      request.get(`/tickets/${tkt.number}/comments`)
         .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {

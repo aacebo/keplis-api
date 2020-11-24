@@ -11,7 +11,7 @@ export const commentsRoute = express.Router()
 .use(auth)
 .use(routes.likesRoute)
 .get(
-  '/organizations/:orgName/projects/:projectName/tickets/:ticketNumber/comments',
+  '/tickets/:ticketNumber/comments',
   pagination,
   validateResponse(endpoints.FindCommentResponseSchema),
   endpoints.find,
@@ -22,7 +22,7 @@ export const commentsRoute = express.Router()
   endpoints.findOne,
 )
 .post(
-  '/organizations/:orgName/projects/:projectName/tickets/:ticketNumber/comments',
+  '/tickets/:ticketNumber/comments',
   validateBody(endpoints.CreateCommentRequestSchema),
   validateResponse(endpoints.CreateCommentResponseSchema),
   endpoints.create,
