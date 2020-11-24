@@ -1,6 +1,6 @@
 import * as joi from 'joi';
 
-import { NAME_REGEX } from '../../../../core/name';
+import { NAME_REGEX } from '../../../../../../core/name';
 
 export class CreateProjectRequest {
   readonly name: string;

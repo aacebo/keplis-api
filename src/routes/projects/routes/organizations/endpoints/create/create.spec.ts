@@ -1,15 +1,16 @@
 import { StatusCodes } from 'http-status-codes';
 
-import * as mocks from '../../../../testing/mocks';
-import { OrganizationModel } from '../../../organizations/organization.entity';
-import { organizationDocument } from '../../../organizations/organization-document.mock';
+import * as mocks from '../../../../../../testing/mocks';
 
-import { ProjectModel } from '../../project.entity';
-import { projectDocument } from '../../project-document.mock';
+import { OrganizationModel } from '../../../../../organizations/organization.entity';
+import { organizationDocument } from '../../../../../organizations/organization-document.mock';
+
+import { ProjectModel } from '../../../../project.entity';
+import { projectDocument } from '../../../../project-document.mock';
 
 import { create } from './create';
 
-jest.mock('../../project.entity', () => ({
+jest.mock('../../../../project.entity', () => ({
   ProjectModel: class {
     static findOne() { return Promise.resolve(projectDocument()); }
     toObject() { }

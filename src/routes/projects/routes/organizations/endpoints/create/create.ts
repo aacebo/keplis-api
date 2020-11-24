@@ -1,10 +1,10 @@
 import { Response } from 'express';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 
-import { IAuthRequest } from '../../../../core/auth';
-import { OrganizationModel } from '../../../organizations/organization.entity';
+import { IAuthRequest } from '../../../../../../core/auth';
+import { OrganizationModel } from '../../../../../organizations/organization.entity';
 
-import { ProjectModel } from '../../project.entity';
+import { ProjectModel } from '../../../../project.entity';
 
 import { CreateProjectRequest } from './create-request.dto';
 

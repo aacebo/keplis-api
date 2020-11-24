@@ -1,12 +1,12 @@
 import { StatusCodes } from 'http-status-codes';
 
-import * as mocks from '../../../../testing/mocks';
+import * as mocks from '../../../../../../testing/mocks';
 
-import { OrganizationModel } from '../../../organizations/organization.entity';
-import { organizationDocument } from '../../../organizations/organization-document.mock';
+import { OrganizationModel } from '../../../../../organizations/organization.entity';
+import { organizationDocument } from '../../../../../organizations/organization-document.mock';
 
-import { ProjectModel } from '../../project.entity';
-import { projectDocument } from '../../project-document.mock';
+import { ProjectModel } from '../../../../project.entity';
+import { projectDocument } from '../../../../project-document.mock';
 
 import { find } from './find';
 
