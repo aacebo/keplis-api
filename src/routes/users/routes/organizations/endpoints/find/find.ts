@@ -1,41 +1,17 @@
-import { MongooseFilterQuery } from 'mongoose';
 import { Response } from 'express';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 
-import { IPaginationRequest } from '../../../../../../core/pagination';
 import { IAuthRequest } from '../../../../../../core/auth';
+import { OrganizationModel } from '../../../../../organizations/organization.entity';
 
-import { OrganizationModel, IOrganizationDocument, Organization } from '../../../../../organizations/organization.entity';
+export async function find(req: IAuthRequest, res: Response) {
+  const organization = await OrganizationModel.findOne({ name: req.params.orgName })
+                                              .populate('owners', '_id image username email');
 
-import { UserModel } from '../../../../user.entity';
-
-export async function find(req: IAuthRequest & IPaginationRequest, res: Response) {
-  const user = await UserModel.findOne({ username: req.params.username });
-
-  if (!user) {
-    res.status(StatusCodes.NOT_FOUND).send(`User ${ReasonPhrases.NOT_FOUND}`);
+  if (!organization) {
+    res.status(StatusCodes.NOT_FOUND).send(`Organization ${ReasonPhrases.NOT_FOUND}`);
     return;
   }
 
-  const conditions: MongooseFilterQuery<Pick<IOrganizationDocument, keyof IOrganizationDocument>> = {
-    owners: { $in: [user._id] },
-    displayName: { $regex: req.pagination.filter, $options: 'i' },
-    removedAt: { $eq: undefined },
-  };
-
-  const [organizations, total] = await Promise.all([
-    OrganizationModel.find(conditions)
-      .sort(req.pagination.sort.join(' '))
-      .skip(req.pagination.skip)
-      .limit(req.pagination.perPage)
-      .populate('createdBy', '_id image username email'),
-    OrganizationModel.countDocuments(conditions),
-  ]);
-
-  req.total = total;
-  res.send(organizations.map(o => o.toObject()).map((o: Organization) => ({
-    ...o,
-    owners: o.owners.length,
-    projects: o.projects.length,
-  })));
+  res.send(organization.toObject().owners);
 }

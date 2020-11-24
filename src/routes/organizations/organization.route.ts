@@ -8,8 +8,9 @@ import * as endpoints from './endpoints';
 import * as routes from './routes';
 
 export const organizationsRoute = express.Router()
-.use(routes.ownersRoute)
 .use(auth)
+.use(routes.ownersRoute)
+.use(routes.usersRoute)
 .get(
   '/organizations',
   pagination,
