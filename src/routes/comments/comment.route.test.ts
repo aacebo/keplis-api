@@ -58,7 +58,7 @@ describe('[e2e] /tickets/:ticketNumber/comments', () => {
     const payload = ticket();
     delete payload.status;
 
-    const res = await request.post(`/organizations/${org.name}/projects/${proj.name}/tickets`)
+    const res = await request.post(`/projects/${proj.name}/tickets`)
       .set('Authorization', `Bearer ${token}`)
       .send(payload)
       .expect(StatusCodes.CREATED);

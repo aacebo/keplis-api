@@ -9,7 +9,7 @@ import * as endpoints from './endpoints';
 export const ticketsRoute = express.Router()
 .use(auth)
 .get(
-  '/organizations/:orgName/projects/:projectName/tickets',
+  '/projects/:projectName/tickets',
   pagination,
   validateResponse(endpoints.FindTicketResponseSchema),
   endpoints.find,
@@ -20,7 +20,7 @@ export const ticketsRoute = express.Router()
   endpoints.findOne,
 )
 .post(
-  '/organizations/:orgName/projects/:projectName/tickets',
+  '/projects/:projectName/tickets',
   validateBody(endpoints.CreateTicketRequestSchema),
   validateResponse(endpoints.CreateTicketResponseSchema),
   endpoints.create,

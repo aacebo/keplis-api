@@ -16,7 +16,7 @@ import { project } from '../projects/project.mock';
 import { Ticket } from './ticket.entity';
 import { ticket } from './ticket.mock';
 
-describe('[e2e] /organizations/:orgName/projects/:projectName/tickets', () => {
+describe('[e2e] /projects/:projectName/tickets', () => {
   let request: supertest.SuperTest<supertest.Test>;
   let token: string;
   let org: Organization;
@@ -54,7 +54,7 @@ describe('[e2e] /organizations/:orgName/projects/:projectName/tickets', () => {
     const payload = ticket();
     delete payload.status;
 
-    const res = await request.post(`/organizations/${org.name}/projects/${proj.name}/tickets`)
+    const res = await request.post(`/projects/${proj.name}/tickets`)
       .set('Authorization', `Bearer ${token}`)
       .send(payload)
       .expect(StatusCodes.CREATED);
@@ -63,22 +63,11 @@ describe('[e2e] /organizations/:orgName/projects/:projectName/tickets', () => {
   });
 
   describe('create', () => {
-    it('should not find organization', (done) => {
-      const payload = ticket();
-      delete payload.status;
-
-      request.post(`/organizations/test/projects/${proj.name}/tickets`)
-        .set('Authorization', `Bearer ${token}`)
-        .send(payload)
-        .expect(StatusCodes.NOT_FOUND)
-        .end(done);
-    });
-
     it('should not find project', (done) => {
       const payload = ticket();
       delete payload.status;
 
-      request.post(`/organizations/${org.name}/projects/test/tickets`)
+      request.post('/projects/test/tickets')
         .set('Authorization', `Bearer ${token}`)
         .send(payload)
         .expect(StatusCodes.NOT_FOUND)
@@ -89,7 +78,7 @@ describe('[e2e] /organizations/:orgName/projects/:projectName/tickets', () => {
       const payload = ticket();
       delete payload.status;
 
-      request.post(`/organizations/${org.name}/projects/${proj.name}/tickets`)
+      request.post(`/projects/${proj.name}/tickets`)
         .set('Authorization', `Bearer ${token}`)
         .send(payload)
         .expect(StatusCodes.CREATED)
@@ -104,22 +93,15 @@ describe('[e2e] /organizations/:orgName/projects/:projectName/tickets', () => {
   });
 
   describe('find', () => {
-    it('should not find organization', (done) => {
-      request.get(`/organizations/test/projects/${proj.name}/tickets`)
-        .set('Authorization', `Bearer ${token}`)
-        .expect(StatusCodes.NOT_FOUND)
-        .end(done);
-    });
-
     it('should not find project', (done) => {
-      request.get(`/organizations/${org.name}/projects/test/tickets`)
+      request.get('/projects/test/tickets')
         .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.NOT_FOUND)
         .end(done);
     });
 
     it('should find tickets', (done) => {
-      request.get(`/organizations/${org.name}/projects/${proj.name}/tickets`)
+      request.get(`/projects/${proj.name}/tickets`)
         .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {

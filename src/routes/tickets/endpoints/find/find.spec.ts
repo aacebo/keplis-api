@@ -1,8 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 
 import * as mocks from '../../../../testing/mocks';
-import { OrganizationModel } from '../../../organizations/organization.entity';
-import { organizationDocument } from '../../../organizations/organization-document.mock';
 
 import { ProjectModel } from '../../../projects/project.entity';
 import { projectDocument } from '../../../projects/project-document.mock';
@@ -27,7 +25,7 @@ describe('find', () => {
   beforeEach(() => {
     params.response = mocks.response();
     params.request = mocks.request({
-      params: { orgName: 'test', projectName: 'test' },
+      params: { projectName: 'test' },
       pagination: { filter: '', skip: 0, sort: [] },
     });
   });
@@ -36,27 +34,13 @@ describe('find', () => {
     jest.resetAllMocks();
   });
 
-  it('should not find organization', async () => {
-    const sendSpy = spyOn(params.response, 'send');
-    const statusSpy = spyOn(params.response, 'status').and.callThrough();
-    const findOrgSpy = jest.spyOn(OrganizationModel, 'findOne').mockResolvedValueOnce(undefined);
-
-    await find(params.request, params.response);
-
-    expect(findOrgSpy).toHaveBeenCalledTimes(1);
-    expect(statusSpy).toHaveBeenCalledWith(StatusCodes.NOT_FOUND);
-    expect(sendSpy).not.toHaveBeenCalled();
-  });
-
   it('should not find project', async () => {
     const sendSpy = spyOn(params.response, 'send');
     const statusSpy = spyOn(params.response, 'status').and.callThrough();
-    const findOrgSpy = jest.spyOn(OrganizationModel, 'findOne').mockResolvedValueOnce(organizationDocument() as any);
     const findProjectSpy = jest.spyOn(ProjectModel, 'findOne').mockResolvedValueOnce(undefined);
 
     await find(params.request, params.response);
 
-    expect(findOrgSpy).toHaveBeenCalledTimes(1);
     expect(findProjectSpy).toHaveBeenCalledTimes(1);
     expect(statusSpy).toHaveBeenCalledWith(StatusCodes.NOT_FOUND);
     expect(sendSpy).not.toHaveBeenCalled();
@@ -65,7 +49,6 @@ describe('find', () => {
   it('should find tickets', async () => {
     const sendSpy = spyOn(params.response, 'send');
     const statusSpy = spyOn(params.response, 'status');
-    const findOrgSpy = jest.spyOn(OrganizationModel, 'findOne').mockResolvedValueOnce(organizationDocument() as any);
     const findProjectSpy = jest.spyOn(ProjectModel, 'findOne').mockResolvedValueOnce(projectDocument() as any);
     const countTicketSpy = jest.spyOn(TicketModel, 'countDocuments').mockResolvedValueOnce(100);
     const findTicketSpy = jest.spyOn(TicketModel, 'find').mockReturnValueOnce({
@@ -80,7 +63,6 @@ describe('find', () => {
 
     await find(params.request, params.response);
 
-    expect(findOrgSpy).toHaveBeenCalledTimes(1);
     expect(findProjectSpy).toHaveBeenCalledTimes(1);
     expect(countTicketSpy).toHaveBeenCalledTimes(1);
     expect(findTicketSpy).toHaveBeenCalledTimes(1);

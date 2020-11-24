@@ -27,7 +27,7 @@ describe('create', () => {
   beforeEach(() => {
     params.response = mocks.response();
     params.request = mocks.request({
-      params: { orgName: 'test', projectName: 'test', ticketNumber: '1' },
+      params: { ticketNumber: '1' },
       body: commentDocument().toObject(),
     });
   });
