@@ -18,10 +18,7 @@ export async function find(req: IAuthRequest & IPaginationRequest, res: Response
   }
 
   const conditions: MongooseFilterQuery<Pick<IOrganizationDocument, keyof IOrganizationDocument>> = {
-    $or: [
-      { owners: { $in: [user._id] } },
-      { viewers: { $in: [user._id] } },
-    ],
+    owners: { $in: [user._id] },
     displayName: { $regex: req.pagination.filter, $options: 'i' },
     removedAt: { $eq: undefined },
   };
