@@ -19,7 +19,7 @@ import { ticket } from '../tickets/ticket.mock';
 import { Comment } from './comment.entity';
 import { comment } from './comment.mock';
 
-describe('[e2e] /tickets/:ticketNumber/comments', () => {
+describe('[e2e] /comments', () => {
   let request: supertest.SuperTest<supertest.Test>;
   let token: string;
   let org: Organization;
