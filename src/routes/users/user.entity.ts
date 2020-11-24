@@ -29,7 +29,7 @@ export interface IUserDocument extends User, mongoose.Document {
 
 export const UserModel = mongoose.model<IUserDocument>('User', new mongoose.Schema<User>({
   _id: { type: String, default: uuid.v4, required: true },
-  origin: { type: UserOrigin },
+  origin: { type: String, enum: Object.values(UserOrigin) },
   image: { type: String },
   username: { type: String, match: NAME_REGEX, required: true, unique: true, index: true },
   firstName: { type: String, required: true },

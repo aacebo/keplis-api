@@ -8,6 +8,7 @@ export function ticketDocument(args?: Partial<Ticket>) {
   const value = ticket({
     _id: uuid.v4(),
     comments: [],
+    labels: [],
     createdAt: faker.date.past(),
     ...args,
   });
