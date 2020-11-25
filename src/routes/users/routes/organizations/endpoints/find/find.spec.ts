@@ -5,6 +5,9 @@ import * as mocks from '../../../../../../testing/mocks';
 import { OrganizationModel } from '../../../../../organizations/organization.entity';
 import { organizationDocument } from '../../../../../organizations/organization-document.mock';
 
+import { UserModel } from '../../../../user.entity';
+import { userDocument } from '../../../../user-document.mock';
+
 import { find } from './find';
 
 describe('find', () => {
@@ -13,40 +16,62 @@ describe('find', () => {
     response: mocks.response(),
   };
 
+  const organizations = [
+    organizationDocument(),
+    organizationDocument(),
+    organizationDocument(),
+  ];
+
   beforeEach(() => {
-    params.request = mocks.request({ params: { orgName: 'test' } });
     params.response = mocks.response();
+    params.request = mocks.request({
+      pagination: { filter: '', skip: 0, sort: [] },
+      params: { username: 'test' },
+    });
   });
 
   afterEach(() => {
     jest.resetAllMocks();
   });
 
-  it('should not find organization', async () => {
-    const sendSpy = spyOn(params.response, 'send');
+  it('should not find user', async () => {
     const statusSpy = spyOn(params.response, 'status').and.callThrough();
-    const findSpy = jest.spyOn(OrganizationModel, 'findOne').mockReturnValueOnce({
-      populate: () => Promise.resolve(undefined),
-    } as any);
+    const findOneSpy = jest.spyOn(UserModel, 'findOne').mockResolvedValueOnce(undefined);
 
     await find(params.request, params.response);
 
-    expect(sendSpy).not.toHaveBeenCalled();
-    expect(findSpy).toHaveBeenCalledTimes(1);
+    expect(findOneSpy).toHaveBeenCalledTimes(1);
     expect(statusSpy).toHaveBeenCalledWith(StatusCodes.NOT_FOUND);
   });
 
-  it('should find organization owners', async () => {
+  it('should find organizations', async () => {
     const sendSpy = spyOn(params.response, 'send');
-    const statusSpy = spyOn(params.response, 'status').and.callThrough();
-    const findSpy = jest.spyOn(OrganizationModel, 'findOne').mockReturnValueOnce({
-      populate: () => Promise.resolve(organizationDocument()),
+    const findOneSpy = jest.spyOn(UserModel, 'findOne').mockResolvedValueOnce(userDocument() as any);
+    const countSpy = jest.spyOn(OrganizationModel, 'countDocuments').mockResolvedValueOnce(100);
+    const findSpy = jest.spyOn(OrganizationModel, 'find').mockReturnValueOnce({
+      sort: () => ({
+        skip: () => ({
+          limit: () => ({
+            populate: (..._args: string[]) => Promise.resolve(organizations),
+          }),
+        }),
+      }),
     } as any);
 
     await find(params.request, params.response);
 
-    expect(sendSpy).toHaveBeenCalledTimes(1);
-    expect(statusSpy).not.toHaveBeenCalled();
+    expect(findOneSpy).toHaveBeenCalledTimes(1);
     expect(findSpy).toHaveBeenCalledTimes(1);
+    expect(countSpy).toHaveBeenCalledTimes(1);
+    expect(sendSpy).toHaveBeenCalledWith(organizations.map(o => {
+      delete o.toObject;
+      delete o.save;
+
+      return {
+        ...o,
+        owners: o.owners.length,
+        projects: o.projects.length,
+      };
+    }));
   });
 });

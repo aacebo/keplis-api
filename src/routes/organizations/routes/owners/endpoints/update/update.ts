@@ -3,9 +3,9 @@ import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 
 import { IAuthRequest } from '../../../../../../core/auth';
 
-import { OrganizationModel } from '../../../../../organizations/organization.entity';
+import { UserModel } from '../../../../../users/user.entity';
 
-import { UserModel } from '../../../../user.entity';
+import { OrganizationModel } from '../../../../organization.entity';
 
 import { UpdateOrganizationOwnerRequest } from './update-request.dto';
 

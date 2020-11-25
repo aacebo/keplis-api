@@ -2,11 +2,11 @@ import { StatusCodes } from 'http-status-codes';
 
 import * as mocks from '../../../../../../testing/mocks';
 
-import { OrganizationModel } from '../../../../../organizations/organization.entity';
-import { organizationDocument } from '../../../../../organizations/organization-document.mock';
+import { UserModel } from '../../../../../users/user.entity';
+import { userDocument } from '../../../../../users/user-document.mock';
 
-import { UserModel } from '../../../../user.entity';
-import { userDocument } from '../../../../user-document.mock';
+import { OrganizationModel } from '../../../../organization.entity';
+import { organizationDocument } from '../../../../organization-document.mock';
 
 import { update } from './update';
 

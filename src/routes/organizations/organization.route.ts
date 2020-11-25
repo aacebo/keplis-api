@@ -9,7 +9,7 @@ import * as routes from './routes';
 
 export const organizationsRoute = express.Router()
 .use(auth)
-.use(routes.usersRoute)
+.use(routes.ownersRoute)
 .get(
   '/organizations',
   pagination,
