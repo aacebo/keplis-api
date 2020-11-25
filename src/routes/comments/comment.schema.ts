@@ -8,7 +8,7 @@ import { Comment } from './comment.entity';
 
 export const CommentSchema = joi.object<Comment>({
   _id: joi.string().uuid({ version: 'uuidv4' }).required(),
-  ticket: joi.string().uuid({ version: 'uuidv4' }).required(),
+  ticket: joi.string().uuid({ version: 'uuidv4' }),
   comments: joi.array().items(joi.string().uuid({ version: 'uuidv4' })).required(),
   likes: joi.array().items(joi.string().uuid({ version: 'uuidv4' })).required(),
   body: joi.string().required(),

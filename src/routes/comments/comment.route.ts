@@ -10,6 +10,7 @@ import * as routes from './routes';
 export const commentsRoute = express.Router()
 .use(auth)
 .use(routes.likesRoute)
+.use(routes.commentsRoute)
 .get(
   '/comments',
   pagination,
