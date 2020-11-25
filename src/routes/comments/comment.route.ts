@@ -9,7 +9,6 @@ import * as routes from './routes';
 export const commentsRoute = express.Router()
 .use(auth)
 .use(routes.likesRoute)
-.use(routes.ticketsRoute)
 .get(
   '/comments/:commentId',
   validateResponse(endpoints.FindOneCommentResponseSchema),

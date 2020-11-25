@@ -2,11 +2,11 @@ import { StatusCodes } from 'http-status-codes';
 
 import * as mocks from '../../../../../../testing/mocks';
 
-import { TicketModel } from '../../../../../tickets/ticket.entity';
-import { ticketDocument } from '../../../../../tickets/ticket-document.mock';
+import { CommentModel } from '../../../../../comments/comment.entity';
+import { commentDocument } from '../../../../../comments/comment-document.mock';
 
-import { CommentModel } from '../../../../comment.entity';
-import { commentDocument } from '../../../../comment-document.mock';
+import { TicketModel } from '../../../../ticket.entity';
+import { ticketDocument } from '../../../../ticket-document.mock';
 
 import { find } from './find';
 

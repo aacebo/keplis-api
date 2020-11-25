@@ -3,9 +3,9 @@ import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 
 import { IAuthRequest } from '../../../../../../core/auth';
 
-import { TicketModel } from '../../../../../tickets/ticket.entity';
+import { CommentModel } from '../../../../../comments/comment.entity';
 
-import { CommentModel } from '../../../../comment.entity';
+import { TicketModel } from '../../../../ticket.entity';
 
 import { CreateCommentRequest } from './create-request.dto';
 

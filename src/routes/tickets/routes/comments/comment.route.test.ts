@@ -12,10 +12,10 @@ import { organization } from '../../../organizations/organization.mock';
 import { Project } from '../../../projects/project.entity';
 import { project } from '../../../projects/project.mock';
 
-import { Ticket } from '../../../tickets/ticket.entity';
-import { ticket } from '../../../tickets/ticket.mock';
+import { comment } from '../../../comments/comment.mock';
 
-import { comment } from '../../comment.mock';
+import { Ticket } from '../../ticket.entity';
+import { ticket } from '../../ticket.mock';
 
 describe('[e2e] /tickets/:ticketNumber/comments', () => {
   let request: supertest.SuperTest<supertest.Test>;

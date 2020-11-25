@@ -4,9 +4,9 @@ import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 
 import { IPaginationRequest } from '../../../../../../core/pagination';
 
-import { TicketModel } from '../../../../../tickets/ticket.entity';
+import { CommentModel, Comment, ICommentDocument } from '../../../../../comments/comment.entity';
 
-import { CommentModel, Comment, ICommentDocument } from '../../../../comment.entity';
+import { TicketModel } from '../../../../ticket.entity';
 
 export async function find(req: IPaginationRequest, res: Response) {
   const ticket = await TicketModel.findOne({
