@@ -18,7 +18,7 @@ describe('find', () => {
   ];
 
   beforeEach(() => {
-    params.request = mocks.request({ params: { orgName: 'test' }, pagination: { filter: '', skip: 0, sort: [] } });
+    params.request = mocks.request({ pagination: { filter: '', skip: 0, sort: [] } });
     params.response = mocks.response();
   });
 

@@ -3,7 +3,6 @@ import { StatusCodes } from 'http-status-codes';
 import { isValid } from 'date-fns';
 
 import { devUserToken } from '../../seed/dev-user-token';
-import { DEV_USER } from '../../seed/dev-user';
 
 import { startTestServer } from '../../testing/utils';
 
@@ -62,54 +61,14 @@ describe('[e2e] /tickets', () => {
       tkt = res.body.data;
   });
 
-  describe('create', () => {
-    it('should not find project', (done) => {
-      const payload = ticket();
-      delete payload.status;
-
-      request.post('/projects/test/tickets')
-        .set('Authorization', `Bearer ${token}`)
-        .send(payload)
-        .expect(StatusCodes.NOT_FOUND)
-        .end(done);
-    });
-
-    it('should create ticket', (done) => {
-      const payload = ticket();
-      delete payload.status;
-
-      request.post(`/projects/${proj.name}/tickets`)
-        .set('Authorization', `Bearer ${token}`)
-        .send(payload)
-        .expect(StatusCodes.CREATED)
-        .expect(res => {
-          expect(res.body).toBeDefined();
-          expect(res.body.data).toMatchObject(payload);
-          expect(res.body.data.project).toEqual(proj._id);
-          expect(res.body.data.createdBy._id).toEqual(DEV_USER._id);
-        })
-        .end(done);
-    });
-  });
-
   describe('find', () => {
-    it('should not find project', (done) => {
-      request.get('/projects/test/tickets')
-        .set('Authorization', `Bearer ${token}`)
-        .expect(StatusCodes.NOT_FOUND)
-        .end(done);
-    });
-
-    it('should find tickets', (done) => {
-      request.get(`/projects/${proj.name}/tickets`)
+    it('find projects', (done) => {
+      request.get('/tickets')
         .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
           expect(body).toBeDefined();
-          expect(body.user).toBeDefined();
-          expect(body.meta).toBeDefined();
-          expect(body.links).toBeDefined();
-          expect(body.data.length).toEqual(2);
+          expect(body.data).toHaveLength(1);
         })
         .end(done);
     });

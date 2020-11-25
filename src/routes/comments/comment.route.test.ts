@@ -3,7 +3,6 @@ import { StatusCodes } from 'http-status-codes';
 import { isValid } from 'date-fns';
 
 import { devUserToken } from '../../seed/dev-user-token';
-import { DEV_USER } from '../../seed/dev-user';
 
 import { startTestServer } from '../../testing/utils';
 
@@ -75,57 +74,6 @@ describe('[e2e] /comments', () => {
       .expect(StatusCodes.CREATED);
 
       cmt = res.body.data;
-  });
-
-  describe('create', () => {
-    it('should not find ticket', (done) => {
-      const payload = comment();
-
-      request.post('/tickets/5000/comments')
-        .set('Authorization', `Bearer ${token}`)
-        .send(payload)
-        .expect(StatusCodes.NOT_FOUND)
-        .end(done);
-    });
-
-    it('should create comment', (done) => {
-      const payload = comment();
-
-      request.post(`/tickets/${tkt.number}/comments`)
-        .set('Authorization', `Bearer ${token}`)
-        .send(payload)
-        .expect(StatusCodes.CREATED)
-        .expect(res => {
-          expect(res.body).toBeDefined();
-          expect(res.body.data).toMatchObject(payload);
-          expect(res.body.data.ticket).toEqual(tkt._id);
-          expect(res.body.data.createdBy._id).toEqual(DEV_USER._id);
-        })
-        .end(done);
-    });
-  });
-
-  describe('find', () => {
-    it('should not find ticket', (done) => {
-      request.get('/tickets/5000/comments')
-        .set('Authorization', `Bearer ${token}`)
-        .expect(StatusCodes.NOT_FOUND)
-        .end(done);
-    });
-
-    it('should find comments', (done) => {
-      request.get(`/tickets/${tkt.number}/comments`)
-        .set('Authorization', `Bearer ${token}`)
-        .expect(StatusCodes.OK)
-        .expect(({ body }) => {
-          expect(body).toBeDefined();
-          expect(body.user).toBeDefined();
-          expect(body.meta).toBeDefined();
-          expect(body.links).toBeDefined();
-          expect(body.data.length).toEqual(2);
-        })
-        .end(done);
-    });
   });
 
   describe('findOne', () => {
