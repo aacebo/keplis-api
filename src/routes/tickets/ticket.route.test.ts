@@ -62,7 +62,7 @@ describe('[e2e] /tickets', () => {
   });
 
   describe('find', () => {
-    it('find projects', (done) => {
+    it('find tickets', (done) => {
       request.get('/tickets')
         .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)

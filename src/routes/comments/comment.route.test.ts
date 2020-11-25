@@ -76,6 +76,19 @@ describe('[e2e] /comments', () => {
       cmt = res.body.data;
   });
 
+  describe('find', () => {
+    it('find comments', (done) => {
+      request.get('/comments')
+        .set('Authorization', `Bearer ${token}`)
+        .expect(StatusCodes.OK)
+        .expect(({ body }) => {
+          expect(body).toBeDefined();
+          expect(body.data).toHaveLength(1);
+        })
+        .end(done);
+    });
+  });
+
   describe('findOne', () => {
     it('should not find comment', (done) => {
       request.get('/comments/test')

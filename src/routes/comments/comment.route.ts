@@ -1,6 +1,7 @@
 import * as express from 'express';
 
 import { auth } from '../../core/auth';
+import { pagination } from '../../core/pagination';
 import { validateBody, validateResponse } from '../../core/validate';
 
 import * as endpoints from './endpoints';
@@ -9,6 +10,12 @@ import * as routes from './routes';
 export const commentsRoute = express.Router()
 .use(auth)
 .use(routes.likesRoute)
+.get(
+  '/comments',
+  pagination,
+  validateResponse(endpoints.FindCommentResponseSchema),
+  endpoints.find,
+)
 .get(
   '/comments/:commentId',
   validateResponse(endpoints.FindOneCommentResponseSchema),
