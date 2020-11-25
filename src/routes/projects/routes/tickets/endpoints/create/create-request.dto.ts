@@ -1,7 +1,7 @@
 import * as joi from 'joi';
 
-import { TicketLabel } from '../../../../ticket-label.enum';
-import { TicketType } from '../../../../ticket-type.enum';
+import { TicketLabel } from '../../../../../tickets/ticket-label.enum';
+import { TicketType } from '../../../../../tickets/ticket-type.enum';
 
 export class CreateTicketRequest {
   readonly type: TicketType;

@@ -3,10 +3,10 @@ import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 
 import { IAuthRequest } from '../../../../../../core/auth';
 
-import { ProjectModel } from '../../../../../projects/project.entity';
+import { TicketModel } from '../../../../../tickets/ticket.entity';
+import { TicketStatus } from '../../../../../tickets/ticket-status.enum';
 
-import { TicketModel } from '../../../../ticket.entity';
-import { TicketStatus } from '../../../../ticket-status.enum';
+import { ProjectModel } from '../../../../project.entity';
 
 import { CreateTicketRequest } from './create-request.dto';
 

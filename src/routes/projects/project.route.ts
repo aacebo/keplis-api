@@ -4,11 +4,11 @@ import { auth } from '../../core/auth';
 import { validateBody, validateResponse } from '../../core/validate';
 
 import * as endpoints from './endpoints';
-// import * as routes from './routes';
+import * as routes from './routes';
 
 export const projectsRoute = express.Router()
 .use(auth)
-// .use(routes.organizationsRoute)
+.use(routes.ticketsRoute)
 .get(
   '/projects/:projectName',
   validateResponse(endpoints.FindOneProjectResponseSchema),

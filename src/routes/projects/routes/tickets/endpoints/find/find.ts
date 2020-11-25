@@ -3,9 +3,10 @@ import { Response } from 'express';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 
 import { IPaginationRequest } from '../../../../../../core/pagination';
-import { ProjectModel } from '../../../../../projects/project.entity';
 
-import { TicketModel, ITicketDocument, Ticket } from '../../../../ticket.entity';
+import { TicketModel, ITicketDocument, Ticket } from '../../../../../tickets/ticket.entity';
+
+import { ProjectModel } from '../../../../project.entity';
 
 export async function find(req: IPaginationRequest, res: Response) {
   const project = await ProjectModel.findOne({

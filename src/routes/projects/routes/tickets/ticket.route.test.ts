@@ -9,10 +9,10 @@ import { startTestServer } from '../../../../testing/utils';
 import { Organization } from '../../../organizations/organization.entity';
 import { organization } from '../../../organizations/organization.mock';
 
-import { Project } from '../../../projects/project.entity';
-import { project } from '../../../projects/project.mock';
+import { ticket } from '../../../tickets/ticket.mock';
 
-import { ticket } from '../../ticket.mock';
+import { Project } from '../../project.entity';
+import { project } from '../../project.mock';
 
 describe('[e2e] /projects/:projectName/tickets', () => {
   let request: supertest.SuperTest<supertest.Test>;

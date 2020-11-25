@@ -2,14 +2,14 @@ import { StatusCodes } from 'http-status-codes';
 
 import * as mocks from '../../../../../../testing/mocks';
 
-import { ProjectModel } from '../../../../../projects/project.entity';
-import { projectDocument } from '../../../../../projects/project-document.mock';
+import { ticketDocument } from '../../../../../tickets/ticket-document.mock';
 
-import { ticketDocument } from '../../../../ticket-document.mock';
+import { ProjectModel } from '../../../../project.entity';
+import { projectDocument } from '../../../../project-document.mock';
 
 import { create } from './create';
 
-jest.mock('../../../../ticket.entity', () => ({
+jest.mock('../../../../../tickets/ticket.entity', () => ({
   TicketModel: class {
     toObject() { }
     save() { return Promise.resolve(); }
