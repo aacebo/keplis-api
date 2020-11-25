@@ -45,6 +45,19 @@ describe('[e2e] /projects', () => {
       proj = res.body.data;
   });
 
+  describe('find', () => {
+    it('find projects', (done) => {
+      request.get('/projects')
+        .set('Authorization', `Bearer ${token}`)
+        .expect(StatusCodes.OK)
+        .expect(({ body }) => {
+          expect(body).toBeDefined();
+          expect(body.data).toHaveLength(1);
+        })
+        .end(done);
+    });
+  });
+
   describe('findOne', () => {
     it('should not find project', (done) => {
       request.get('/projects/test')
