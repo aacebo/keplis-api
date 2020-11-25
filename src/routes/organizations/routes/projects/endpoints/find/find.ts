@@ -3,9 +3,10 @@ import { Response } from 'express';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 
 import { IPaginationRequest } from '../../../../../../core/pagination';
-import { OrganizationModel } from '../../../../../organizations/organization.entity';
 
-import { ProjectModel, IProjectDocument, Project } from '../../../../project.entity';
+import { ProjectModel, IProjectDocument, Project } from '../../../../../projects/project.entity';
+
+import { OrganizationModel } from '../../../../organization.entity';
 
 export async function find(req: IPaginationRequest, res: Response) {
   const organization = await OrganizationModel.findOne({ name: req.params.orgName });

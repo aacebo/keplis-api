@@ -6,10 +6,10 @@ import { DEV_USER } from '../../../../seed/dev-user';
 
 import { startTestServer } from '../../../../testing/utils';
 
-import { Organization } from '../../../organizations/organization.entity';
-import { organization } from '../../../organizations/organization.mock';
+import { project } from '../../../projects/project.mock';
 
-import { project } from '../../project.mock';
+import { Organization } from '../../organization.entity';
+import { organization } from '../../organization.mock';
 
 describe('[e2e] /organizations/:orgName/projects', () => {
   let request: supertest.SuperTest<supertest.Test>;

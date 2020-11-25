@@ -10,6 +10,7 @@ import * as routes from './routes';
 export const organizationsRoute = express.Router()
 .use(auth)
 .use(routes.ownersRoute)
+.use(routes.projectsRoute)
 .get(
   '/organizations',
   pagination,

@@ -6,7 +6,7 @@ import { validateBody, validateResponse } from '../../../../core/validate';
 
 import * as endpoints from './endpoints';
 
-export const organizationsRoute = express.Router()
+export const projectsRoute = express.Router()
 .use(auth)
 .get(
   '/organizations/:orgName/projects',
