@@ -4,6 +4,7 @@ import * as mongoose from 'mongoose';
 import * as express from 'express';
 import * as dotenv from 'dotenv';
 import * as cors from 'cors';
+import { formatDistanceToNow } from 'date-fns';
 
 import * as pkg from '../package.json';
 
@@ -16,6 +17,7 @@ import * as routes from './routes';
 
 export async function startServer() {
   const app = express();
+  const start = new Date();
 
   try {
     Logger.info(`connecting to ${process.env.DB}...`);
@@ -32,7 +34,11 @@ export async function startServer() {
     app.use(cors());
 
     app.get('/', (_req, res) => {
-      res.send({ version: pkg.version });
+      res.send({
+        name: pkg.name,
+        version: pkg.version,
+        uptime: formatDistanceToNow(start),
+      });
     });
 
     app.use(logger);
