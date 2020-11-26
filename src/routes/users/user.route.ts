@@ -41,4 +41,5 @@ export const usersRoute = express.Router()
   endpoints.login,
 )
 .use(routes.organizationsRoute)
-.use(routes.ticketsRoute);
+.use(routes.ticketsRoute)
+.use(routes.commentsRoute);
