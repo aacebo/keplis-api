@@ -5,9 +5,11 @@ import { pagination } from '../../../../core/pagination';
 import { validateBody, validateResponse } from '../../../../core/validate';
 
 import * as endpoints from './endpoints';
+import * as routes from './routes';
 
 export const ticketsRoute = express.Router()
 .use(auth)
+.use(routes.statsRoute)
 .get(
   '/projects/:projectName/tickets',
   pagination,
