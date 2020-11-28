@@ -10,6 +10,7 @@ import * as routes from './routes';
 export const ticketsRoute = express.Router()
 .use(auth)
 .use(routes.commentsRoute)
+.use(routes.statsRoute)
 .get(
   '/tickets',
   pagination,
