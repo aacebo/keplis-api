@@ -7,9 +7,11 @@ import { validateResponse } from '../../../../core/validate';
 import { FindTicketResponseSchema } from '../../../tickets/endpoints/find/find-response.dto';
 
 import * as endpoints from './endpoints';
+import * as routes from './routes';
 
 export const ticketsRoute = express.Router()
 .use(auth)
+.use(routes.statsRoute)
 .get(
   '/organizations/:orgName/tickets',
   pagination,

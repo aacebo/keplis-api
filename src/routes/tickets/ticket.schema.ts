@@ -13,7 +13,7 @@ export const TicketSchema = joi.object<Ticket>({
   number: joi.number().min(1).required(),
   type: joi.string().valid(...Object.values(TicketType)).required(),
   status: joi.string().valid(...Object.values(TicketStatus)).required(),
-  labels: joi.array().items(joi.string().valid(...Object.values(TicketLabel))).required(),
+  labels: joi.array().items(joi.string().valid(...Object.values(TicketLabel))).unique().required(),
   title: joi.string().required(),
   body: joi.string().required(),
   createdAt: joi.date().required(),

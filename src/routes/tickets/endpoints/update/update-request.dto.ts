@@ -12,7 +12,7 @@ export class UpdateTicketRequest {
 
 export const UpdateTicketRequestSchema = joi.object<UpdateTicketRequest>({
   status: joi.string().valid(...Object.values(TicketStatus)),
-  labels: joi.array().items(joi.string().valid(...Object.values(TicketLabel))),
+  labels: joi.array().items(joi.string().valid(...Object.values(TicketLabel))).unique(),
   title: joi.string(),
   body: joi.string(),
 });

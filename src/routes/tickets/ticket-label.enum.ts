@@ -3,4 +3,5 @@ export enum TicketLabel {
   WorkingAsExpected = 'working-as-expected',
   AwaitingResponse = 'awaiting-response',
   Resolved = 'resolved',
+  Rejected = 'rejected',
 }

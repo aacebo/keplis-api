@@ -32,7 +32,7 @@ describe('[e2e] /organizations/:orgName/tickets', () => {
       .send(payload)
       .expect(StatusCodes.CREATED);
 
-      org = res.body.data;
+    org = res.body.data;
   });
 
   beforeAll(async () => {

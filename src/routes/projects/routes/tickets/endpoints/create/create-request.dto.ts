@@ -12,7 +12,7 @@ export class CreateTicketRequest {
 
 export const CreateTicketRequestSchema = joi.object<CreateTicketRequest>({
   type: joi.string().valid(...Object.values(TicketType)).required(),
-  labels: joi.array().items(joi.string().valid(...Object.values(TicketLabel))).default([]),
+  labels: joi.array().items(joi.string().valid(...Object.values(TicketLabel))).unique().default([]),
   title: joi.string().required(),
   body: joi.string().required(),
 });
