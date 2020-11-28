@@ -11,6 +11,7 @@ export const organizationsRoute = express.Router()
 .use(auth)
 .use(routes.ownersRoute)
 .use(routes.projectsRoute)
+.use(routes.ticketsRoute)
 .get(
   '/organizations',
   pagination,

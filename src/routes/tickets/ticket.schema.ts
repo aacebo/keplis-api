@@ -7,6 +7,7 @@ import { Ticket } from './ticket.entity';
 
 export const TicketSchema = joi.object<Ticket>({
   _id: joi.string().uuid({ version: 'uuidv4' }).required(),
+  organization: joi.string().uuid({ version: 'uuidv4' }).required(),
   project: joi.string().uuid({ version: 'uuidv4' }).required(),
   comments: joi.array().items(joi.string().uuid({ version: 'uuidv4' })).required(),
   number: joi.number().min(1).required(),

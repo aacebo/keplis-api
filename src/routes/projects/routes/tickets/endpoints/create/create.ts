@@ -22,6 +22,7 @@ export async function create(req: IAuthRequest<any, any, CreateTicketRequest>, r
 
   const ticket = new TicketModel({
     ...req.body,
+    organization: project.organization,
     project: project._id,
     status: TicketStatus.Open,
     createdBy: req.user.id,

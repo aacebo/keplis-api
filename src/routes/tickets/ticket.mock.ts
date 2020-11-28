@@ -14,7 +14,11 @@ export function ticket(args?: Partial<Ticket>) {
   return {
     type: types[faker.random.number(types.length - 1)],
     status: statuses[faker.random.number(statuses.length - 1)],
-    labels: [labels[faker.random.number(labels.length - 1)]],
+    labels: [
+      labels[faker.random.number(labels.length - 1)],
+      labels[faker.random.number(labels.length - 1)],
+      labels[faker.random.number(labels.length - 1)],
+    ],
     title: faker.lorem.sentence(),
     body: faker.lorem.sentences(20),
     ...args,

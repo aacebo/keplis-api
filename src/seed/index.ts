@@ -82,13 +82,14 @@ async function start(count: number) {
     Logger.info(`creating tickets(${count})...`);
 
     for (let i = 0; i < count; i++) {
+      const p = await ProjectModel.findById(seeder.get('projects'));
       const v = new TicketModel(ticket({
         _id: uuid.v4(),
-        project: seeder.get('projects'),
+        organization: p.organization,
+        project: p._id,
         createdBy: seeder.get('users'),
       }));
 
-      const p = await ProjectModel.findById(v.project);
       p.tickets.push(v._id);
 
       seeder.set(v._id, 'tickets');
