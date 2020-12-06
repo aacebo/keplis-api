@@ -8,7 +8,6 @@ import * as endpoints from './endpoints';
 import * as routes from './routes';
 
 export const ticketsRoute = express.Router()
-.use(auth)
 .use(routes.commentsRoute)
 .use(routes.statsRoute)
 .get(
@@ -24,12 +23,14 @@ export const ticketsRoute = express.Router()
 )
 .put(
   '/tickets/:ticketNumber',
+  auth,
   validateBody(endpoints.UpdateTicketRequestSchema),
   validateResponse(endpoints.UpdateTicketResponseSchema),
   endpoints.update,
 )
 .delete(
   '/tickets/:ticketNumber',
+  auth,
   validateResponse(endpoints.RemoveTicketResponseSchema),
   endpoints.remove,
 );

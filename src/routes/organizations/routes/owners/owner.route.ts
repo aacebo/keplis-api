@@ -6,7 +6,6 @@ import { validateBody, validateResponse } from '../../../../core/validate';
 import * as endpoints from './endpoints';
 
 export const ownersRoute = express.Router()
-.use(auth)
 .get(
   '/organizations/:orgName/owners',
   validateResponse(endpoints.FindOrganizationOwnersResponseSchema),
@@ -14,6 +13,7 @@ export const ownersRoute = express.Router()
 )
 .put(
   '/organizations/:orgName/owners',
+  auth,
   validateBody(endpoints.UpdateOrganizationOwnerRequestSchema),
   validateResponse(endpoints.UpdateOrganizationOwnerResponseSchema),
   endpoints.update,

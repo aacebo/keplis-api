@@ -34,7 +34,6 @@ describe('[e2e] /organizations/:name/owners', () => {
   describe('find', () => {
     it('should find owners', (done) => {
       request.get(`/organizations/${org.name}/owners`)
-        .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
           expect(body).toBeDefined();

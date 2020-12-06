@@ -75,14 +75,12 @@ describe('[e2e] /users/:username/comments', () => {
   describe('find', () => {
     it('should not find user', (done) => {
       request.get('/users/test/comments')
-        .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.NOT_FOUND)
         .end(done);
     });
 
     it('should find comments', (done) => {
       request.get(`/users/${DEV_USER.username}/comments`)
-        .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
           expect(body).toBeDefined();

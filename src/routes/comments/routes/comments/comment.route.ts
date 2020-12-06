@@ -10,7 +10,6 @@ import { FindCommentResponseSchema } from '../../endpoints/find/find-response.dt
 import * as endpoints from './endpoints';
 
 export const commentsRoute = express.Router()
-.use(auth)
 .get(
   '/comments/:commentId/comments',
   validateResponse(FindCommentResponseSchema),
@@ -18,6 +17,7 @@ export const commentsRoute = express.Router()
 )
 .post(
   '/comments/:commentId/comments',
+  auth,
   validateBody(CreateCommentRequestSchema),
   validateResponse(CreateCommentResponseSchema),
   endpoints.create,

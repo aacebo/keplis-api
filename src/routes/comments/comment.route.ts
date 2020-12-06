@@ -8,7 +8,6 @@ import * as endpoints from './endpoints';
 import * as routes from './routes';
 
 export const commentsRoute = express.Router()
-.use(auth)
 .use(routes.likesRoute)
 .use(routes.commentsRoute)
 .get(
@@ -24,12 +23,14 @@ export const commentsRoute = express.Router()
 )
 .put(
   '/comments/:commentId',
+  auth,
   validateBody(endpoints.UpdateCommentRequestSchema),
   validateResponse(endpoints.UpdateCommentResponseSchema),
   endpoints.update,
 )
 .delete(
   '/comments/:commentId',
+  auth,
   validateResponse(endpoints.RemoveCommentResponseSchema),
   endpoints.remove,
 );

@@ -72,18 +72,15 @@ describe('[e2e] /organizations/:orgName/projects', () => {
   describe('find', () => {
     it('should not find organization', (done) => {
       request.get(`/organizations/test/projects`)
-        .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.NOT_FOUND)
         .end(done);
     });
 
     it('should find projects', (done) => {
       request.get(`/organizations/${org.name}/projects`)
-        .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
           expect(body).toBeDefined();
-          expect(body.user).toBeDefined();
           expect(body.meta).toBeDefined();
           expect(body.links).toBeDefined();
           expect(body.data.length).toEqual(2);

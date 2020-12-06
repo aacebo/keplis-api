@@ -79,7 +79,6 @@ describe('[e2e] /comments', () => {
   describe('find', () => {
     it('find comments', (done) => {
       request.get('/comments')
-        .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
           expect(body).toBeDefined();
@@ -92,14 +91,12 @@ describe('[e2e] /comments', () => {
   describe('findOne', () => {
     it('should not find comment', (done) => {
       request.get('/comments/test')
-        .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.NOT_FOUND)
         .end(done);
     });
 
     it('should find one comment', (done) => {
       request.get(`/comments/${cmt._id}`)
-        .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
           expect(body).toBeDefined();

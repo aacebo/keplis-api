@@ -1,6 +1,5 @@
 import * as express from 'express';
 
-import { auth } from '../../../../core/auth';
 import { pagination } from '../../../../core/pagination';
 import { validateResponse } from '../../../../core/validate';
 
@@ -10,7 +9,6 @@ import * as endpoints from './endpoints';
 import * as routes from './routes';
 
 export const ticketsRoute = express.Router()
-.use(auth)
 .use(routes.statsRoute)
 .get(
   '/organizations/:orgName/tickets',

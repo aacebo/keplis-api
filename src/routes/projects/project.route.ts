@@ -8,7 +8,6 @@ import * as endpoints from './endpoints';
 import * as routes from './routes';
 
 export const projectsRoute = express.Router()
-.use(auth)
 .use(routes.ticketsRoute)
 .get(
   '/projects',
@@ -23,12 +22,14 @@ export const projectsRoute = express.Router()
 )
 .put(
   '/projects/:projectName',
+  auth,
   validateBody(endpoints.UpdateProjectRequestSchema),
   validateResponse(endpoints.UpdateProjectResponseSchema),
   endpoints.update,
 )
 .delete(
   '/projects/:projectName',
+  auth,
   validateResponse(endpoints.RemoveProjectResponseSchema),
   endpoints.remove,
 );

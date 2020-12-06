@@ -7,7 +7,6 @@ import { validateBody, validateResponse } from '../../../../core/validate';
 import * as endpoints from './endpoints';
 
 export const projectsRoute = express.Router()
-.use(auth)
 .get(
   '/organizations/:orgName/projects',
   pagination,
@@ -16,6 +15,7 @@ export const projectsRoute = express.Router()
 )
 .post(
   '/organizations/:orgName/projects',
+  auth,
   validateBody(endpoints.CreateProjectRequestSchema),
   validateResponse(endpoints.CreateProjectResponseSchema),
   endpoints.create,

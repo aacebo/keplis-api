@@ -64,7 +64,6 @@ describe('[e2e] /tickets', () => {
   describe('find', () => {
     it('should find tickets', (done) => {
       request.get('/tickets')
-        .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
           expect(body).toBeDefined();
@@ -77,14 +76,12 @@ describe('[e2e] /tickets', () => {
   describe('findOne', () => {
     it('should not find ticket', (done) => {
       request.get('/tickets/5000')
-        .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.NOT_FOUND)
         .end(done);
     });
 
     it('should find one ticket', (done) => {
       request.get(`/tickets/${tkt.number}`)
-        .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
           expect(body).toBeDefined();

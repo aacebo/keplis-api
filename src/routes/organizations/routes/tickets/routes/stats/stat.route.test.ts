@@ -63,14 +63,12 @@ describe('[e2e] /organizations/:orgName/tickets/stats', () => {
   describe('labels', () => {
     it('should not find organization', (done) => {
       request.get('/organizations/test/tickets/stats/labels')
-        .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.NOT_FOUND)
         .end(done);
     });
 
     it('should get ticket label aggregate', (done) => {
       request.get(`/organizations/${org.name}/tickets/stats/labels`)
-        .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
           expect(body).toBeDefined();
@@ -83,14 +81,12 @@ describe('[e2e] /organizations/:orgName/tickets/stats', () => {
   describe('statuses', () => {
     it('should not find organization', (done) => {
       request.get('/organizations/test/tickets/stats/statuses')
-        .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.NOT_FOUND)
         .end(done);
     });
 
     it('should get ticket status aggregate', (done) => {
       request.get(`/organizations/${org.name}/tickets/stats/statuses`)
-        .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
           expect(body).toBeDefined();
@@ -103,14 +99,12 @@ describe('[e2e] /organizations/:orgName/tickets/stats', () => {
   describe('types', () => {
     it('should not find organization', (done) => {
       request.get('/organizations/test/tickets/stats/types')
-        .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.NOT_FOUND)
         .end(done);
     });
 
     it('should get ticket type aggregate', (done) => {
       request.get(`/organizations/${org.name}/tickets/stats/types`)
-        .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
           expect(body).toBeDefined();

@@ -8,6 +8,9 @@ import * as endpoints from './endpoints';
 import * as routes from './routes';
 
 export const usersRoute = express.Router()
+.use(routes.organizationsRoute)
+.use(routes.ticketsRoute)
+.use(routes.commentsRoute)
 .get(
   '/users',
   auth,
@@ -39,7 +42,4 @@ export const usersRoute = express.Router()
   validateBody(endpoints.LoginUserRequestSchema),
   validateResponse(endpoints.LoginUserResponseSchema),
   endpoints.login,
-)
-.use(routes.organizationsRoute)
-.use(routes.ticketsRoute)
-.use(routes.commentsRoute);
+);

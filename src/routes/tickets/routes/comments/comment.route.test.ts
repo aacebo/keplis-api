@@ -103,18 +103,15 @@ describe('[e2e] /tickets/:ticketNumber/comments', () => {
   describe('find', () => {
     it('should not find ticket', (done) => {
       request.get('/tickets/5000/comments')
-        .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.NOT_FOUND)
         .end(done);
     });
 
     it('should find comments', (done) => {
       request.get(`/tickets/${tkt.number}/comments`)
-        .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
           expect(body).toBeDefined();
-          expect(body.user).toBeDefined();
           expect(body.meta).toBeDefined();
           expect(body.links).toBeDefined();
           expect(body.data.length).toEqual(2);

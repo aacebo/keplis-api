@@ -59,7 +59,6 @@ describe('[e2e] /organizations/:orgName/tickets', () => {
   describe('find', () => {
     it('should find tickets', (done) => {
       request.get(`/organizations/${org.name}/tickets`)
-        .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
           expect(body).toBeDefined();

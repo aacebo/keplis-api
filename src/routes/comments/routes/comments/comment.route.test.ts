@@ -104,7 +104,6 @@ describe('[e2e] /comments/:commentId/comments', () => {
   describe('find', () => {
     it('should not find comment', (done) => {
       request.get('/comments/test/comments')
-        .set('Authorization', `Bearer ${token}`)
         .send(comment())
         .expect(StatusCodes.NOT_FOUND)
         .end(done);
@@ -112,7 +111,6 @@ describe('[e2e] /comments/:commentId/comments', () => {
 
     it('should find comments', (done) => {
       request.get(`/comments/${cmt._id}/comments`)
-        .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
           expect(body).toBeDefined();

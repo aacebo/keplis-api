@@ -90,18 +90,15 @@ describe('[e2e] /projects/:projectName/tickets', () => {
   describe('find', () => {
     it('should not find project', (done) => {
       request.get('/projects/test/tickets')
-        .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.NOT_FOUND)
         .end(done);
     });
 
     it('should find tickets', (done) => {
       request.get(`/projects/${proj.name}/tickets`)
-        .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
           expect(body).toBeDefined();
-          expect(body.user).toBeDefined();
           expect(body.meta).toBeDefined();
           expect(body.links).toBeDefined();
           expect(body.data.length).toEqual(2);

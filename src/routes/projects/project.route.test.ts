@@ -48,7 +48,6 @@ describe('[e2e] /projects', () => {
   describe('find', () => {
     it('find projects', (done) => {
       request.get('/projects')
-        .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
           expect(body).toBeDefined();
@@ -61,14 +60,12 @@ describe('[e2e] /projects', () => {
   describe('findOne', () => {
     it('should not find project', (done) => {
       request.get('/projects/test')
-        .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.NOT_FOUND)
         .end(done);
     });
 
     it('should find one project', (done) => {
       request.get(`/projects/${proj.name}`)
-        .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
           expect(body).toBeDefined();

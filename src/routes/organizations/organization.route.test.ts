@@ -51,11 +51,9 @@ describe('[e2e] /organizations', () => {
   describe('find', () => {
     it('should find organizations', (done) => {
       request.get('/organizations')
-        .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
           expect(body).toBeDefined();
-          expect(body.user).toBeDefined();
           expect(body.meta).toBeDefined();
           expect(body.links).toBeDefined();
           expect(body.data.length).toEqual(2);
@@ -67,14 +65,12 @@ describe('[e2e] /organizations', () => {
   describe('findOne', () => {
     it('should not find organization', (done) => {
       request.get('/organizations/test')
-        .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.NOT_FOUND)
         .end(done);
     });
 
     it('should find one organization', (done) => {
       request.get(`/organizations/${org.name}`)
-        .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
           expect(body).toBeDefined();

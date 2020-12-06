@@ -60,14 +60,12 @@ describe('[e2e] /users/:username/tickets', () => {
   describe('find', () => {
     it('should not find user', (done) => {
       request.get('/users/test/tickets')
-        .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.NOT_FOUND)
         .end(done);
     });
 
     it('should find tickets', (done) => {
       request.get(`/users/${DEV_USER.username}/tickets`)
-        .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
           expect(body).toBeDefined();

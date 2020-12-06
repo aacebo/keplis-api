@@ -8,9 +8,9 @@ import { UpdateCommentResponseSchema } from '../../endpoints/update/update-respo
 import * as endpoints from './endpoints';
 
 export const likesRoute = express.Router()
-.use(auth)
 .put(
   '/comments/:commentId/likes',
+  auth,
   validateResponse(UpdateCommentResponseSchema),
   endpoints.update,
 );

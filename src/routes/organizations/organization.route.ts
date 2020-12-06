@@ -8,7 +8,6 @@ import * as endpoints from './endpoints';
 import * as routes from './routes';
 
 export const organizationsRoute = express.Router()
-.use(auth)
 .use(routes.ownersRoute)
 .use(routes.projectsRoute)
 .use(routes.ticketsRoute)
@@ -25,18 +24,21 @@ export const organizationsRoute = express.Router()
 )
 .post(
   '/organizations',
+  auth,
   validateBody(endpoints.CreateOrganizationRequestSchema),
   validateResponse(endpoints.CreateOrganizationResponseSchema),
   endpoints.create,
 )
 .put(
   '/organizations/:orgName',
+  auth,
   validateBody(endpoints.UpdateOrganizationRequestSchema),
   validateResponse(endpoints.UpdateOrganizationResponseSchema),
   endpoints.update,
 )
 .delete(
   '/organizations/:orgName',
+  auth,
   validateResponse(endpoints.RemoveOrganizationResponseSchema),
   endpoints.remove,
 );

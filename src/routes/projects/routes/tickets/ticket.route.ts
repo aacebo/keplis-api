@@ -8,7 +8,6 @@ import * as endpoints from './endpoints';
 import * as routes from './routes';
 
 export const ticketsRoute = express.Router()
-.use(auth)
 .use(routes.statsRoute)
 .get(
   '/projects/:projectName/tickets',
@@ -18,6 +17,7 @@ export const ticketsRoute = express.Router()
 )
 .post(
   '/projects/:projectName/tickets',
+  auth,
   validateBody(endpoints.CreateTicketRequestSchema),
   validateResponse(endpoints.CreateTicketResponseSchema),
   endpoints.create,

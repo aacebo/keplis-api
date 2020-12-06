@@ -28,18 +28,15 @@ describe('[e2e] /users/:username/organizations', () => {
   describe('find', () => {
     it('should not find user', (done) => {
       request.get(`/users/1/organizations`)
-        .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.NOT_FOUND)
         .end(done);
     });
 
     it('should find user organizations', (done) => {
       request.get(`/users/${DEV_USER.username}/organizations`)
-        .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
           expect(body).toBeDefined();
-          expect(body.user).toBeDefined();
           expect(body.meta).toBeDefined();
           expect(body.links).toBeDefined();
           expect(body.data.length).toEqual(1);

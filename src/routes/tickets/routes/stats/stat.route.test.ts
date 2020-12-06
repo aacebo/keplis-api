@@ -63,7 +63,6 @@ describe('[e2e] /tickets/stats', () => {
   describe('labels', () => {
     it('should get ticket label aggregate', (done) => {
       request.get('/tickets/stats/labels')
-        .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
           expect(body).toBeDefined();
@@ -76,7 +75,6 @@ describe('[e2e] /tickets/stats', () => {
   describe('statuses', () => {
     it('should get ticket status aggregate', (done) => {
       request.get('/tickets/stats/statuses')
-        .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
           expect(body).toBeDefined();
@@ -89,7 +87,6 @@ describe('[e2e] /tickets/stats', () => {
   describe('types', () => {
     it('should get ticket type aggregate', (done) => {
       request.get('/tickets/stats/types')
-        .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
           expect(body).toBeDefined();
