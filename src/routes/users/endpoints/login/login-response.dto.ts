@@ -5,7 +5,7 @@ import { UserSchema } from '../../user.schema';
 
 export class LoginUserResponse {
   readonly token: string;
-  readonly user: User
+  readonly user: User;
 }
 
 export const LoginUserResponseSchema = joi.object<LoginUserResponse>({
