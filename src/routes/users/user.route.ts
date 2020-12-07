@@ -13,14 +13,12 @@ export const usersRoute = express.Router()
 .use(routes.commentsRoute)
 .get(
   '/users',
-  auth,
   pagination,
   validateResponse(endpoints.FindUserResponseSchema),
   endpoints.find,
 )
 .get(
   '/users/:username',
-  auth,
   validateResponse(endpoints.FindOneUserResponseSchema),
   endpoints.findOne,
 )

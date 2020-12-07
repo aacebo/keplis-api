@@ -39,11 +39,9 @@ describe('[e2e] /users', () => {
   describe('find', () => {
     it('should find user', (done) => {
       request.get('/users')
-        .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
           expect(body).toBeDefined();
-          expect(body.user).toBeDefined();
           expect(body.meta).toBeDefined();
           expect(body.links).toBeDefined();
           expect(body.data.length).toEqual(1);
@@ -55,14 +53,12 @@ describe('[e2e] /users', () => {
   describe('findOne', () => {
     it('should not find user', (done) => {
       request.get(`/users/test`)
-        .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.NOT_FOUND)
         .end(done);
     });
 
     it('should find one user', (done) => {
       request.get(`/users/${DEV_USER.username}`)
-        .set('Authorization', `Bearer ${token}`)
         .expect(StatusCodes.OK)
         .expect(({ body }) => {
           expect(body).toBeDefined();
